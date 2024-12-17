@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>actorInfo</title>
+</head>
+<link href="./css/info.css" rel="stylesheet" type="text/css">
+<script src="./js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+    function toggleImg(){
+        let heart = document.getElementById("heart");
+
+        const currentImg = heart.style.backgroundImage;
+
+        if(currentImg.includes("full_heart.png")){
+            //원래 이미지로
+            heart.style.backgroundImage = "url('./img/heart.png')";
+            heart.style.width = "45px";
+            heart.style.height = "45px";
+        } else {
+            heart.style.backgroundImage = "url('./img/full_heart.png')";
+            heart.style.width = "52px";
+            heart.style.height = "56px";
+        }
+
+        
+    }
+</script>
+<body>
+    <div id="main">
+        <div id="actor_info">
+            <div class="actor_detail">
+                <div class="actor_img"></div>
+                <div class="actor_cont">
+                    <div class="name">최재림</div>
+                    <ul class="text">
+                        <li><span class="birth">출생 | 1985년</span></li>
+                        <li><span class="nationality">국적 | 대한민국</span></li>
+                        <li><span class="education">학력 | 한국예술종합학교</span></li>
+                        <li><span class="debut">데뷔 | 2009년 1월 9일 뮤지컬 &nbsp;<b>렌트</b></span></li>
+                    </ul>   
+                </div>
+            </div>
+            <div class="actor_like">
+                <div id="heart" onclick="toggleImg()"></div>
+                <div class="frame">
+                    <span class="like">좋아요</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="actor_career">
+            <div class="cont_title">수상</div>
+            <span class="award-list">
+                2018년 제6회 대한민국 예술문화인상 뮤지컬 부문<br/>
+                2019년 제3회 한국뮤지컬어워즈 남우주연상 마틸다<br/>
+                2022년 제6회 한국뮤지컬어워즈 남우조연상 시카고<br/>
+                2022년 제16회 DIMF 어워즈 올해의스타상 시카고<br/>
+                2024년 제18회 DIMF 어워즈 올해의스타상 오페라의 유령, &nbsp;레미제라블<br/>
+                2024년 제15회 대중문화예술상 국무총리 표창
+            </span>
+        </div>
+
+        <div id="actor_others">
+            <div class="cont_title">대표작</div>
+            <div class="others_container">
+                <div class="other1">
+                    <img src="./img/other1.png">
+                    <div class="other_name" onclick="">오페라의 유령</div>
+                    <div class="other_role">팬텀 역</div>
+                </div>
+                <div class="other2">
+                    <img src="./img/other2.png">
+                    <div class="other_name" onclick="">킹키부츠</div>
+                    <div class="other_role">롤라 역</div>
+                </div>
+                <div class="other3">
+                    <img src="./img/other3.png">
+                    <div class="other_name" onclick="">지킬 앤 하이드</div>
+                    <div class="other_role">지킬/하이드 역</div>
+                </div>
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
