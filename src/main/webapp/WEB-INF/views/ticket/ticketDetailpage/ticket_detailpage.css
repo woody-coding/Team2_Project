@@ -168,6 +168,12 @@ li {
 	cursor: pointer;
 }
 
+/* 경인 추가 - '예매하기' 버튼이 비활성화 상태 일 때 */
+.bookTicket:disabled {
+  background-color: #cccccc;
+}
+
+
 .AllRoundBtn {
 	text-align: center;
 }
