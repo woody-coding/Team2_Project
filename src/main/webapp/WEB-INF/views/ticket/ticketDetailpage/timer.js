@@ -1,5 +1,5 @@
 // ex) 버튼 활성화 시간 설정 (날짜, 시각, 분, 초)
-const targetDate = new Date('2024-12-21 13:10:00'); 
+const targetDate = new Date('2024-12-21 18:31:00'); 
 
 // '예매하기' 버튼에 모든 함수가 접근 가능하도록 전역 변수로 선언
 let reserveButton; 
