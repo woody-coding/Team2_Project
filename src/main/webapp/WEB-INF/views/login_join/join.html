@@ -55,12 +55,13 @@
     function pwtest() {
       var p1 = document.getElementById('user_pw').value;
       var p2 = document.getElementById('user_pwre').value;
- 		
+      var chk = localStorage.getItem('pwchk');
       if( p1 != p2 ) {
         alert("비밀번호가 일치 하지 않습니다");
         return false;
       } else{
         alert("비밀번호가 일치합니다");
+        localStorage.setItem('pwchk',true);
        	return true;
       }
    	}
@@ -84,10 +85,41 @@
     function nullChk(){
     	if(document.getElementById('user_id').value==''){
     		alert("아이디를 입력해주세요.")
-    		if(document.getElementById('user_pw').value==''){
-    			alert("비밀번호를 입력해주세요.")
-    			return false
-    		}
+    		return false
+    	}
+    	if(document.getElementById('user_pw').value==''){
+    		alert("비밀번호를 입력해주세요.")
+    		return false
+    	}
+    	if(document.getElementById('user_name').value==''){
+    		alert("성함을 입력해주세요.")
+    		return false
+    	}
+    	if(document.getElementById('user_name').value==''){
+    		alert("성함을 입력해주세요.")
+    		return false
+    	}
+    	if(document.getElementById('user_phone').value==''){
+    		alert("전화번호를 입력해주세요.")
+    		return false
+    	}
+    	if(document.getElementById('address_kakao').value==''){
+    		alert("주소를 입력해주세요.")
+    		return false
+    	}
+    	if(document.getElementById('address_detail').value==''){
+    		alert("상세 주소를 입력해주세요.")
+    		return false
+    	}
+    	var chk = localStorage.getItem('chk');
+    	var pwchk = localStorage.getItem('pwchk');
+    	if(pwchk == null){
+        	alert("비밀번호 확인을 완료 해주세요.")
+        	return false
+    	}
+    	if(chk == null){
+        	alert("휴대폰 인증을 완료 해주세요.")
+        	return false
     	}
     }
 </script>
@@ -109,7 +141,7 @@ window.onload = function(){
 <body>
 	<div></div>
 	<div><img src="/imgs/logo_orange.png" style="width:370px; height:140px;"></div>
-	<form onsubmit="nullChk()">
+	<form onsubmit="return nullChk()">
 	<table>
 		<tr>
             <th>ID</th>
@@ -127,7 +159,7 @@ window.onload = function(){
         </tr>
         <tr>
             <th>Name</th>
-            <td><input type="text" name="user_name" placeholder="성함을 입력 해주세요."></td>
+            <td><input type="text" id="user_name" name="user_name" placeholder="성함을 입력 해주세요."></td>
         </tr>
         <tr>
             <th>Phone</th>
@@ -136,15 +168,15 @@ window.onload = function(){
         </tr>
         <tr>
             <th>Adder</th>
-            <td><input type="text" id="address_kakao" name="address" placeholder="상세 주소 페이지 이동" readonly/></td>
+            <td><input type="text" id="address_kakao" name="address" placeholder="주소 페이지 이동" readonly/></td>
         </tr>
         <tr>
             <th></th>
-            <td><input type="text" name="address_detail" placeholder="상세 주소를 입력해주세요."></td>
+            <td><input type="text" id="address_detail" name="address_detail" placeholder="상세 주소를 입력해주세요."></td>
         </tr>
         <tr>
         	<th></th>
-        	<td><input type="submit" value="가입 완료" style="width:290px; height:35px"></td>
+        	<td><input type="submit" value="가입 완료"  style="width:290px; height:35px"></td>
         </tr>
      </table>
    	</form>
