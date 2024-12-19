@@ -38,9 +38,6 @@
             justify-content: center; /* 수평 가운데 정렬 */
             align-items: center; /* 수직 가운데 정렬 */
             margin-top: -52px;
-            background-size: cover; /* cover: 배경 이미지를 요소를 완전히 덮도록 설정 */
-    background-position: center; /* 중앙 정렬 */
-    background-repeat: no-repeat; /* 이미지를 반복하지 않도록 설정 */
         }
         .place-field {
     background-color: #f0f0f0; /* 읽기 전용 필드의 배경색 */
@@ -337,32 +334,19 @@
         </div>
     </section>
     <section class="show-text-area">
-        <div class="show-text-container" style="margin-top: 62px;margin-left: -85px;">
+        <div class="show-text-container" style="margin-top: 62px; margin-left: -85px;">
             <span class="title title-actor">공연 정보</span>
-            <textarea class="show-text-field" placeholder="공연정보를 입력해 주세요" style="width: 993px; height: 250px; display: block; margin-top: 10px; resize: none;" ></textarea>
-            <button class="register-button" style="margin-left: 93.3%;margin-top: 20px;padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">등록</button>
+            <textarea class="show-text-field" placeholder="공연정보를 입력해 주세요" style="width: 993px; height: 250px; display: block; margin-top: 10px; resize: none;"></textarea>
+            <div class="update-button" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">수정</button>
+                <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">취소</button>
+            </div>
         </div>
-        
-        </section>
-        
+    </section>
 	<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('poster').addEventListener('click', function() {
-        document.getElementById('fileInput').click();
-    });
-
-    document.getElementById('fileInput').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.querySelector('.poster').style.backgroundImage = `url(${e.target.result})`;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-});
-
+		document.getElementById('poster').addEventListener('click', function() {
+			document.getElementById('fileInput').click();
+		});
 
 		function setupTimeInput(countInputId, timeInputId, previousTimeInputId) {
 			document.getElementById(countInputId).addEventListener('click', function() {

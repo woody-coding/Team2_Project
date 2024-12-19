@@ -38,9 +38,6 @@
             justify-content: center; /* 수평 가운데 정렬 */
             align-items: center; /* 수직 가운데 정렬 */
             margin-top: -52px;
-            background-size: cover; /* cover: 배경 이미지를 요소를 완전히 덮도록 설정 */
-    background-position: center; /* 중앙 정렬 */
-    background-repeat: no-repeat; /* 이미지를 반복하지 않도록 설정 */
         }
         .place-field {
     background-color: #f0f0f0; /* 읽기 전용 필드의 배경색 */
@@ -130,7 +127,7 @@
 
 		.calendar-header {
 			display: flex;
-			justify-content: space-between;
+			justify-content: center;
 			align-items: center;
 			margin-bottom: 10px;
 			font-size: 18px;
@@ -245,7 +242,7 @@
         <div class="showInfoBox" style="margin-left: 50px;margin-right: 50px;">
             <div class="title-input-container">
                 <span class="title">제 목</span>
-                <input type="text" class="input-title-field input" placeholder="제목을 입력해주세요" style="width: 278px; margin-left: 55px;"/>
+                <input type="text" class="input-title-field input" placeholder="제목을 입력해주세요" style="width: 278px; margin-left: 55px;" readonly/>
             </div>
             <div class="place-container">
                 <span class="title">공연 장소</span>
@@ -267,7 +264,7 @@
             </div>
             <div class="age-seat-container">
                 <span class="title">관람 연령</span>
-                <select id="ageSelect" class="age-select input" style="margin-left: 17px;">
+                <select id="ageSelect" class="age-select input" style="margin-left: 17px;" disabled>
                     <option value="all">전체 이용가</option>
                     <option value="12">12세</option>
                     <option value="15">15세</option>
@@ -278,20 +275,20 @@
             </div>
             <div class="price-container">
                 <span class="title">가 격</span>
-                <input type="text" id="inputPriceField" class="input-price-field input" placeholder="가격" style="width: 100px; margin-left: 53px;">
+                <input type="text" id="inputPriceField" class="input-price-field input" placeholder="가격" style="width: 100px; margin-left: 53px;" readonly/>
                 <span class="won">원</span>
             </div>  
         </div>
-        <div class="calender-container" style="border: 1px solid #dddddd;height: 285px;margin-top: -22px;border-radius: 6px;width: 320px;">
+        <div class="calender-container" style="border: 1px solid #dddddd;height: 285px;margin-top: -22px;border-radius: 6px;width: 320px;margin-right: 79px;">
             <div class="calendar-header">
-                <button id="prevMonth">&lt;</button>
+                <button id="prevMonth" style="display: none;">&lt;</button>
                 <span id="currentMonthYear">December 2024</span>
-                <button id="nextMonth">&gt;</button>
+                <button id="nextMonth" style="display: none;">&gt;</button>
             </div>
             <div class="calendar-days" id="calendarDays"></div>
                
         </div>  
-        <button id="resetSelection" class="fixed-button">재선택</button>    
+        <button id="resetSelection" class="fixed-button" style="display: none;">재선택</button>    
 	</section>
     <section class="actor-area">
         <div class="actor-container">
@@ -337,32 +334,49 @@
         </div>
     </section>
     <section class="show-text-area">
-        <div class="show-text-container" style="margin-top: 62px;margin-left: -85px;">
+        <div class="show-text-container" style="margin-top: 62px; margin-left: -85px;">
             <span class="title title-actor">공연 정보</span>
-            <textarea class="show-text-field" placeholder="공연정보를 입력해 주세요" style="width: 993px; height: 250px; display: block; margin-top: 10px; resize: none;" ></textarea>
-            <button class="register-button" style="margin-left: 93.3%;margin-top: 20px;padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">등록</button>
+            <textarea class="show-text-field" placeholder="공연정보를 입력해 주세요" style="width: 993px; height: 250px; display: block; margin-top: 10px; resize: none;" readonly></textarea>
+            <div class="update-button" style="display: flex; justify-content: space-between; gap: 10px; margin-top: 20px;">
+                <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">목록</button>
+                <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">수정</button>
+            </div>
         </div>
-        
-        </section>
-        
+    </section>
 	<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('poster').addEventListener('click', function() {
-        document.getElementById('fileInput').click();
-    });
+		// Disable all event listeners
+		document.querySelectorAll('*').forEach(element => {
+			const clone = element.cloneNode(true);
+			element.parentNode.replaceChild(clone, element);
+		});
 
-    document.getElementById('fileInput').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.querySelector('.poster').style.backgroundImage = `url(${e.target.result})`;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-});
+		// Prevent default actions for specific elements
+		document.querySelectorAll('input, textarea, button').forEach(element => {
+			element.addEventListener('click', event => event.preventDefault());
+			element.addEventListener('focus', event => event.preventDefault());
+		});
 
+		// Disable calendar navigation and popup events
+		document.getElementById('prevMonth').addEventListener('click', event => event.preventDefault());
+		document.getElementById('nextMonth').addEventListener('click', event => event.preventDefault());
+		document.getElementById('resetSelection').addEventListener('click', event => event.preventDefault());
+
+		// Allow days to be displayed but prevent interaction
+		document.querySelectorAll('.day').forEach(day => {
+			day.addEventListener('click', event => event.preventDefault());
+		});
+
+		// Disable actor box popup
+		document.querySelectorAll('.actBox').forEach(actBox => {
+			actBox.addEventListener('click', event => event.preventDefault());
+		});
+
+		// Disable file input popup
+		document.getElementById('poster').addEventListener('click', event => event.preventDefault());
+
+		document.getElementById('poster').addEventListener('click', function() {
+			document.getElementById('fileInput').click();
+		});
 
 		function setupTimeInput(countInputId, timeInputId, previousTimeInputId) {
 			document.getElementById(countInputId).addEventListener('click', function() {
@@ -437,54 +451,8 @@ function renderCalendar() {
 
         const selectedDate = new Date(dateStr);
 
-        // 첫 번째 날짜가 선택된 후, 이전 날짜는 회색으로 표시
-        if (isStartDateSelected && selectedDate < startDate) {
-            dayCell.classList.add('disabled');
-        }
 
-        // 두 번째 날짜가 선택된 후, 이후 날짜는 회색으로 표시
-        if (endDate && selectedDate > endDate) {
-            dayCell.classList.add('disabled');
-        }
-
-        dayCell.addEventListener('click', () => {
-            if (dayCell.classList.contains('disabled')) {
-                return; // 회색 날짜는 클릭 불가
-            }
-
-            document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
-            dayCell.classList.add('selected');
-
-            if (!isStartDateSelected) {
-                document.getElementById('startDateField').value = dateStr;
-                startDate = selectedDate;
-                isStartDateSelected = true;
-                // 첫 번째 날짜 선택 후, 이전 날짜를 회색으로 변경
-                document.querySelectorAll('.day').forEach(el => {
-                    const elDate = new Date(el.getAttribute('data-date'));
-                    if (elDate < startDate) {
-                        el.classList.add('disabled');
-                    }
-                });
-            } else {
-                document.getElementById('endDateField').value = dateStr;
-                endDate = selectedDate;
-                isStartDateSelected = false;
-                // 두 번째 날짜 선택 후, 구간 내의 날짜를 주황색 배경으로 표시
-                document.querySelectorAll('.day').forEach(el => {
-                    const elDate = new Date(el.getAttribute('data-date'));
-                    if (elDate >= startDate && elDate <= endDate) {
-                        el.classList.add('selected-range');
-                    } else {
-                        el.classList.remove('selected-range');
-                    }
-                    // 두 번째 날짜 이후의 날짜를 회색으로 변경
-                    if (elDate > endDate) {
-                        el.classList.add('disabled');
-                    }
-                });
-            }
-        });
+    
 
         calendarDays.appendChild(dayCell);
     }
@@ -516,12 +484,12 @@ document.getElementById('resetSelection').addEventListener('click', () => {
 renderCalendar();
 
 // Add event listeners to each actBox
-document.querySelectorAll('.actBox').forEach(function(actBox) {
-    actBox.addEventListener('click', function() {
+//document.querySelectorAll('.actBox').forEach(function(actBox) {
+//    actBox.addEventListener('click', function() {
         // Open a new window with specified dimensions
-        window.open('', 'ActorPopup', 'width=350,height=350');
-    });
-});
+//        window.open('', 'ActorPopup', 'width=350,height=350');
+//    });
+//});
 	</script>
 </body>
 </html>
