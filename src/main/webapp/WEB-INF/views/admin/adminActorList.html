@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	section {
+            width: 1200px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            display: flex; /* 플렉스박스 사용 */
+            align-items: center; /* 수직 중앙 정렬 */
+        }
+        table{ 
+        	border-collapse : collapse; /*이중선 제거*/
+        	 width: 1200px; 
+        	 
+        }  
+        th,td{
+          height: 30px;
+      	  text-align: left;
+          border: 1px solid #000;
+      
+          vertical-align: top;	/* 위 */
+          vertical-align: bottom;   /* 아래 */
+          vertical-align: middle;   /* 가운데 */
+    	}
+    	th{
+    		background-color: #dddddd;
+    	}
+
+</style>
+</head>
+
+<body>
+	<section>
+		<div class="dateSearch"></div>
+		<div class="tableBox" style="width: 1200px; font-size: 14px;">
+			<table>
+				<tr>
+					<th scope="col" class="userNum">번호</th>
+					<th scope="col" class="userName">이름</th>
+					<th scope="col" class="actorBirth">생일</th>
+					<th scope="col" class="actorInfo">소개</th>
+					<th scope="col" class="actorEdu">학력</th>
+				</tr>
+				<tr>
+					<td class="actorNum">1</td>
+					<td class="actorName">ㅇㅇㅇ</td>
+					<td class="actorBirth">95.12.12</td>
+					<td class="actorInfo">배우 입니다.</td>
+					<td class="actorEdu">대학만?</td>
+				</tr>
+				<!-- 20개 까지만 출력하기 -->
+			</table>
+		</div>
+	</section>
+</body>
+</html>

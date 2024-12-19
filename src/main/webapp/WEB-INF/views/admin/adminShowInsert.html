@@ -38,6 +38,9 @@
             justify-content: center; /* 수평 가운데 정렬 */
             align-items: center; /* 수직 가운데 정렬 */
             margin-top: -52px;
+            background-size: cover; /* cover: 배경 이미지를 요소를 완전히 덮도록 설정 */
+    background-position: center; /* 중앙 정렬 */
+    background-repeat: no-repeat; /* 이미지를 반복하지 않도록 설정 */
         }
         .place-field {
     background-color: #f0f0f0; /* 읽기 전용 필드의 배경색 */
@@ -343,9 +346,23 @@
         </section>
         
 	<script>
-		document.getElementById('poster').addEventListener('click', function() {
-			document.getElementById('fileInput').click();
-		});
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('poster').addEventListener('click', function() {
+        document.getElementById('fileInput').click();
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.querySelector('.poster').style.backgroundImage = `url(${e.target.result})`;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+
 
 		function setupTimeInput(countInputId, timeInputId, previousTimeInputId) {
 			document.getElementById(countInputId).addEventListener('click', function() {
