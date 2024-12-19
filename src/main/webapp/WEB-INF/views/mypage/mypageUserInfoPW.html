@@ -264,16 +264,15 @@
             margin-top: 8px; /* 이름과 이미지 사이의 간격 추가 */
         }
         .formFrame {
-
-	padding: 30px;
-	height: auto;
-	width: 80%;
-	max-width: 600px;
-	margin: auto;
-	border-radius: 10px;
-	border: 1px solid;
-	margin-top: 50px;
-	margin-bottom: 50px;
+padding: 30px;
+    height: auto;
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+    border-radius: 10px;
+    border: 1px solid;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .formInput {
@@ -314,11 +313,32 @@ button {
 
 	
 }
+.formFrame {
+            width: 662px; /* 너비 설정 */
+            height: 828.81px; /* 높이 설정 */
+            padding: 30px;
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+    border-radius: 10px;
+    border: 1px solid;
+    margin-top: 50px;
+    margin-bottom: 50px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff9400;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <section>
-        <div class="sideBar" style="width: 1014px;">
+        <div class="sideBar" style="width: 1014px;margin-right: 33px;margin-bottom: 446px;margin-left: -0.3px;">
             <div class="userContainer">
                 <div class="userBox">
                     <span class="userName" style="font-size: 24px; font-weight: 700;">ㅇㅇㅇ</span>
@@ -359,51 +379,47 @@ button {
         </div>
         <div class="contentBox" style="margin-right: 25px;">
             <div class="NameBox">
-                <span class="detailName">리뷰 관리</span>
+                <span class="detailName">회원 정보</span>
             </div>
             <div class="content">
                 <div class="recommendContainer" style="width: 936px;">
-                    <div>
-		<div class="formFrame">
-			<form>
-				<div>
-					<div class="w-100">
-						<h1>공연관람후기</h1>
-						<p>공연명</p>
-						<input class="formInput" readonly="readonly" style="background-color: #FDF0E1; ">
-					</div>
-					
-					<div class="w-100">
-						<p >관람일시</p>
-						<input class="formInput" readonly="readonly" style="background-color: #FDF0E1; ">
-					</div>
-					<div class="w-100">
-						<p>제목</p>
-						<input class="formInput" readonly="readonly">
-					</div>
-					<div class="w-100">
-						<p>별점</p>
-						<span><input type="radio" checked="checked" name="star"disabled>★★★★★</span>
-						<span><input type="radio" name="star"disabled>★★★★</span>
-						<span><input type="radio" name="star"disabled>★★★</span>
-						<span><input type="radio" name="star"disabled>★★</span>
-						<span><input type="radio" name="star"disabled>★</span>
-					</div>
-					<div class="w-100">
-						<p>내용</p>
-						<textarea class="formInput text" style="resize: none;" readonly></textarea>
-					</div>
-				</div>
-				<div style="display: flex;justify-content: space-between;">
-					<button class="list">목록</button>
-					<button class="update">수정</button>
-				</div>
-			</form>	
-		</div>
+
+                    
+    <div class="formFrame">
+        <h2>비밀번호 확인</h2>
+        <input class="formInput" type="password" id="password"required>
+        <button id="confirmButton" style="width: 18%;margin-left: 78.7%;">확인</button>
+    </div>
 	</div>    
                 </div>
             </div>
-        </div>
     </section>
 </body>
+    <script>
+        document.getElementById('confirmButton').addEventListener('click', function() {
+            const password = document.getElementById('password').value;
+
+            // AJAX 요청
+            fetch('/api/confirm-password', { // 서버의 비밀번호 확인 API URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password: password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 비밀번호 일치 시 회원 정보 페이지로 이동
+                    window.location.href = '회원정보수정.html'; // 회원 정보 수정 페이지 URL
+                } else {
+                    alert('비밀번호가 일치하지 않습니다. 다시 시도하세요.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('서버와의 연결에 문제가 발생했습니다.');
+            });
+        });
+    </script>
 </html>
