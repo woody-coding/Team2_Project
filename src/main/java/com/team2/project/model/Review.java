@@ -28,7 +28,7 @@ public class Review {
     @Id
 	@GeneratedValue(strategy=GenerationType.AUTO) 
 	@Column(name="REVIEW_NO")
-    private Number ReviewNo;
+    private int ReviewNo;
     
     @Column(name = "SHOW_NO", nullable = false)
     private int showNo;  

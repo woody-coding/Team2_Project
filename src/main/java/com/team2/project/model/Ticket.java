@@ -10,9 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
-import jakarta.persistence.SequenceGenerator;
-
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,13 +29,13 @@ public class Ticket {
     @Id
 	@GeneratedValue(strategy=GenerationType.AUTO) 
 	@Column(name="TICKET_NO")
-    private Number ticketNo;
+    private int ticketNo;
 	
     @Column(name = "MEMBER_NO", nullable = false)
     private int memberNo;
     
     @Column(name = "SHOW_NO", nullable = false)
-    private Number showNo;
+    private int showNo;
 	
 	@Column(name = "TICKET_STATE", nullable = false)
     private String ticketState;
