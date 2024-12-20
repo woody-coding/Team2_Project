@@ -15,31 +15,31 @@ import lombok.Setter;
 @Table(name="MULTI24_MEMBER")
 @Getter
 @Setter
-public class MEMBER {
+public class Member {
 	
 	@Id
 	@Column(name="MEMBER_NO", nullable=false)
-	private int member_no;
+	private int memberNo;
 	
 	@Column(name="MEMBER_ID", nullable=false)
-	private String member_id;
+	private String memberId;
 	
 	@Column(name="MEMBER_PW", nullable=false)
-	private String member_pw;
+	private String memberPw;
 	
 	@Column(name="MEMBER_NAME", nullable=false)
-	private String member_name;
+	private String memberName;
 	
 	@Column(name="MEMBER_PHONE", nullable=false)
-	private String member_phone;
+	private String memberPhone;
 	
 	@Column(name="MEMBER_ADDR", nullable=false)
-	private String member_addr;
+	private String memberAddr;
 	
 	@Column(name="MEMBER_STATUS", nullable=false)
-	private String member_status;
+	private String memberStatus;
 	
 	@Column(name="MEMBER_DATE", nullable=false)
 	@Temporal(TemporalType.DATE)
-	private Date member_date;
+	private Date memberDate;
 }
