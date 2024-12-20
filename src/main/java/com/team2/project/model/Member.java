@@ -44,4 +44,20 @@ public class Member {
 	@Column(name="MEMBER_DATE", nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date memberDate;
+
+	public Member() {}
+
+	public Member(int memberNo, String memberId, String memberPw, String memberName, String memberPhone,
+			String memberAddr, String memberStatus, Date memberDate) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberPw = memberPw;
+		this.memberName = memberName;
+		this.memberPhone = memberPhone;
+		this.memberAddr = memberAddr;
+		this.memberStatus = memberStatus;
+		this.memberDate = memberDate;
+	}
+	
 }
