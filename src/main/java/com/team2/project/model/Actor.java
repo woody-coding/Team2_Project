@@ -50,4 +50,8 @@ public class Actor {
 	@Column(name = "ACTOR_BIRTH")
 	@Temporal(TemporalType.DATE)
 	private Date actorBirth;
+	
+	@Column(name = "ACTOR_DEBUT")
+	@Temporal(TemporalType.DATE)
+	private Date actorDebut;
 }
