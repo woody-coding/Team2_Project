@@ -115,6 +115,16 @@
     		<groupId>com.oracle.database.security</groupId>
     		<artifactId>osdt_core</artifactId>
     		<version>19.21.0.0</version>
+		</dependency>
+		<!-- 메시지 전송 -->
+		<dependency>
+  			<groupId>net.nurigo</groupId>
+  			<artifactId>sdk</artifactId>
+  			<version>4.2.7</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.google.code.gson</groupId>
+    		<artifactId>gson</artifactId>
 		</dependency>    
     </dependencies>
     <build>

@@ -8,14 +8,23 @@
     window.onload = function(){
     	localStorage.clear();
     }
+    var pnumchk = false;
     function phonenumchk(){
-    	var chk = localStorage.getItem('chk');
+    	var p = document.getElementById('user_phone').value;
+    	if(p==''){
+    		alert("핸드폰 번호를 입력 해주세요.")
+    	}else{
+    		openNumAuth()
+    	}
+    	}
+    function openNumAuth(){
+ 		var chk = localStorage.getItem('chk');
  		if(chk == null){
     	window.open("/phonechk",target="_blank","width=500, height=400")
  		}else{
  			alert("이미 핸드폰 인증을 완료 했습니다.")
  		}
-    	}
+    }
     function nullChk(){
     	if(document.getElementById('user_name').value==''){
     		alert("성함을 입력해주세요.")
