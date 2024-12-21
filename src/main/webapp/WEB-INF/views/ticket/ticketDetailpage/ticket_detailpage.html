@@ -20,6 +20,11 @@
 				<div>
 				<h2 class="ticketDeatilTitle">연극 늘근도둑이야기</h2>
 				<img class="ticketPoster" src="늘근도둑포스터.png">
+				<div class="right_area">
+					<a href="javascript:;" class="icon heart LikePlay">
+						<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
+					</a>
+				</div>
 				</div>
 				<ul class="ticketDetailList">
 					<li><b>장소 </b><span>대학로 아트포레스트 1관</span></li>
@@ -73,26 +78,51 @@
 				<div class="playInfoCast">
 					<h3>캐스팅</h3>
 					<div class="castmates">
+						<div class="right_area">
+							<a href="javascript:;" class="icon heart">
+								<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
+							</a>
+						</div>
 						<img class="castPic" src="카리나.png">
 						<h4>역할</h4>
 						<p>배우이름</p>
 					</div>
 					<div class="castmates">
+						<div class="right_area">
+							<a href="javascript:;" class="icon heart">
+								<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
+							</a>
+						</div>
 						<img class="castPic" src="카리나.png">
 						<h4>역할</h4>
 						<p>배우이름</p>
 					</div>
 					<div class="castmates">
+						<div class="right_area">
+							<a href="javascript:;" class="icon heart">
+								<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
+							</a>
+						</div>
 						<img class="castPic" src="카리나.png">
 						<h4>역할</h4>
 						<p>배우이름</p>
 					</div>
 					<div class="castmates">
+						<div class="right_area">
+							<a href="javascript:;" class="icon heart">
+								<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
+							</a>
+						</div>
 						<img class="castPic" src="카리나.png">
 						<h4>역할</h4>
 						<p>배우이름</p>
 					</div>
 					<div class="castmates">
+						<div class="right_area">
+							<a href="javascript:;" class="icon heart">
+								<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
+							</a>
+						</div>
 						<img class="castPic" src="카리나.png">
 						<h4>역할</h4>
 						<p>배우이름</p>
@@ -282,6 +312,30 @@
 				
 			});
 			
+		</script>
+		
+		<script>
+		$(function() {
+		// 모든 .icon.heart에 개별 클릭 이벤트 추가
+		$('.icon.heart').on('click', function() {
+			// 현재 클릭된 요소(this)에만 active 클래스 토글
+			$(this).toggleClass('active');
+
+			if ($(this).hasClass('active')) {
+				// 하트가 활성화되었을 때 이미지 변경
+				$(this).find('img').attr({
+					'src': 'https://cdn-icons-png.flaticon.com/512/803/803087.png',
+					'alt': '찜하기 완료'
+				});
+			} else {
+				// 하트가 비활성화되었을 때 원래 이미지로 변경
+				$(this).find('img').attr({
+					'src': 'https://cdn-icons-png.flaticon.com/512/812/812327.png',
+					'alt': '찜하기'
+					});
+				}
+			});
+		});
 		</script>
 	</body>
 	
