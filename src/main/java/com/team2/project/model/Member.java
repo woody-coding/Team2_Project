@@ -1,9 +1,11 @@
 package com.team2.project.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -21,6 +23,7 @@ public class Member {
 	
 	@Id
 	@Column(name="MEMBER_NO", nullable=false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int memberNo;
 	
 	@Column(name="MEMBER_ID", nullable=false)
@@ -38,8 +41,11 @@ public class Member {
 	@Column(name="MEMBER_ADDR", nullable=false)
 	private String memberAddr;
 	
+	@Column(name="MEMBER_ADDRDE", nullable=false)
+	private String memberAddrde;
+	
 	@Column(name="MEMBER_STATUS", nullable=false)
-	private String memberStatus;
+	private Boolean memberStatus;
 	
 	@Column(name="MEMBER_DATE", nullable=false)
 	@Temporal(TemporalType.DATE)
@@ -48,7 +54,7 @@ public class Member {
 	public Member() {}
 
 	public Member(int memberNo, String memberId, String memberPw, String memberName, String memberPhone,
-			String memberAddr, String memberStatus, Date memberDate) {
+			String memberAddr, String memberAddrde, Boolean memberStatus, Date memberDate) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
@@ -56,8 +62,11 @@ public class Member {
 		this.memberName = memberName;
 		this.memberPhone = memberPhone;
 		this.memberAddr = memberAddr;
+		this.memberAddrde = memberAddrde;
 		this.memberStatus = memberStatus;
 		this.memberDate = memberDate;
 	}
+
+	
 	
 }
