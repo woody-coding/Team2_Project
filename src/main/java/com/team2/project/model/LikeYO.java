@@ -2,9 +2,12 @@ package com.team2.project.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -26,17 +29,22 @@ import lombok.ToString;
 public class LikeYO {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "likeYo_seq")
+    @SequenceGenerator(name = "likeYo_seq", sequenceName = "MULTI24_LIKEYO_SEQ", allocationSize = 1)
 	@Column(name = "LIKE_NO")
 	private int likeNO;
 	
 	@Column(name = "SHOW_NO")
-	private int showNO; //fk
+	private Integer showNO; //fk
 	
 	@Column(name = "ACTOR_NO")
-	private int actorNo; //fk
+	private Integer actorNo; //fk
 	
 	@Column(name = "MEMBER_NO")
 	private int memberNo; //fk
+	
+	@Column(name = "STATUS", nullable = false)
+	private String status;
 	
 	@ManyToOne
 	@JoinColumn(name = "SHOW_NO" , insertable = false, updatable = false)
