@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<link rel="stylesheet" href="ticket_detailpage.css" />
+	
+<!--제이쿼리-->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script src="timer.js"></script>
+</head>
+<body>
+
+	<div class="header"></div>
+	
+	<body class="bodyWrapper">
+		<div class="bodyTop">
+			<div class="ticketDetail">
+				<div>
+				<h2 class="ticketDeatilTitle">연극 늘근도둑이야기</h2>
+				<img class="ticketPoster" src="늘근도둑포스터.png">
+				</div>
+				<ul class="ticketDetailList">
+					<li><b>장소 </b><span>대학로 아트포레스트 1관</span></li>
+					<li><b>공연기간 </b><span>2022.03.05 ~2024.12.31</span></li>
+					<li><b>공연시간 </b><span>100분</span></li>
+					<li><b>관람연령 </b><span>12세이상</span></li>
+					<li><b>가격 </b><span>전석 </span><span>50,000</span></li>
+					<li><b>혜택 </b><span>무이자할부</span></li>
+					<li><b>프로모션 </b><span>카카오페이</span><span>5만원이상 결제시 2천원 즉시할인</span></li>
+					
+				</ul>
+				
+			</div>
+			<div class="ticketBuy">
+				<div><b>관람일</b></div>
+				
+				 <div class="calendar">
+					<!--날짜선택시 회차 정보 매칭후 쏴줘야함.-->
+					<div class="calendar-header">
+						<button id="prevMonth">&lt;</button>
+						<span id="monthYear">December 2024</span>
+						<button id="nextMonth">&gt;</button>
+					</div>
+					<div class="calendar-days" id="calendarDays">
+				</div>
+				
+				</div>
+				
+				<script src="datepicker.js"></script>
+				
+				<div class="AllRoundBtn">
+				<button class="RoundBtn">1회 <span>12:00</span></button>
+				<button class="RoundBtn">2회 <span>16:00</span></button></div>
+				<!--남은 좌석 표기-->
+				<div class="Seatleft"><b>전석 </b><span>123</span></div>
+				<!--예매하기 버튼을 누르면 좌석예매 페이지로 이동-->
+				<button class="bookTicket" disabled>예매하기</button>
+			</div>
+		
+		</div>
+		
+		<div class="bodyBottom">
+			<div class="ticketInfo">
+				<div class="InfoTab playInfo">공연정보</div>
+				<div class="InfoTab saleInfo">판매정보</div>
+				<div class="InfoTab playReview">관람후기</div>
+			</div>
+			<hr>
+			
+			<div class="playInfoDetail">
+				<div class="playInfoCast">
+					<h3>캐스팅</h3>
+					<div class="castmates">
+						<img class="castPic" src="카리나.png">
+						<h4>역할</h4>
+						<p>배우이름</p>
+					</div>
+					<div class="castmates">
+						<img class="castPic" src="카리나.png">
+						<h4>역할</h4>
+						<p>배우이름</p>
+					</div>
+					<div class="castmates">
+						<img class="castPic" src="카리나.png">
+						<h4>역할</h4>
+						<p>배우이름</p>
+					</div>
+					<div class="castmates">
+						<img class="castPic" src="카리나.png">
+						<h4>역할</h4>
+						<p>배우이름</p>
+					</div>
+					<div class="castmates">
+						<img class="castPic" src="카리나.png">
+						<h4>역할</h4>
+						<p>배우이름</p>
+					</div>
+				</div>
+				
+
+				<div class="playInfoTime">
+					<h3>공연시간 정보</h3>
+					<p>예매가능시간: 관람 1시간 30분 전까지</p>
+					<p>화 7시 30분 / 수 5시, 7시 30분 / 목 8시/ 금 5시, 8시 / 토 3시,6시 / 일 및 공휴일 2시, 5시 (월 공연없음)</p>
+					<p>*12/23(월) 5시</p>
+				</div>
+			</div>	
+
+				<!-- 판매정보 탭-->			
+			<div class="saleInfoDetail">
+				<div>
+					<h3>기획사 정보</h3>
+					<p>주최/제작: ㈜나인스토리</p>
+					<p>문의: ㈜나인스토리 02-3672-0900</p>
+				</div>
+				
+				<div>
+					<h3>상품관련 정보</h3>
+					<table>
+						<tr>
+							<td>주최/기획</td>
+							<td>나인스토리</td>
+							<td>고객문의</td>
+							<td>02-1234-5678</td>
+						</tr>
+						<tr>
+							<td>공연시간</td>
+							<td>100 분</td>
+							<td>관람등급</td>
+							<td>12세이상</td>
+						</tr>
+						<tr>
+							<td>주연</td>
+							<td>노진원, 전재형, 박철민, 태항호, 김상묵, 주우성, 유일한, 이호연, 안태영</td>
+							<td>공연장소</td>
+							<td>대학로 아트포레스트 1관</td>
+						</tr>
+						<tr>
+							<td>예매수수료</td>
+							<td>장당 1,000원</td>
+							<td>배송료</td>
+							<td>현장수령 무료 (배송불가)</td>
+						</tr>
+						<tr>
+							<td>유효기간/이용조건</td>
+							<td colspan="3">2022.03.05~2025.01.31 예매한 공연 날짜, 회차에 한해 이용가능</td>
+						</tr>
+						<tr>
+							<td>예매취소조건</td>
+							<td colspan="3"><p>취소일자에 따라서 아래와 같이 취소수수료가 부과됩니다. 예매 일 기준보다 관람일 기준이 우선 적용됩니다. 단, 예매 당일 밤 12시 이전 취소 시에는 취소수수료가 없으며, 예매 수수료도 환불됩니다.(취소기한 내에 한함)</p>
+								<table>
+									<tr>
+										<td>취소일</td>
+										<td>취소수수료</td>
+									</tr>
+									<tr>
+										<td>예매 후 7일 이내</td>
+										<td>없음</td>
+									</tr>
+									<tr>
+										<td>예매 후 8일~관람일 10일전까지</td>
+										<td>장당 2,000원(티켓금액의 10%한도)</td>
+									</tr>
+									<tr>
+										<td>관람일 9일전~7일전까지</td>
+										<td>티켓금액의 10%</td>
+									</tr>
+									<tr>
+										<td>관람일 6일전~3일전까지</td>
+										<td>티켓금액의 20%</td>
+									</tr>
+									<tr>
+										<td>관람일 2일전~1일전까지</td>
+										<td>티켓금액의 30%</td>
+									</tr>							
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td>취소환불방법</td>
+							<td colspan="3">
+							<p>My티켓 > 예매/취소내역에서 직접 취소 또는 고객센터 (1544-1555)를 통해서 예매를 취소할 수 있습니다.</p>
+							<p>티켓이 배송된 이후에는 인터넷 취소가 안되며, 취소마감 시간 이전에 티켓이 인터파크 티켓 고객센터로 반송되어야 취소 가능합니다. 취소수수료는 도착일자 기준으로 부과되며, 배송료는 환불되지 않습니다.</p></td>
+						</tr>
+						<tr>
+							<td>배송티켓 안내</td>
+							<td colspan="3">
+							<p>티켓 배송 (배송상태 : 배송 준비중 이후) 후에는 주소 변경이 불가합니다.</p>
+							<p>부득이하게 주소 변경이 필요하신 경우 각 배송사에 수취 거절 요청 후,
+							고객센터(1544-1555)로 재배송 신청할 수 있습니다.(배송비 3,200원 추가 부과)</p></td>
+						</tr>
+						<tr>
+							<td>모바일티켓 안내</td>
+							<td colspan="3">
+							<p>티켓수령방법을 모바일티켓으로 선택 시 인터파크 앱, 인터파크 티켓 앱에서 즉시 이용 가능합니다.</p>
+							<p>모바일티켓으로 예매하실 경우 종이 티켓으로 입장권 수령방법 변경 불가합니다.</p>
+							<p>결제완료(입금완료)후 모바일티켓을 확인할 수 있습니다.</p>
+							<p>안드로이드 버전 4.0이상만 사용 가능, iOS 7 이상만 사용 가능합니다.</p>
+							<p>스포츠 시즌권 구매고객이거나 인터파크 외 예매처에서 예매한 모바일티켓은 별도의 모바일티켓 앱을 통해서만 이용 가능합니다.</p>
+							</td>
+						</tr>
+					</table>
+					
+				</div>
+				
+			</div>
+
+			<!-- 관람후기 탭-->
+			<div class="playReviewDetail">
+				<div>
+					<h3>꼭 읽어주세요.</h3>
+					<p>게시판 운영 규정에 어긋난다고 판단되는 게시글은 사전 통보없이 블라인드 처리될 수 있습니다.<br>
+					특히 티켓 매매 및 양도의 글은 발견 즉시 임의 삭제되며 전화번호, 이메일 등의 개인정보는 악용될 우려가 있으므로 게시를 삼가 주시기 바랍니다.<br>
+					사전 경고에도 불구하고 불량 게시물을 계속적으로 게재한 게시자의 경우 인터파크 티켓 게시판 작성 권한이 제한됩니다.</p>
+				</div>
+				
+				<div class="ReviewRating">
+					<div class="pentagram"></div><div><h2>평점 5.0</h2></div>
+				</div>
+				
+				<button class="ReivewWirte">관람후기 작성하기</button>
+				
+				<div class="ReviewBoard">
+					<div class="ReviewBox">
+						<div>
+							<div><span>예매자</span><span>예매자 이름</span><span>작성날짜</span></div>
+						</div>
+						<div>
+							<h3>제목</h3>
+							<p class="ReviewContent">
+							국가안전보장회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다. 공무원은 국민전체에 대한 봉사자이며, 국민에 대하여 책임을 진다. 정부는 예산에 변경을 가할 필요가 있을 때에는 추가경정예산안을 편성하여 국회에 제출할 수 있다.
+							대한민국의 영토는 한반도와 그 부속도서로 한다. 국회는 국민의 보통·평등·직접·비밀선거에 의하여 선출된 국회의원으로 구성한다. 탄핵소추의 의결을 받은 자는 탄핵심판이 있을 때까지 그 권한행사가 정지된다.</p>
+							<button class="ReviewMore" onclick=button_onclick()>후기 더보기</button>
+
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+		
+		<script>
+			
+		//후기 더보기 , 접기 버튼
+		
+		$('.ReviewMore').on('click', function() {
+			if ($('.ReviewMore').html() == '후기 더보기') {
+				// 후기 더보기 버튼 클릭 시
+				$('.ReviewContent').addClass('open'); // 열리는 클래스 추가
+				$('.ReviewMore').html('접기');
+			} else {
+				// 접기 버튼 클릭 시
+				$('.ReviewContent').removeClass('open'); // 열리는 클래스 제거
+				$('.ReviewMore').html('후기 더보기');
+			}
+		});
+			
+		</script>
+		
+		<script>
+
+
+			
+		//하단 공연정보/판매정보/관람후기 탭 바꾸기 스크립트
+			
+			const tabs = ['saleInfo', 'playInfo', 'playReview'];
+			const details = ['saleInfoDetail', 'playInfoDetail', 'playReviewDetail'];
+
+			tabs.forEach((tab, index) => {
+				document.getElementsByClassName(tab)[0].addEventListener('click', function() {
+					// 모든 탭의 스타일 및 관련 정보를 초기화
+					tabs.forEach((otherTab, otherIndex) => {
+						document.getElementsByClassName(otherTab)[0].style.borderBottom = 'none';
+						document.getElementsByClassName(details[otherIndex])[0].style.display = 'none';
+					});
+
+				//초기화 후 클릭된 탭과 관련된 정보 표시
+				document.getElementsByClassName(tab)[0].style.borderBottom = '5px solid';
+				document.getElementsByClassName(details[index])[0].style.display = 'block';
+				});
+				
+			});
+			
+		</script>
+	</body>
+	
+	<footer class="footer"></footer>
+	
+	
+</body>
+</html>

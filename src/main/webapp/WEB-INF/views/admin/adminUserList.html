@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	section {
+            width: 1200px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            display: flex; /* 플렉스박스 사용 */
+            align-items: center; /* 수직 중앙 정렬 */
+        }
+        table{ 
+        	border-collapse : collapse; /*이중선 제거*/
+        	 width: 1200px; 
+        	 
+        }  
+        th,td{
+          height: 30px;
+      	  text-align: left;
+          border: 1px solid #000;
+      
+          vertical-align: top;	/* 위 */
+          vertical-align: bottom;   /* 아래 */
+          vertical-align: middle;   /* 가운데 */
+    	}
+    	th{
+    		background-color: #dddddd;
+    	}
+
+</style>
+</head>
+
+<body>
+	<section>
+		<div class="dateSearch"></div>
+		<div class="tableBox" style="width: 1200px; font-size: 14px;">
+			<table>
+				<tr>
+					<th scope="col" class="userNum">번호</th>
+					<th scope="col" class="userName">이름</th>
+					<th scope="col" class="userId">아이디</th>
+					<th scope="col" class="userAdrr">주소</th>
+					<th scope="col" class="userAdrrDetail">상세 주소</th>
+					<th scope="col" class="userPhone">전화 번호</th>
+					<th scope="col" class="userSignup">가입일</th>
+					<th scope="col" class="userStatus">상태</th>
+				</tr>
+				<tr>
+					<td class="userNum">1</td>
+					<td class="userName">ㅇㅇㅇ</td>
+					<td class="userId">abc123@abc123</td>
+					<td class="userAdrr">서울특별시 은평구 갈현로 29길 62</td>
+					<td class="userAdrrDetail">코오롱 하늘채 아파트 101동 605호</td>
+					<td class="userPhone">010-9510-6733</td>
+					<td class="userSignup">24.04.04</td>
+					<td class="userStatus">회원</td>
+				</tr>
+				<!-- 20개 까지만 출력하기 -->
+			</table>
+		</div>
+	</section>
+</body>
+</html>
