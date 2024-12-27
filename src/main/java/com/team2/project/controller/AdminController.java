@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -92,5 +94,23 @@ public class AdminController {
     		return null;
 		}
     	
+    }
+    
+ // 공연 수정 페이지
+    @GetMapping("/adminShowUpdate")
+    public String showUpdate(@RequestParam int showNo, Model model) {
+        Show show = adminService.getShowById(showNo);
+        if (show != null) {
+            model.addAttribute("show", show);
+            return "admin/adminShowUpdate"; // 수정 페이지
+        } else {
+            return "error/404"; // 공연이 없을 경우 404 페이지로 이동
+        }
+    }
+
+    @PostMapping("/updateShow")
+    public String updateShow(@ModelAttribute Show show) {
+        adminService.updateShow(show); // 공연 정보 업데이트
+        return "redirect:/admin/showList"; // 수정 후 공연 목록 페이지로 리다이렉트
     }
 }

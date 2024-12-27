@@ -21,4 +21,6 @@ public interface AdminRepository extends JpaRepository<Member, Integer> {
     @Query("SELECT s FROM Show s WHERE s.showNo = ?1")
     Show findShowById(int showNo);
     
+    <S extends Show> S save(S entity);
+    
 }

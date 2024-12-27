@@ -26,4 +26,8 @@ public class AdminService {
     public Show getShowById(int ShowNo) {
     	return adminRepository.findShowById(ShowNo);
     }
+    
+    public void updateShow(Show show) {
+        adminRepository.save(show);
+    }
 }
