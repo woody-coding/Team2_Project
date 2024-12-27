@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -27,7 +28,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Actor {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "actor_seq")
+    @SequenceGenerator(name = "actor_seq", sequenceName = "MULTI24_ACTOR_SEQ", allocationSize = 1)
 	@Column(name = "ACTOR_NO")
 	private int actorNo;
 	
@@ -54,4 +56,7 @@ public class Actor {
 	@Column(name = "ACTOR_DEBUT")
 	@Temporal(TemporalType.DATE)
 	private Date actorDebut;
+	
+	@Column(name = "ACTOR_NATION", length = 70)
+	private String actorNation;
 }

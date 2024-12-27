@@ -1,13 +1,13 @@
 package com.team2.project.model;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,8 +25,9 @@ import lombok.ToString;
 public class ShowActor {
 		
 		@Id
-		 @GeneratedValue(strategy = GenerationType.AUTO)
-		@Column(name = "SHOW_ACTOR_NO", nullable = false)
+		@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "showactor_seq")
+	    @SequenceGenerator(name = "showactor_seq", sequenceName = "MULTI24_SHOWACTOR_SEQ", allocationSize = 1)
+		@Column(name = "SHOW_ACTOR", nullable = false)
 	    private int ShowActorNo;
 
 	    @Column(name = "SHOW_NO", nullable = false)
@@ -38,6 +39,11 @@ public class ShowActor {
 	    @Column(name = "ROLE_NAME", nullable = false)
 	    private String roleName;
 	    
+	    @Column(name = "ACTOR_NAME", length = 30, nullable = false)
+		private String actorName;
+	    
+	    @Column(name = "SHOW_TITLE", length = 1000, nullable = false)
+		private String showTitle;
 
 	    @ManyToOne
 	    @JoinColumn(name = "SHOW_NO", insertable = false, updatable = false)

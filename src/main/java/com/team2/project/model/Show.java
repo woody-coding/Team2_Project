@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -28,7 +29,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Show {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "show_seq")
+    @SequenceGenerator(name = "show_seq", sequenceName = "MULTI24_SHOW_SEQ", allocationSize = 1)
 	@Column(name = "SHOW_NO")
 	private int showNo;
 	
