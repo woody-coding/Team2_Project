@@ -1,6 +1,5 @@
 package com.team2.project.model;
 
-
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -13,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,7 +20,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @Table(name = "MULTI24_INQUIRY")
 public class Inquiry {
 
@@ -58,17 +55,21 @@ public class Inquiry {
 	@Column(name = "INQUIRY_ANSWERDATE")
 	private LocalDate inquiryAnswerDate;
 	
-	
-	public enum InquiryCategory {
-	    RESERVATION, TICKET, MEMBER, SYSTEM
-	}
-
-	public enum InquiryStatus {
-	    ANSWER_PROCESSING, ANSWER_CHOSEN
-	}
-
 	public Inquiry() {
+		 this.inquiryStatus = InquiryStatus.ANSWER_PROCESSING;
+	}
+
+	public Inquiry(int inquiryNo, Member member, InquiryCategory inquiryCategory, LocalDate inquiryDate,
+			String inquiryTitle, String inquiryContent, InquiryStatus inquiryStatus, String inquiryAnswer,
+			LocalDate inquiryAnswerDate) {
+		this.inquiryNo = inquiryNo;
+		this.member = member;
+		this.inquiryCategory = inquiryCategory;
+		this.inquiryDate = inquiryDate;
+		this.inquiryTitle = inquiryTitle;
+		this.inquiryContent = inquiryContent;
 		this.inquiryStatus = InquiryStatus.ANSWER_PROCESSING;
-		this.inquiryDate = LocalDate.now();
+		this.inquiryAnswer = inquiryAnswer;
+		this.inquiryAnswerDate = inquiryAnswerDate;
 	}
 }
