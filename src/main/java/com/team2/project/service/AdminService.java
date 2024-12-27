@@ -22,4 +22,8 @@ public class AdminService {
     public List<Show> getAllShows(){
     	return adminRepository.findAllShow();
     }
+    
+    public Show getShowById(int ShowNo) {
+    	return adminRepository.findShowById(ShowNo);
+    }
 }

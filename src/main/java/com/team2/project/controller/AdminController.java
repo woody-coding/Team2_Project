@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -78,5 +79,18 @@ public class AdminController {
         model.addAttribute("totalShows", totalShows);
 
         return "admin/adminShowList"; // 뷰 이름
+    }
+    
+    @GetMapping("/showDetail/{showNo}")
+    public String showDetail(@PathVariable int showNo, Model model) {
+    	Show show = adminService.getShowById(showNo);
+    	
+    	if(show != null) {
+    		model.addAttribute("show",show);
+    		return "admin/adminShowDetail";
+    	}else {
+    		return null;
+		}
+    	
     }
 }
