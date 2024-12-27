@@ -31,8 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
-<<<<<<< HEAD
 /.metadata/
-=======
-.metadata/
->>>>>>> origin/dev
+
+# Maven POM file
+pom.xml
+
+# Spring Boot application properties
+src/main/resources/application.properties
+
+
