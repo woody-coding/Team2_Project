@@ -4,7 +4,6 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -67,4 +66,14 @@ public class Show {
 	@ManyToOne
 	@JoinColumn(name = "FILE_NO", insertable = false, updatable = false)
 	private ShowActorFile showActorFile;
+	
+	@Column(name = "SHOW_PLACE", length = 40, nullable = false)
+	private String showPlace;
+	
+	@Column(name = "SHOW_PLAYTIME", nullable = false)
+	private Integer showPlayTime;
+	
+	@Column(name = "SHOW_RATING", length = 20, nullable = false)
+	private String showRating;
+	
 }
