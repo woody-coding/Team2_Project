@@ -19,6 +19,7 @@ import java.util.UUID;
 @Table(name = "MULTI24_SHOWACTOR_FILE")
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 public class ShowActorFile {
 
@@ -36,10 +37,10 @@ public class ShowActorFile {
     private Date fileDate;
 
     @Column(name = "SHOW_NO")
-    private int showNo; 
+    private Integer showNo; 
 
     @Column(name = "ACTOR_NO")
-    private int actorNo;
+    private Integer actorNo;
     
     @ManyToOne
     @JoinColumn(name = "SHOW_NO", insertable = false, updatable = false)
