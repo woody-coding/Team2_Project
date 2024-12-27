@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -44,21 +44,32 @@
 					<th scope="col" class="showActor">출연 배우</th>
 					<th scope="col" class="showStartDate">시작일</th>
 					<th scope="col" class="showEndDate">마감일</th>
-					<th scope="col" class="showCount">공연 횟수</th>
-					<th scope="col" class="showStatus">상태</th>
+					<th scope="col" class="showPrice">가격</th>
+					<th scope="col" class="showLeftSeat">남은 좌석</th>
 				</tr>
-				<tr>
-					<td class="showNum">1</td>
-					<td class="showCate">뮤지컬</td>
-					<td class="showTitle"><a>공연 제목 인데</a></td>
-					<td class="showActor">ㅇㅇㅇ 외3인</td>
-					<td class="showStartDate">24.12.15</td>
-					<td class="showEndDate">24.12.18</td>
-					<td class="showCount">2</td>
-					<td class="showStatus">진행중</td>
+				<tr th:each="show : ${shows}">
+					<td class="showNum" th:text=${show.showNo}>1</td>
+					<td class="showCate" th:text=${show.showCate}>뮤지컬</td>
+					<td class="showTitle" th:text=${show.showTitle}><a>공연 제목 인데</a></td>
+					<td class="showActor" th:text=${show.showNo}>ㅇㅇㅇ 외3인</td>
+					<td class="showStartDate" th:text=${show.startDate}>24.12.15</td>
+					<td class="showEndDate" th:text=${show.endDate}>24.12.18</td>
+					<td class="showCount" th:text=${show.showPrice}>2</td>
+					<td class="showStatus" th:text=${show.leftSeat}>0</td>
 				</tr>
-				<!-- 20개 까지만 출력하기 -->
 			</table>
+			<div class="pagination">
+                <span th:if="${currentPage > 0}">
+                    <a th:href="@{/admin/members(page=${currentPage - 1}, size=${size})}">이전</a>
+                </span>
+                <!-- 페이지 번호 수동 생성 -->
+                <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a th:href="@{/admin/members(page=${i}, size=${size})}" th:text="${i + 1}"></a>
+                </span>
+                <span th:if="${currentPage < totalPages - 1}">
+                    <a th:href="@{/admin/members(page=${currentPage + 1}, size=${size})}">다음</a>
+                </span>
+            </div>
 		</div>
 	</section>
 </body>
