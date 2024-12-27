@@ -38,7 +38,3 @@ pom.xml
 
 # Spring Boot application properties
 /src/main/resources/application.properties
-<<<<<<< HEAD
-
-=======
->>>>>>> 92d66ae779a05d3be397be488e8bbe07577976bf
