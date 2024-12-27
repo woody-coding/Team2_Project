@@ -35,6 +35,7 @@ build/
 
 # Maven POM file
 pom.xml
+application.properties
 
 # Spring Boot application properties
 src/main/resources/application.properties
