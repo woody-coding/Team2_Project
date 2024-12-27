@@ -17,4 +17,8 @@ public interface AdminRepository extends JpaRepository<Member, Integer> {
     @Query("SELECT s FROM Show s") // Show 엔티티를 가져오는 JPQL 쿼리
     List<Show> findAllShow();
     
+    // ID로 Show 조회
+    @Query("SELECT s FROM Show s WHERE s.showNo = ?1")
+    Show findShowById(int showNo);
+    
 }
