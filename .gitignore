@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+/.metadata/
+
+# Maven POM file
+pom.xml
+
+# Spring Boot application properties
+src/main/resources/application.properties
+
