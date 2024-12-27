@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kakao.app.KakaoAPI;
 import com.team2.project.model.Member;
-import com.team2.project.repository.Member;
+import com.team2.project.repository.Memberdao;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -27,7 +27,7 @@ public class TestController {
 	
 	
 	@Autowired
-	private Member dao;
+	private Memberdao dao;
 	
 	KakaoAPI kakaoApi = new KakaoAPI();
 	
