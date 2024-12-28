@@ -1,0 +1,6 @@
+diff a/.gitignore b/.gitignore	(rejected hunks)
+@@ -31,3 +31,4 @@
+ 
+ ### VS Code ###
+ .vscode/
++.metadata/
