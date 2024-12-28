@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -242,17 +242,17 @@
         <div class="showInfoBox" style="margin-left: 50px;margin-right: 50px;">
             <div class="title-input-container">
                 <span class="title">제 목</span>
-                <input type="text" class="input-title-field input" placeholder="제목을 입력해주세요" style="width: 278px; margin-left: 55px;" readonly/>
+                <input type="text" th:value="${show.showTitle}" class="input-title-field input"  style="width: 278px; margin-left: 55px;" readonly/>
             </div>
             <div class="place-container">
                 <span class="title">공연 장소</span>
-                <input type="text" class="place-field input" value="고정 장소" readonly style="width: 280px;"/>
+                <input type="text" class="place-field input"  value="고정 장소" readonly style="width: 280px;"/>
             </div>
             <div class="date-container">
                 <span class="title">공연 기간</span>
-                <input type="text" id="startDateField" class="start-date-field input" placeholder="시작 날짜" readonly style="width: 115px; margin-right: 8px;"/>
+                <input type="text" id="startDateField" th:value="${show.startDate}" class="start-date-field input" placeholder="시작 날짜" readonly style="width: 115px; margin-right: 8px;"/>
                 <span class="title">~</span>
-                <input type="text" id="endDateField" class="end-date-field input" placeholder="종료 날짜" readonly style="width: 115px; margin-left: 8px;"/>
+                <input type="text" id="endDateField" th:value="${show.endDate}" class="end-date-field input" placeholder="종료 날짜" readonly style="width: 115px; margin-left: 8px;"/>
             </div>
             <div class="count-container">
                 <span class="title">회 차</span>
@@ -274,8 +274,8 @@
                 <input type="text" class="input-price-field input" value="123석" readonly style="width: 51px;"/>
             </div>
             <div class="price-container">
-                <span class="title">가 격</span>
-                <input type="text" id="inputPriceField" class="input-price-field input" placeholder="가격" style="width: 100px; margin-left: 53px;" readonly/>
+                <span class="title" >가 격</span>
+                <input type="text" id="inputPriceField" th:value="${show.showPrice}" class="input-price-field input" placeholder="가격" style="width: 100px; margin-left: 53px;" readonly/>
                 <span class="won">원</span>
             </div>  
         </div>
@@ -336,10 +336,13 @@
     <section class="show-text-area">
         <div class="show-text-container" style="margin-top: 62px; margin-left: -85px;">
             <span class="title title-actor">공연 정보</span>
-            <textarea class="show-text-field" placeholder="공연정보를 입력해 주세요" style="width: 993px; height: 250px; display: block; margin-top: 10px; resize: none;" readonly></textarea>
+            <textarea class="show-text-field" th:field="${show.showInfo}" placeholder="공연정보를 입력해 주세요" style="width: 993px; height: 250px; display: block; margin-top: 10px; resize: none;" readonly></textarea>
             <div class="update-button" style="display: flex; justify-content: space-between; gap: 10px; margin-top: 20px;">
                 <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">목록</button>
-                <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">수정</button>
+<a class="register-button"
+   style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;"
+   th:href="@{/admin/adminShowUpdate(showNo=${show.showNo})}">수정</a>
+
             </div>
         </div>
     </section>

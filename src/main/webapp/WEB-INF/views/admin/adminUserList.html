@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -47,18 +47,33 @@
 					<th scope="col" class="userSignup">가입일</th>
 					<th scope="col" class="userStatus">상태</th>
 				</tr>
-				<tr>
-					<td class="userNum">1</td>
-					<td class="userName">ㅇㅇㅇ</td>
-					<td class="userId">abc123@abc123</td>
-					<td class="userAdrr">서울특별시 은평구 갈현로 29길 62</td>
-					<td class="userAdrrDetail">코오롱 하늘채 아파트 101동 605호</td>
-					<td class="userPhone">010-9510-6733</td>
-					<td class="userSignup">24.04.04</td>
-					<td class="userStatus">회원</td>
-				</tr>
-				<!-- 20개 까지만 출력하기 -->
+				<tr th:each="member : ${members}">
+    <td class="userNum" th:text="${member.memberNo}">1</td>
+    <td class="userName" th:text="${member.memberName}">ㅇㅇㅇ</td>
+    <td class="userId" th:text="${member.memberId}">abc123@abc123</td>
+    <td class="userAdrr" th:text="${member.memberAddr}">서울특별시 은평구 갈현로 29길 62</td>
+    <td class="userAdrrDetail" th:text="${member.memberAddrDe}">코오롱 하늘채 아파트 101동 605호</td>
+    <td class="userPhone" th:text="${member.memberPhone}">010-9510-6733</td>
+    <td class="userSignup" th:text="${#dates.format(member.memberDate, 'yyyy-MM-dd')}">24.04.04</td>
+    <td class="userStatus">
+        <span th:if="${member.memberStatus == 0}">관리자</span>
+        <span th:if="${member.memberStatus == 1}">회원</span>
+        <span th:if="${member.memberStatus == 2}">탈퇴</span>
+    </td>
+</tr>
 			</table>
+			<div class="pagination">
+                <span th:if="${currentPage > 0}">
+                    <a th:href="@{/admin/members(page=${currentPage - 1}, size=${size})}">이전</a>
+                </span>
+                <!-- 페이지 번호 수동 생성 -->
+                <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a th:href="@{/admin/members(page=${i}, size=${size})}" th:text="${i + 1}"></a>
+                </span>
+                <span th:if="${currentPage < totalPages - 1}">
+                    <a th:href="@{/admin/members(page=${currentPage + 1}, size=${size})}">다음</a>
+                </span>
+            </div>
 		</div>
 	</section>
 </body>

@@ -379,24 +379,24 @@ button {
 					</div>
 					<div class="w-100">
 						<p>제목</p>
-						<input class="formInput">
+						<input class="formInput" readonly="readonly">
 					</div>
 					<div class="w-100">
 						<p>별점</p>
-						<span><input type="radio" checked="checked" name="star"  >★★★★★</span>
-						<span><input type="radio" name="star">★★★★</span>
-						<span><input type="radio" name="star">★★★</span>
-						<span><input type="radio" name="star">★★</span>
-						<span><input type="radio" name="star">★</span>
+						<span><input type="radio" checked="checked" name="star"disabled>★★★★★</span>
+						<span><input type="radio" name="star"disabled>★★★★</span>
+						<span><input type="radio" name="star"disabled>★★★</span>
+						<span><input type="radio" name="star"disabled>★★</span>
+						<span><input type="radio" name="star"disabled>★</span>
 					</div>
 					<div class="w-100">
 						<p>내용</p>
-						<textarea class="formInput text" style="resize: none;"></textarea>
+						<textarea class="formInput text" style="resize: none;" readonly></textarea>
 					</div>
 				</div>
-				<div>
+				<div style="display: flex;justify-content: space-between;">
+					<button class="list">목록</button>
 					<button class="update">수정</button>
-					<button class="cancel">취소</button>
 				</div>
 			</form>	
 		</div>

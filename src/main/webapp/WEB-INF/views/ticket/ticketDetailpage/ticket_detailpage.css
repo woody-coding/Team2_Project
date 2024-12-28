@@ -360,3 +360,82 @@ td {
 .pentagram::after {
     transform: rotate(-71deg);
 }
+
+
+ .right_area .icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100vw * (45 / 1920));
+    height: calc(100vw * (45 / 1920));
+
+    border-radius: 50%;
+    border: solid 2px #eaeaea;
+    background-color: #fff;
+	margin-top: 5px;
+}
+
+.icon.heart img{
+    width: calc(100vw * (24 / 1920));
+    height: calc(100vw * (24 / 1920));
+}
+
+.icon.heart.fas{
+  color:red;
+  text-decoration:none; 
+  color:inherit; 
+  cursor: pointer;
+}
+.heart{
+    transform-origin: center;
+}
+.heart.active img{
+    animation: animateHeart .3s linear forwards;
+}
+
+@keyframes animateHeart{
+    0%{transform:scale(.2);}
+    40%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+  }
+
+
+.castmates {
+    position: relative; /* 자식 요소의 absolute 위치 기준 */
+    display: inline-block;
+    width: 100px; /* .castPic과 동일한 너비 적용 */
+    height: 50%; /* .castPic과 동일한 높이 적용 */
+    overflow: hidden; /* 이미지 영역을 넘지 않도록 설정 */
+}
+
+.castmates .castPic {
+    width: 100px; /* 지정된 너비 */
+    height: 50%; /* 지정된 높이 */
+    border-radius: 50%; /* 원형 이미지 */
+    object-fit: cover; /* 이미지 비율 유지 */
+}
+
+.castmates .right_area {
+    position: absolute; /* 부모(.castmates)를 기준으로 위치 조정 */
+    top: 70px; /* 상단에서 5px 여백 */
+    right: 0px; /* 우측에서 5px 여백 */
+    z-index: 10; /* 이미지 위로 표시 */
+}
+
+.right_area .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; /* 아이콘 너비 조정 */
+    height: 30px; /* 아이콘 높이 조정 */
+    border-radius: 50%; /* 원형 버튼 */
+    border: solid 2px #eaeaea;
+    background-color: #fff;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.icon.heart img {
+    width: 16px; /* 아이콘 내부 이미지 크기 */
+    height: 16px;
+}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
@@ -272,7 +272,7 @@
         <div class="sideBar" style="width: 1014px;">
             <div class="userContainer">
                 <div class="userBox">
-                    <span class="userName" style="font-size: 24px; font-weight: 700;">ㅇㅇㅇ</span>
+                    <span class="userName" style="font-size: 24px; font-weight: 700;">${mypage.memberName}</span>
                     <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
                 </div>
                 <div class="container">
