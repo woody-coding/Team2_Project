@@ -30,15 +30,15 @@ import java.util.UUID;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Value("${file.upload-dir}")
+/*    @Value("${file.upload-dir}")
     private String uploadDir;
 
     @Autowired
     private AdminService adminService;
 
-    /**
+    *//**
      * InitBinder: 날짜 포맷 설정
-     */
+     *//*
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -47,9 +47,9 @@ public class AdminController {
         binder.registerCustomEditor(Date.class, "endDate", new CustomDateEditor(dateFormat, true));
     }
 
-    /**
+    *//**
      * 회원 리스트 조회 (수동 페이징 처리)
-     */
+     *//*
     @GetMapping("/memberList")
     public String listMembers(Model model,
                               @RequestParam(defaultValue = "0") int page,
@@ -70,9 +70,9 @@ public class AdminController {
         return "admin/adminUserList";
     }
 
-    /**
+    *//**
      * 공연 리스트 조회 (수동 페이징 처리)
-     */
+     *//*
     @GetMapping("/showList")
     public String showList(Model model,
                            @RequestParam(defaultValue = "0") int page,
@@ -93,9 +93,9 @@ public class AdminController {
         return "admin/adminShowList";
     }
 
-    /**
+    *//**
      * 공연 상세 조회
-     */
+     *//*
     @GetMapping("/showDetail/{showNo}")
     public String showDetail(@PathVariable int showNo, Model model) {
         Show show = adminService.getShowById(showNo);
@@ -107,9 +107,9 @@ public class AdminController {
         }
     }
 
-    /**
+    *//**
      * 공연 수정 페이지 이동
-     */
+     *//*
     @GetMapping("/adminShowUpdate")
     public String showUpdate(@RequestParam int showNo, Model model) {
         Show show = adminService.getShowById(showNo);
@@ -121,18 +121,18 @@ public class AdminController {
         }
     }
 
-    /**
+    *//**
      * 공연 수정 처리
-     */
+     *//*
     @PostMapping("/updateShow")
     public String updateShow(@ModelAttribute Show show) {
         adminService.updateShow(show);
         return "redirect:/admin/showList";
     }
 
-    /**
+    *//**
      * 공연 등록 폼
-     */
+     *//*
     @GetMapping("/showInsert")
     public String showInsertForm(Model model) {
         AdminShowDTO adminShowDTO = new AdminShowDTO();
@@ -140,9 +140,9 @@ public class AdminController {
         return "admin/adminShowInsert"; // 입력 페이지 이름
     }
 
-    /**
+    *//**
      * 공연 등록 처리
-     */
+     *//*
     @PostMapping("/showInsert")
     public String insertShow(@ModelAttribute AdminShowDTO adminShowDTO,
                              @RequestParam("showImage") MultipartFile file,
@@ -174,10 +174,6 @@ public class AdminController {
         show.setShowPlayTime(adminShowDTO.getShowPlayTime());
         show.setShowRating(adminShowDTO.getShowRating());
         
-
-        show.setShowRating(adminShowDTO.getShowRating());
-        
-
         // Show 엔티티 저장
         adminService.insertShow(show);
 
@@ -201,9 +197,9 @@ public class AdminController {
         return "redirect:/admin/showList";
     }
 
-    /**
+    *//**
      * 파일 저장 처리
-     */
+     *//*
     private String saveUploadedFile(MultipartFile file) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
@@ -213,5 +209,5 @@ public class AdminController {
         Path filePath = uploadPath.resolve(fileName);
         file.transferTo(filePath.toFile());
         return fileName;
-    }
+    }*/
 }
