@@ -4,17 +4,18 @@ package com.team2.project.service;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team2.project.model.Inquiry;
 import com.team2.project.model.InquiryCategory;
 import com.team2.project.model.InquiryFile;
 import com.team2.project.model.Member;
-import com.team2.project.repository.InquiryFileRepository;
 import com.team2.project.repository.InquiryRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 public class InquiryService {
 	
 	private final InquiryRepository inquiryRepository;
-	private final InquiryFileRepository inquiryFileRepository;
 
 	@Value("${file.dir}")
 	private String fileDir;
@@ -36,21 +36,22 @@ public class InquiryService {
 	}
 	
 	// 문의 등록 및 업데이트 (이미지 포함)
+	@Transactional
 	public Inquiry saveInquiry(Member member, InquiryCategory inquiryCategory, String inquiryTitle, String inquiryContent, List<MultipartFile> files) {
 		
 		Inquiry inquiry = new Inquiry();
+		List<InquiryFile> inquiryFiles = new ArrayList<>();
 		inquiry.setMember(member);
 		inquiry.setInquiryCategory(inquiryCategory);
 		inquiry.setInquiryTitle(inquiryTitle);
 		inquiry.setInquiryContent(inquiryContent);
 		
-		Inquiry savedInquiry = inquiryRepository.save(inquiry);
 		
         // 이미지 파일 처리 및 저장
         if (files != null && files.size() <= 3) { // 최대 3개 파일 제한
             for (MultipartFile file : files) {
                 InquiryFile inquiryFile = new InquiryFile();
-                inquiryFile.setInquiry(savedInquiry); // 저장된 Inquiry 객체 설정
+                inquiryFile.setInquiry(inquiry);
                 inquiryFile.setInquiryFileName(file.getOriginalFilename());
                 inquiryFile.setInquiryFileDate(LocalDate.now());
                 
@@ -61,14 +62,17 @@ public class InquiryService {
 
                 // 로컬에 파일 저장 + 디비에 파일 경로 저장
                 try {
+                	inquiryFiles.add(inquiryFile);
                     File destinationFile = new File(fileFullPath);
                     file.transferTo(destinationFile); // 실제 파일 저장
-                    inquiryFileRepository.save(inquiryFile); // InquiryFile 정보 데이터베이스에 저장
                 } catch (IOException e) {
                     throw new RuntimeException("파일 저장 중 오류 발생: " + e.getMessage());
                 }
-            } 
-            return savedInquiry;
+            }
+            
+            inquiry.setInquiryFiles(inquiryFiles);
+            
+            return inquiryRepository.save(inquiry);
             
         } else {
             throw new IllegalArgumentException("최대 3개의 파일만 업로드 가능합니다.");
