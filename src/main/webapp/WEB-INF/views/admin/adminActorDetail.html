@@ -49,7 +49,6 @@
     position: relative;
     width: 264px;
     height: 309px;
-    background: url(../img/jearim.png)
       no-repeat center;
     background-size: cover;
     z-index: 13;
@@ -270,7 +269,7 @@
             <div class="actor_detail">
                 <div id="actor_img" class="actor_img" 
      					th:style="'background-image: url(/uploads/' + ${actor.showActorFile.fileNo} + '); border: 1px solid; width: 264px; height: 309px; background-size: cover; background-position: center; background-repeat: no-repeat;'">
-    				<input type="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .png"/>
+    				<input type="file" id="fileInput" name="file" style="display: none;" accept=".jpg, .jpeg, .png"/>
 				</div>    
                 <div class="actor_cont">
                     <textarea class="auto-resize name" th:text="${actor.actorName}" style="width: 175px;height: 48px;margin-left: -454px;" readonly></textarea>
@@ -303,8 +302,8 @@
             </textarea>
         </div>
         <div class="update-button" style="display: flex; justify-content: space-between; gap: 10px; margin-top: 20px;">
-            <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">목록</button>
-            <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">수정</button>
+            <input type="button" class="register-button" th:onclick="|location.href='actorList'|" value="목록" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;"/>
+            <<input type="button" th:onclick="|location.href='updateForm?actorNo=*{actorNo}'|"  class="register-button" value="수정" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;"/>
         </div>
     </div>
 </body>
