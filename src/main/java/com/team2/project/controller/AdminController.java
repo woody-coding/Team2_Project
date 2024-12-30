@@ -245,6 +245,66 @@ public class AdminController {
 		return "admin/adminActorDetail";
 	}
 	
+	//작가 수정
+	@GetMapping("/updateForm")
+	public String actorUpdateForm(@RequestParam int actorNo, Model model) {
+		model.addAttribute("actor", adminActorService.getActorByActorNo(actorNo));
+		
+		return "admin/adminActorUpdate";
+	}
+	
+	@PostMapping("/actorUpdate")
+	public String actorUpdate(@RequestParam(value="file", required = false) MultipartFile file, @ModelAttribute Actor actor) {
+	    try {
+	        // 기존 Actor 정보 가져오기
+	        Actor existingActor = adminActorService.getActorByActorNo(actor.getActorNo());
+	        if (existingActor == null) {
+	            return "redirect:/admin/actorList?error=actorNotFound";
+	        }
+	        
+	        adminActorService.deleteExistingFile(existingActor);
+
+	        // 파일이 새로 업로드된 경우 파일 처리
+	        if (file != null && !file.isEmpty()) {
+	            String fileName = saveUploadedFile(file);
+	            String fileNo = fileName; // UUID + "_" + originalFileName 사용
+
+	            // 새로운 파일 정보 저장
+	            ShowActorFile newShowActorFile = new ShowActorFile();
+	            newShowActorFile.setFileNo(fileNo);
+	            newShowActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString());
+	            newShowActorFile.setFileName(file.getOriginalFilename());
+	            newShowActorFile.setFileDate(new Date());
+
+	            // Actor와 파일 관계 설정
+	            newShowActorFile.setActor(actor);
+	            adminActorService.saveShowActorFile(newShowActorFile); // 새로운 파일 정보 저장
+	            
+	            // Actor 객체에 새로운 파일 정보 설정
+	            actor.setShowActorFile(newShowActorFile);
+	            actor.setFileNo(newShowActorFile.getFileNo());
+	        } else {
+	            // 파일이 업로드되지 않은 경우 기존 파일 정보 유지
+	            actor.setShowActorFile(existingActor.getShowActorFile());
+	            actor.setFileNo(existingActor.getFileNo());
+	        }
+
+	        // 배우 정보 저장
+	        adminActorService.saveActor(actor);
+	        
+	        if (actor.getShowActorFile() != null) {
+	            actor.getShowActorFile().setFileNo(actor.getFileNo()); // ShowActorFile의 fileNo 업데이트
+	        }
+	        
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return "redirect:/admin/uploadForm?error=uploadFailed";
+	    }
+	    
+	    return "redirect:/admin/actorDetail?actorNo=" + actor.getActorNo();
+	}
+
+	
 	//날짜 스트링 저장
 	@InitBinder
 	public void initBinder1(WebDataBinder binder) {
