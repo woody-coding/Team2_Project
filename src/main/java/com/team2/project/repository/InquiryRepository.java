@@ -8,6 +8,7 @@ import com.team2.project.model.Inquiry;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,7 +19,7 @@ import org.springframework.data.repository.query.Param;
 public interface InquiryRepository extends JpaRepository<Inquiry, Integer> {
 	
 	// 해당 회원의 모든 문의 내역 조회
-	List<Inquiry> findByMember_MemberNo(int memberNo);
+	List<Inquiry> findByMember_MemberNo(int memberNo, Sort sort);
 	
 	// 해당 회원의 특정 문의 글 삭제
 	@Modifying
