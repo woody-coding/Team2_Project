@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -260,34 +260,32 @@
     
     </style>
 </head>
-<link href="./css/info.css" rel="stylesheet" type="text/css">
-<script src="./js/jquery-3.7.1.min.js"></script>
+<script src="../js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 
 </script>
 <body>
-    <div id="main">
+    <div id="main" th:object="${actor}">
         <div id="actor_info">
             <div class="actor_detail">
-                <div id="actor_img" class="actor_img" style="border: 1px solid; width: 264px; height: 309px;background-size: cover; /* cover: 배경 이미지를 요소를 완전히 덮도록 설정 */
-                background-position: center; /* 중앙 정렬 */
-                background-repeat: no-repeat; /* 이미지를 반복하지 않도록 설정 */">
-                    <input type="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .png"/>
-                </div>               
+                <div id="actor_img" class="actor_img" 
+     					th:style="'background-image: url(/uploads/' + ${actor.showActorFile.fileNo} + '); border: 1px solid; width: 264px; height: 309px; background-size: cover; background-position: center; background-repeat: no-repeat;'">
+    				<input type="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .png"/>
+				</div>    
                 <div class="actor_cont">
-                    <textarea class="auto-resize name" style="width: 175px;height: 48px;margin-left: -454px;" readonly>최재림</textarea>
+                    <textarea class="auto-resize name" th:text="${actor.actorName}" style="width: 175px;height: 48px;margin-left: -454px;" readonly></textarea>
                     <ul class="text">
                         <li>
-                            출생 | <textarea class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"readonly>1985년</textarea>
+                            출생 | <textarea th:text="${actor.actorBirth}" class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"readonly></textarea>
                         </li>
                         <li>
-                            국적 | <textarea class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"readonly>대한민국</textarea>
+                            국적 | <textarea th:text="${actor.actorNation}" class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"readonly></textarea>
                         </li>
                         <li>
-                            학력 | <textarea class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"readonly>대한민국</textarea>
+                            학력 | <textarea  th:text="${actor.actorEdu}" class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"readonly></textarea>
                         </li>
                         <li>
-                            데뷔 | <textarea class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"readonly>대한민국</textarea>
+                            데뷔 | <textarea  th:text="${actor.actorDebut}" class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"readonly></textarea>
                         </li>
                     </ul>   
                 </div>
@@ -296,7 +294,7 @@
 
         <div id="actor_career">
             <div class="cont_title">수상</div>
-            <textarea class="award-list auto-resize" style="resize: none;"readonly>2018년 제6회 대한민국 예술문화인상 뮤지컬 부문
+            <textarea class="award-list auto-resize" th:text="${actor.actorInfo}" style="resize: none;"readonly>2018년 제6회 대한민국 예술문화인상 뮤지컬 부문
 2019년 제3회 한국뮤지컬어워즈 남우주연상 마틸다
 2022년 제6회 한국뮤지컬어워즈 남우조연상 시카고
 2022년 제16회 DIMF 어워즈 올해의스타상 시카고

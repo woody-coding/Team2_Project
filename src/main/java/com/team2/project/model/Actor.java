@@ -43,6 +43,9 @@ public class Actor {
 	@JoinColumn(name = "FILE_NO", referencedColumnName = "FILE_NO", insertable = false, updatable = false)
 	private ShowActorFile showActorFile;
 	
+	@Column(name = "FILE_NO")
+    private String fileNo;
+	
 	@Column(name = "ACTOR_EDU", length = 50)
 	private String actorEdu;
 	

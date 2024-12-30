@@ -28,16 +28,16 @@ public class ShowActorFile {
     private Date fileDate;
 
     @ManyToOne(cascade = CascadeType.PERSIST) // 또는 CascadeType.ALL
-    @JoinColumn(name = "SHOW_NO", referencedColumnName = "SHOW_NO", nullable = false)
+    @JoinColumn(name = "SHOW_NO", referencedColumnName = "SHOW_NO")
     private Show show;
 
     @ManyToOne(cascade = CascadeType.PERSIST) // 또는 CascadeType.ALL
-    @JoinColumn(name = "ACTOR_NO", referencedColumnName = "ACTOR_NO", nullable = false)
+    @JoinColumn(name = "ACTOR_NO", referencedColumnName = "ACTOR_NO")
     private Actor actor;
 
-
+    // 기본 생성자에서 UUID와 날짜 초기화
     public ShowActorFile() {
         this.fileNo = UUID.randomUUID().toString(); // UUID 생성
-        this.fileDate = new Date();
+        this.fileDate = new Date(); // 현재 날짜
     }
 }

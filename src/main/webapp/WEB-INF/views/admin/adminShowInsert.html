@@ -39,53 +39,53 @@
             align-items: center; /* 수직 가운데 정렬 */
             margin-top: -52px;
             background-size: cover; /* cover: 배경 이미지를 요소를 완전히 덮도록 설정 */
-    background-position: center; /* 중앙 정렬 */
-    background-repeat: no-repeat; /* 이미지를 반복하지 않도록 설정 */
+    		background-position: center; /* 중앙 정렬 */
+    		background-repeat: no-repeat; /* 이미지를 반복하지 않도록 설정 */
         }
         .place-field {
-    background-color: #f0f0f0; /* 읽기 전용 필드의 배경색 */
-    border: 1px solid #ccc; /* 테두리 스타일 */
-    color: #333; /* 텍스트 색상 */
-    /* 필요에 따라 추가 스타일 */
-}
-.count-container {
-    position: relative; /* 부모 요소를 기준으로 절대 위치 지정 */
-}
-
-.input-field {
-    width: 115px; /* 예시 너비 */
-    cursor: pointer;
-    margin-bottom: 10px; /* 각 입력 필드 사이의 간격 */
-    /* 기타 스타일 */
-}
-
-#timeInput1, #timeInput2 {
-    position: absolute;
-    left: 0; /* 입력 필드와 같은 수평 위치 */
-    display: none; /* 기본적으로 숨김 */
-    z-index: 100; /* 다른 요소 위에 표시 */
-}
-
-#timeInput1 {
-    top: 53px; /* countInput1 아래에 위치 */
-    margin-left: 102px;
-
-}
-
-#timeInput2 {
-    top: 53px;/* countInput2 아래에 위치 */
-    margin-left: 266px;
-} 
-.age-seat-container {
-    margin-top: 10px; /* 위쪽 여백 */
-}
-
-.age-select {
-    margin-left: -1px; /* 왼쪽 여백 */
-    padding: 5px; /* 내부 여백 */
-    /* 필요에 따라 추가 스타일 */
-}
-.calendar {
+		    background-color: #f0f0f0; /* 읽기 전용 필드의 배경색 */
+		    border: 1px solid #ccc; /* 테두리 스타일 */
+		    color: #333; /* 텍스트 색상 */
+		    /* 필요에 따라 추가 스타일 */
+		}
+		.count-container {
+		    position: relative; /* 부모 요소를 기준으로 절대 위치 지정 */
+		}
+		
+		.input-field {
+		    width: 115px; /* 예시 너비 */
+		    cursor: pointer;
+		    margin-bottom: 10px; /* 각 입력 필드 사이의 간격 */
+		    /* 기타 스타일 */
+		}
+		
+		#timeInput1, #timeInput2 {
+		    position: absolute;
+		    left: 0; /* 입력 필드와 같은 수평 위치 */
+		    display: none; /* 기본적으로 숨김 */
+		    z-index: 100; /* 다른 요소 위에 표시 */
+		}
+		
+		#timeInput1 {
+		    top: 53px; /* countInput1 아래에 위치 */
+		    margin-left: 102px;
+		
+		}
+		
+		#timeInput2 {
+		    top: 53px;/* countInput2 아래에 위치 */
+		    margin-left: 266px;
+		} 
+		.age-seat-container {
+		    margin-top: 10px; /* 위쪽 여백 */
+		}
+		
+		.age-select {
+		    margin-left: -1px; /* 왼쪽 여백 */
+		    padding: 5px; /* 내부 여백 */
+		    /* 필요에 따라 추가 스타일 */
+		}
+		.calendar {
             display: inline-block;
             border: 1px solid #ccc;
             padding: 10px;
@@ -119,7 +119,7 @@
             color: white;
         }
 
-/*datepicker*/
+		/*datepicker*/
 		.calendar {
 			background-color: #ffffff;
 			border-radius: 8px;
@@ -159,49 +159,49 @@
 			gap: 5px;
 		}
         
-.day.disabled {
-    color: gray;
-    pointer-events: none; /* 클릭 불가 */
-}
-.input{
-    height: 30px;
-    margin-top: 18px;
-    font-size: 16px;
-    margin-left: 19px;
-}
-
-.fixed-button {
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-392%);
-    padding: 10px 20px;
-    background-color: #ff9400;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 225px;
-    font-size: 14px;
-}
-
-.fixed-button:hover {
-    background-color: #ff9400;
-}
-
-.title{
-    font-size: 18px;
-    font-weight: 600;
-}
-.actBox {
-            display: flex;
-            flex-direction: column; /* 수직 정렬 */
-            align-items: center; /* 가운데 정렬 */
-            width: 130px;
-            position: relative; /* 하트 위치 조정을 위한 설정 */
-            margin-right: 30px; /* actBox 간의 간격 추가 */
-            margin-top: 25px;
-            border: 1px solid #dddddd; /* 테두리 추가 */
-        }
+		.day.disabled {
+		    color: gray;
+		    pointer-events: none; /* 클릭 불가 */
+		}
+		.input{
+		    height: 30px;
+		    margin-top: 18px;
+		    font-size: 16px;
+		    margin-left: 19px;
+		}
+		
+		.fixed-button {
+		    bottom: 10px;
+		    left: 50%;
+		    transform: translateX(-392%);
+		    padding: 10px 20px;
+		    background-color: #ff9400;
+		    color: white;
+		    border: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    margin-top: 225px;
+		    font-size: 14px;
+		}
+		
+		.fixed-button:hover {
+		    background-color: #ff9400;
+		}
+		
+		.title{
+		    font-size: 18px;
+		    font-weight: 600;
+		}
+		.actBox {
+		            display: flex;
+		            flex-direction: column; /* 수직 정렬 */
+		            align-items: center; /* 가운데 정렬 */
+		            width: 130px;
+		            position: relative; /* 하트 위치 조정을 위한 설정 */
+		            margin-right: 30px; /* actBox 간의 간격 추가 */
+		            margin-top: 25px;
+		            border: 1px solid #dddddd; /* 테두리 추가 */
+		        }
         .actImg {
             height: 130px; /* 높이 설정 */
             width: 130px; /* 너비 설정 */
@@ -235,188 +235,151 @@
 </style>
 </head>
 <body>
-	<section class="text-area">
-		<div class="posterBox">
-            <div class="poster" id="poster">
-                사진을 선택해주세요
+    <form action="/admin/showInsert" method="post" enctype="multipart/form-data">
+        <section class="text-area">
+            <div class="posterBox">
+                <div class="poster" id="poster">
+                    사진을 선택해주세요
+                </div>
+                <input type="file" id="fileInput" name="showImage" style="display: none;" accept=".jpg, .jpeg, .png"/>
             </div>
-            <input type="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .png"/>
-        </div>
-        <div class="showInfoBox" style="margin-left: 50px;margin-right: 50px;">
-            <div class="title-input-container">
-                <span class="title">제 목</span>
-                <input type="text" class="input-title-field input" placeholder="제목을 입력해주세요" style="width: 278px; margin-left: 55px;"/>
-            </div>
-            <div class="place-container">
-                <span class="title">공연 장소</span>
-                <input type="text" class="place-field input" value="고정 장소" readonly style="width: 280px;"/>
-            </div>
-            <div class="date-container">
-                <span class="title">공연 기간</span>
-                <input type="text" id="startDateField" class="start-date-field input" placeholder="시작 날짜" readonly style="width: 115px; margin-right: 8px;"/>
-                <span class="title">~</span>
-                <input type="text" id="endDateField" class="end-date-field input" placeholder="종료 날짜" readonly style="width: 115px; margin-left: 8px;"/>
-            </div>
-            <div class="count-container">
-                <span class="title">회 차</span>
-                <input type="text" id="countInput1" class="input-field input" value="1회" readonly style="margin-left: 54px;margin-right: 16px;"/>
-                <input type="time" id="timeInput1" style="display: none;" step="3600" />
+            <div class="showInfoBox" style="margin-left: 50px;margin-right: 50px;">
+                <div class="title-input-container">
+                    <span class="title">제 목</span>
+                    <input type="text" name="showTitle" class="input-title-field input" placeholder="제목을 입력해주세요" style="width: 278px; margin-left: 55px;"/>
+                </div>
+                <div class="place-container">
+                    <span class="title">공연 장소</span>
+                    <input type="text" name="showPlace" class="place-field input" value="고정 장소" readonly style="width: 280px;"/>
+                </div>
+                <div class="date-container">
+                    <span class="title">공연 기간</span>
+                    <input type="text" id="startDateField" name="startDate" class="start-date-field input" placeholder="시작 날짜" readonly style="width: 115px; margin-right: 8px;"/>
+                    <span class="title">~</span>
+                    <input type="text" id="endDateField" name="endDate" class="end-date-field input" placeholder="종료 날짜" readonly style="width: 115px; margin-left: 8px;"/>
+                </div>
+                <div class="count-container">
+    				<span class="title">회 차</span>
+    
+				    <input type="text" id="countInput1" class="input-field input" value="1회" readonly style="margin-left: 54px; margin-right: 16px;" />
+    <input type="time" id="timeInput1" name="showPlayTime" step="3600" required style="display: inline-block;" />
 
-                <input type="text" id="countInput2" class="input-field input" value="2회" readonly />
-                <input type="time" id="timeInput2" style="display: none;" step="3600" />
+    <input type="text" id="countInput2" class="input-field input" value="2회" readonly />
+    <input type="time" id="timeInput2" name="showPlayTime2" step="3600" required style="display: inline-block;" />
+				</div>
+
+                <div class="age-seat-container">
+                    <span class="title">관람 연령</span>
+                    <select id="ageSelect" name="showRating" class="age-select input" style="margin-left: 17px;">
+                        <option value="all">전체 이용가</option>
+                        <option value="12">12세</option>
+                        <option value="15">15세</option>
+                        <option value="19">19세</option>
+                    </select>
+                    <span class="title input">좌석 수</span>
+                    <input type="text" name="totSeat" class="input-price-field input" value="123" readonly style="width: 51px;"/>
+                </div>
+                <div class="price-container">
+                    <span class="title">가 격</span>
+                    <input type="text" id="inputPriceField" name="showPrice" class="input-price-field input" placeholder="가격" style="width: 100px; margin-left: 53px;">
+                    <span class="won">원</span>
+                </div>  
+                <div class="category-container">
+                    <span class="title">공연 카테고리</span>
+                    <select name="showCate" class="input" required>
+                        <option value="">선택하세요</option>
+                        <option value="뮤지컬">뮤지컬</option>
+                        <option value="연극">연극</option>
+                        <option value="콘서트">콘서트</option>
+                        <option value="기타">기타</option>
+                    </select>
+                </div>
             </div>
-            <div class="age-seat-container">
-                <span class="title">관람 연령</span>
-                <select id="ageSelect" class="age-select input" style="margin-left: 17px;">
-                    <option value="all">전체 이용가</option>
-                    <option value="12">12세</option>
-                    <option value="15">15세</option>
-                    <option value="19">19세</option>
-                </select>
-                <span class="title input">좌석 수</span>
-                <input type="text" class="input-price-field input" value="123석" readonly style="width: 51px;"/>
-            </div>
-            <div class="price-container">
-                <span class="title">가 격</span>
-                <input type="text" id="inputPriceField" class="input-price-field input" placeholder="가격" style="width: 100px; margin-left: 53px;">
-                <span class="won">원</span>
+            <div class="calender-container" style="border: 1px solid #dddddd;height: 285px;margin-top: -22px;border-radius: 6px;width: 320px;">
+                <div class="calendar-header">
+                    <button type="button" id="prevMonth">&lt;</button>
+                    <span id="currentMonthYear">December 2024</span>
+                    <button type="button" id="nextMonth">&gt;</button>
+                </div>
+                <div class="calendar-days" id="calendarDays"></div>
             </div>  
-        </div>
-        <div class="calender-container" style="border: 1px solid #dddddd;height: 285px;margin-top: -22px;border-radius: 6px;width: 320px;">
-            <div class="calendar-header">
-                <button id="prevMonth">&lt;</button>
-                <span id="currentMonthYear">December 2024</span>
-                <button id="nextMonth">&gt;</button>
-            </div>
-            <div class="calendar-days" id="calendarDays"></div>
-               
-        </div>  
-        <button id="resetSelection" class="fixed-button">재선택</button>    
-	</section>
-    <section class="actor-area">
-        <div class="actor-container">
-            <span class="title title-actor" style="margin-right: 1002px;">출연 배우</span>
-            <div class="actor-input-container">
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">박상철</div>
-                </div>
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">이름이</div>
-                </div>
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">이름이</div>
-                </div>
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">이름이</div>
-                </div>
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">이름이</div>
-                </div>
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">이름이</div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="show-text-area">
-        <div class="show-text-container" style="margin-top: 62px;margin-left: -85px;">
-            <span class="title title-actor">공연 정보</span>
-            <textarea class="show-text-field" placeholder="공연정보를 입력해 주세요" style="width: 993px; height: 250px; display: block; margin-top: 10px; resize: none;" ></textarea>
-            <button class="register-button" style="margin-left: 93.3%;margin-top: 20px;padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">등록</button>
-        </div>
-        
+            <button type="button" id="resetSelection" class="fixed-button">재선택</button>    
         </section>
-        
-	<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('poster').addEventListener('click', function() {
-        document.getElementById('fileInput').click();
-    });
+        <section class="actor-area">
+            <div class="actor-container">
+                <span class="title title-actor" style="margin-right: 1002px;">출연 배우</span>
+                <div class="actor-input-container">
+                    <!-- 배우 정보 입력 -->
+                </div>
+            </div>
+        </section>
+        <section class="show-text-area">
+            <div class="show-text-container" style="margin-top: 62px;margin-left: -85px;">
+                <span class="title title-actor">공연 정보</span>
+                <textarea name="showInfo" class="show-text-field" placeholder="공연정보를 입력해 주세요" style="width: 993px; height: 250px; display: block; margin-top: 10px; resize: none;" ></textarea>
+                <button type="submit" class="register-button" style="margin-left: 93.3%;margin-top: 20px;padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">등록</button>
+            </div>
+        </section>
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('poster').addEventListener('click', function() {
+                document.getElementById('fileInput').click();
+            });
 
-    document.getElementById('fileInput').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.querySelector('.poster').style.backgroundImage = `url(${e.target.result})`;
-            };
-            reader.readAsDataURL(file);
+            document.getElementById('fileInput').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector('.poster').style.backgroundImage = `url(${e.target.result})`;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        function setupTimeInput(countInputId, timeInputId) {
+            document.getElementById(countInputId).addEventListener('click', function() {
+                var timeInput = document.getElementById(timeInputId);
+                timeInput.style.display = 'inline-block'; // 필드를 보이게 함
+                timeInput.focus(); // 포커스 설정
+            });
+
+            document.getElementById(timeInputId).addEventListener('change', function() {
+                var selectedTime = this.value; // 선택된 시간
+                var formattedTime = selectedTime + ':00'; // 분 단위를 항상 00으로 설정
+
+                document.getElementById(countInputId).value = (countInputId === 'countInput1' ? '1회 ' : '2회 ') + formattedTime;
+                // 필요에 따라 시간 입력 필드를 숨길 수 있습니다.
+                // this.style.display = 'none'; // 필드를 숨김 (선택적으로 사용)
+            });
         }
-    });
-});
 
+        // 각 회차에 대해 시간 입력 필드 설정
+        setupTimeInput('countInput1', 'timeInput1');
+        setupTimeInput('countInput2', 'timeInput2');
 
-		function setupTimeInput(countInputId, timeInputId, previousTimeInputId) {
-			document.getElementById(countInputId).addEventListener('click', function() {
-				var timeInput = document.getElementById(timeInputId);
-				timeInput.style.display = 'block';
-				timeInput.focus();
-			});
+        document.getElementById('inputPriceField').addEventListener('input', function(e) {
+            // 숫자만 남기기
+            let value = e.target.value.replace(/[^0-9]/g, '');
 
-			document.getElementById(timeInputId).addEventListener('change', function() {
-				var selectedTime = this.value;
-				var [hour, minute] = selectedTime.split(':');
-				var formattedTime = hour + ':00';
+            // 천 단위로 쉼표 추가
+            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-				if (previousTimeInputId) {
-					var previousTime = document.getElementById(previousTimeInputId).value;
-					var [prevHour, prevMinute] = previousTime.split(':');
-					var prevTimeInMinutes = parseInt(prevHour) * 60 + parseInt(prevMinute);
-					var selectedTimeInMinutes = parseInt(hour) * 60;
-
-					if (selectedTimeInMinutes <= prevTimeInMinutes || selectedTimeInMinutes - prevTimeInMinutes < 120) {
-						alert('2회차 시간은 1회차 시간보다 최소 3시간 이상 차이가 나야 합니다.');
-						this.value = '';
-						return;
-					}
-				}
-
-				document.getElementById(countInputId).value = (countInputId === 'countInput1' ? '1회 ' : '2회 ') + formattedTime;
-				this.style.display = 'none';
-			});
-		}
-
-		setupTimeInput('countInput1', 'timeInput1');
-		setupTimeInput('countInput2', 'timeInput2', 'timeInput1');
-
-		document.getElementById('inputPriceField').addEventListener('input', function(e) {
-			// 숫자만 남기기
-			let value = e.target.value.replace(/[^0-9]/g, '');
-
-			// 천 단위로 쉼표 추가
-			value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-			// 입력 필드에 값 설정
-			e.target.value = value;
-		});
+            // 입력 필드에 값 설정
+            e.target.value = value;
+        });
         
-
-let isStartDateSelected = false;
-let startDate = null;
-let endDate = null;
-let currentDate = new Date(); // 현재 날짜를 기준으로 초기화
-
-function renderCalendar() {
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth(); // 월은 0부터 시작
+	
+	let isStartDateSelected = false;
+	let startDate = null;
+	let endDate = null;
+	let currentDate = new Date(); // 현재 날짜를 기준으로 초기화
+	
+	function renderCalendar() {
+	    const currentYear = currentDate.getFullYear();
+	    const currentMonth = currentDate.getMonth(); // 월은 0부터 시작
 
     // 월과 연도를 업데이트
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -486,42 +449,42 @@ function renderCalendar() {
             }
         });
 
-        calendarDays.appendChild(dayCell);
-    }
-}
-
-document.getElementById('prevMonth').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar();
-});
-
-document.getElementById('nextMonth').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    renderCalendar();
-});
-
-document.getElementById('resetSelection').addEventListener('click', () => {
-    // 선택 초기화
-    isStartDateSelected = false;
-    startDate = null;
-    endDate = null;
-    document.getElementById('startDateField').value = '';
-    document.getElementById('endDateField').value = '';
-    document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
-    document.querySelectorAll('.disabled').forEach(el => el.classList.remove('disabled'));
-    document.querySelectorAll('.selected-range').forEach(el => el.classList.remove('selected-range'));
-});
-
-// 초기 달력 렌더링
-renderCalendar();
-
-// Add event listeners to each actBox
-document.querySelectorAll('.actBox').forEach(function(actBox) {
-    actBox.addEventListener('click', function() {
-        // Open a new window with specified dimensions
-        window.open('', 'ActorPopup', 'width=350,height=350');
-    });
-});
-	</script>
+	        calendarDays.appendChild(dayCell);
+	    }
+	}
+	
+	document.getElementById('prevMonth').addEventListener('click', () => {
+	    currentDate.setMonth(currentDate.getMonth() - 1);
+	    renderCalendar();
+	});
+	
+	document.getElementById('nextMonth').addEventListener('click', () => {
+	    currentDate.setMonth(currentDate.getMonth() + 1);
+	    renderCalendar();
+	});
+	
+	document.getElementById('resetSelection').addEventListener('click', () => {
+	    // 선택 초기화
+	    isStartDateSelected = false;
+	    startDate = null;
+	    endDate = null;
+	    document.getElementById('startDateField').value = '';
+	    document.getElementById('endDateField').value = '';
+	    document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+	    document.querySelectorAll('.disabled').forEach(el => el.classList.remove('disabled'));
+	    document.querySelectorAll('.selected-range').forEach(el => el.classList.remove('selected-range'));
+	});
+	
+	// 초기 달력 렌더링
+	renderCalendar();
+	
+	// Add event listeners to each actBox
+	document.querySelectorAll('.actBox').forEach(function(actBox) {
+	    actBox.addEventListener('click', function() {
+	        // Open a new window with specified dimensions
+	        window.open('', 'ActorPopup', 'width=350,height=350');
+	    });
+	});
+</script>
 </body>
 </html>
