@@ -27,7 +27,7 @@ public class InquiryService {
 	
 	private final InquiryRepository inquiryRepository;
 
-	@Value("${file.dir}")
+	@Value("${file.upload-dir}")
 	private String fileDir;
 	
 	// 원본 파일명에서 확장자 뽑아내는 메서드
