@@ -59,16 +59,12 @@ public class Show {
 	@Column(name = "SHOW_CATE", length = 30, nullable = false)
 	private String showCate;
 	
-	@Column(name = "SHOW_TIME", nullable = false)
-	@Temporal(TemporalType.TIME)
-	private Date showTime;
+	@Column(name = "SHOW_START_TIME" , length = 20,  nullable = false)
+	private String showStartTime;
 	
 	@ManyToOne
 	@JoinColumn(name = "FILE_NO", insertable = false, updatable = false)
 	private ShowActorFile showActorFile;
-	
-	@Column(name = "SHOW_PLACE", length = 40, nullable = false)
-	private String showPlace;
 	
 	@Column(name = "SHOW_PLAYTIME", nullable = false)
 	private Integer showPlayTime;
@@ -76,4 +72,7 @@ public class Show {
 	@Column(name = "SHOW_RATING", length = 20, nullable = false)
 	private String showRating;
 	
+	@Column(name = "FILE_NO") 
+	private String fileNo;
+
 }
