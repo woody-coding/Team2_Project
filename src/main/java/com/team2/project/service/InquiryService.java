@@ -1,11 +1,11 @@
 package com.team2.project.service;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -92,6 +92,11 @@ public class InquiryService {
 	// 해당 문의 삭제
 	public void deleteInquiry(int memberNo, int inquiryNo) {
 		inquiryRepository.deleteByMemberAndInquiry(memberNo, inquiryNo);
+	}
+	
+	// 문의 고유번호로 해당 문의 전체 내용 반환
+	public Optional<Inquiry> findById(int inquiryNo) {
+		return inquiryRepository.findById(inquiryNo);
 	}
 	
 	// 관리자 답변 생성
