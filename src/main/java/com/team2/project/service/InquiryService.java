@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -81,7 +82,7 @@ public class InquiryService {
 	
 	// 전체 문의 내역 조회 + 이미지 포함 (날짜로 검색 x)
 	public List<Inquiry> findInquiry(int memberNo) {
-		return inquiryRepository.findByMember_MemberNo(memberNo);
+		return inquiryRepository.findByMember_MemberNo(memberNo, Sort.by(Sort.Direction.DESC, "inquiryDate"));
 	}
 	
 	// 전체 문의 내역 조회 + 이미지 포함 (날짜로 검색 o)
