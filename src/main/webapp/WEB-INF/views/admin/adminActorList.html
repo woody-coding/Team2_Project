@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -41,18 +41,33 @@
 					<th scope="col" class="userNum">번호</th>
 					<th scope="col" class="userName">이름</th>
 					<th scope="col" class="actorBirth">생일</th>
-					<th scope="col" class="actorInfo">소개</th>
+					<th scope="col" class="actorDebut">데뷔일</th>
 					<th scope="col" class="actorEdu">학력</th>
+					<th scope="col" class="actorInfo">소개</th>			
 				</tr>
-				<tr>
-					<td class="actorNum">1</td>
-					<td class="actorName">ㅇㅇㅇ</td>
-					<td class="actorBirth">95.12.12</td>
-					<td class="actorInfo">배우 입니다.</td>
-					<td class="actorEdu">대학만?</td>
+				<tr th:each="actor : ${actors}">
+					<td class="actorNum" th:text="${actor.actorNo}">1</td>
+					<td class="actorName">
+						<a th:href="@{/admin/actorDetail(actorNo=${actor.actorNo})}" th:text="${actor.actorName}">ㅇㅇㅇ</a>
+					</td>
+					<td class="actorBirth" th:text="${actor.actorBirth}">95.12.12</td>
+					<td class="actorDebut" th:text="${actor.actorDebut}">95.12.12</td>
+					<td class="actorEdu" th:text="${actor.actorEdu}">대학만?</td>
+					<td class="actorInfo" th:text="${actor.actorInfo}">배우 입니다.</td>
 				</tr>
-				<!-- 20개 까지만 출력하기 -->
 			</table>
+			<div class="pagination">
+                <span th:if="${currentPage > 0}">
+                    <a th:href="@{/admin/actors(page=${currentPage - 1}, size=${size})}">이전</a>
+                </span>
+                <!-- 페이지 번호 수동 생성 -->
+                <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a th:href="@{/admin/members(page=${i}, size=${size})}" th:text="${i + 1}"></a>
+                </span>
+                <span th:if="${currentPage < totalPages - 1}">
+                    <a th:href="@{/admin/actors(page=${currentPage + 1}, size=${size})}">다음</a>
+                </span>
+            </div>
 		</div>
 	</section>
 </body>

@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +29,7 @@ public class InquiryFile {
 	private String inquiryFileNo;
 	
 	@ManyToOne
-	@JoinColumn(name = "INQUIRY_NO", insertable = false, updatable = false)
+	@JoinColumn(name = "INQUIRY_NO", updatable = false)
 	private Inquiry inquiry;
 	
 	@Column(name = "INQUIRY_FILE_PATH", nullable = false, length = 255)
@@ -36,12 +38,12 @@ public class InquiryFile {
 	@Column(name = "INQUIRY_FILE_NAME", nullable = false, length = 255)
 	private String inquiryFileName;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "INQUIRY_FILE_DATE", nullable = false)
 	private LocalDate inquiryFileDate;
 	
 	public InquiryFile() {
 		this.inquiryFileNo = UUID.randomUUID().toString();
-		this.inquiryFileDate = LocalDate.now();
 	}
 	
 }
