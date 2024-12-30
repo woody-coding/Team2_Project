@@ -1,0 +1,269 @@
+body{
+    width: 100%; max-width: 1200px; margin: 0 auto;
+    text-align: center;
+}
+
+main{
+    position: relative;
+    width: 1200px;
+}
+
+#adFrame{
+    position: relative;
+    width: 1200px;
+    height: 400px;
+}
+
+#adImg{
+    width: 100%;
+    height: 100%;
+    background: url(/images/showMain/ad1.png)
+        no-repeat center;
+    background-size: cover;
+    position: absolute;
+}
+
+#arrowArea{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 156px 0 0 0;
+    width: 1200px;
+    height: 48px;
+}
+
+.arrow_left{
+    position: relative;
+    width: 48px;
+    height: 48px;
+    margin: 0 0 0 15px;
+    background: url(/images/showMain/arrow_left.png)
+        no-repeat center;
+    background-size: 100% 100%;
+    cursor: pointer;
+}
+
+.arrow_right{
+    position: relative;
+    width: 48px;
+    height: 48px;
+    margin: 0 15px 0 0;
+    background: url(/images/showMain/arrow_right.png)
+        no-repeat center;
+    background-size: 100% 100%;
+    cursor: pointer;
+}
+
+#dotArea{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 250px;
+    height: 60px;
+    margin: 119px 0 0 464px;
+    cursor: pointer;
+}
+
+.btn_hover{
+    position: relative;
+    width: 28.904px;
+    height: 30px;
+    margin: 25px 0 0 13px;
+    background: url(/images/showMain/btn_hover.png)
+     no-repeat center;
+    background-size: 100% 100%;
+    cursor: pointer;
+}
+
+.btn_default{
+    position: relative;
+    width: 28.904px;
+    height: 30px;
+    margin: 25px 0 0 13px;
+    background: url(/images/showMain/btn_default.png)
+     no-repeat center;
+    background-size: 100% 100%;
+}
+
+#btnArea{
+    position: absolute;
+    height: 44px;
+    width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 70px 0 70px;
+    margin-top: 15px;
+}
+
+.cate_btn{
+    width: 80px;
+    height: 30px;
+    color: #ffffff;
+    padding: 3px 15px 3px 15px;
+    font-size: 18px;
+    font-weight: bold;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+hr{
+    margin: 50px 0 50px 0;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+#hot{
+    width: 1200px;
+    height: 750px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.cont_title{
+    margin-top: 41px;
+    margin-left: 43px;
+    color: #333;
+    font-size: 35px;
+    font-weight: 700;
+    line-height: 32px;
+    text-align: center;
+}
+
+.cont{
+    display: flex;
+    height: inherit;
+    margin-top: 25px;
+}
+
+.hot_ul{
+    overflow: hidden;
+}
+
+.hot_ul li{
+    list-style: none;
+    float: left;
+    margin-left: 24px;
+    margin-bottom: 25px;
+}
+
+.big_cont{
+    width: 340px;
+    height: 565px;
+    background-size: cover;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.hot_list{
+    width: 210px;
+    height: 270px;
+    background-size: cover;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.hot_ul img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+#open_app{
+    width: 1200px;
+    height: 700px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+#open_app .cont{
+    align-items: center;
+    position: relative;
+    padding: 0 45px 0 45px;
+    flex-wrap: nowrap;
+    height: 350px;
+}
+
+.post_area{
+    display: flex;
+    width: 1200px;
+    height: 300px;
+    position: relative;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.poster{
+    display: table;
+    width: clac(25%-20px);
+    height: 280px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.img_frame{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.img_frame img{
+    max-width: 200px;
+    max-height: 280px;
+}
+
+.cont_detail{
+    width: 1200px;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 45px 0 45px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.data_time{
+    margin-top: -10px;
+    height: 41px;
+    width: 200px;
+    color: rgba(255, 143, 95, 0.73);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 23px;
+}
+
+.show_name{
+    width: 200px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    margin-top: -5px;
+}
+
+.more_btnArea{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+    position: relative;
+    width: 260px;
+    height: 73px;
+    margin: 1px 0 0 470px;
+    padding: 0 25px 0 25px;
+    background: #ff9500;
+    border: 3px solid #ececec;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.more_btn{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 20px;
+}
