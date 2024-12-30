@@ -45,7 +45,7 @@ public class Member {
 	private String memberAddrde;
 	
 	@Column(name="MEMBER_STATUS", nullable=false)
-	private Boolean memberStatus;
+	private String memberStatus;
 	
 	@Column(name="MEMBER_DATE", nullable=false)
 	@Temporal(TemporalType.DATE)
@@ -54,7 +54,7 @@ public class Member {
 	public Member() {}
 
 	public Member(int memberNo, String memberId, String memberPw, String memberName, String memberPhone,
-			String memberAddr, String memberAddrde, Boolean memberStatus, Date memberDate) {
+			String memberAddr, String memberAddrde, String memberStatus, Date memberDate) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
