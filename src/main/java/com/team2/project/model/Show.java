@@ -75,4 +75,9 @@ public class Show {
 	@Column(name = "FILE_NO") 
 	private String fileNo;
 
+	//추가?
+	@Column(name = "OPEN_DATE", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date openDate;
+
 }
