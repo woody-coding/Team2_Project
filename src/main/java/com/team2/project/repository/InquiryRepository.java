@@ -1,9 +1,10 @@
 package com.team2.project.repository;
 
-
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.team2.project.model.Inquiry;
+import com.team2.project.model.InquiryStatus;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,16 +22,8 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Integer> {
 	// 해당 회원의 모든 문의 내역 조회
 	List<Inquiry> findByMember_MemberNo(int memberNo, Sort sort);
 	
-	// 해당 회원의 특정 문의 글 삭제
-	@Modifying
-	@Query("DELETE FROM Inquiry "
-			+ "i WHERE i.inquiryNo = :inquiryNo "
-			+ "AND "
-			+ "i.member.memberNo = :memberNo")
-	void deleteByMemberAndInquiry(
-			@Param("memberNo") int memberNo, 
-			@Param("inquiryNo") int inquiryNo);
-
+	// 특정 status(상태)의 문의 조회
+    List<Inquiry> findByMember_MemberNoAndInquiryStatus(int memberNo, InquiryStatus inquiryStatus);
 	
 	// 날짜 범위 데이터 받아서 리스트 뽑아주기
 	@Query("SELECT i FROM Inquiry i " +
@@ -45,6 +38,7 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Integer> {
 
 	// 관리자 답변 생성
     @Modifying
+    @Transactional
     @Query("UPDATE Inquiry i " +
            "SET i.inquiryAnswer = :inquiryAnswer, " +
            "i.inquiryAnswerDate = CURRENT_DATE, " +
