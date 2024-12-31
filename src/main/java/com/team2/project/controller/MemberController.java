@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kakao.app.KakaoAPI;
 import com.team2.project.model.Member;
-import com.team2.project.repository.Memberdao;
+import com.team2.project.repository.MemberRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -27,7 +27,7 @@ public class MemberController {
 	
 	
 	@Autowired
-	private Memberdao dao;
+	private MemberRepository memberRepo;
 	
 	KakaoAPI kakaoApi = new KakaoAPI();
 	
@@ -74,11 +74,18 @@ public class MemberController {
 	
 	@PostMapping("insert")
 	public ModelAndView insert(Member dto) {
-		dto.setMemberStatus(true);
+		dto.setMemberStatus("MEMBER");
 		dto.setMemberDate(new Date());
-		dao.save(dto);
+		memberRepo.save(dto);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:/");
 		return mav;
-	}	
+	}
+	@PostMapping("/login")
+	public ModelAndView login() {
+		
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
+
 }	
