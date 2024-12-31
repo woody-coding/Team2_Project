@@ -64,7 +64,7 @@ public class Inquiry {
 	private LocalDate inquiryAnswerDate;
 			
 	// 이미지 파일 리스트 추가
-    @OneToMany(mappedBy = "inquiry", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "inquiry", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<InquiryFile> inquiryFiles;
 	
 	public Inquiry() {
