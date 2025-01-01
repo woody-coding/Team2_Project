@@ -19,6 +19,7 @@ import com.team2.project.model.ShowActorFile;
 import com.team2.project.repository.AdminActorRepository;
 import com.team2.project.service.AdminActorService;
 import com.team2.project.service.AdminService;
+import com.team2.project.service.AdminShowService;
 
 import retrofit2.http.POST;
 
@@ -28,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -41,6 +43,29 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	/**
+	 * 파일 저장 처리
+	 */
+	private String saveUploadedFile(MultipartFile file) throws IOException {
+	    // 애플리케이션 루트 디렉토리 기준으로 경로 설정
+	    Path uploadPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static", "uploads");
+
+	    // 디렉토리가 존재하지 않으면 생성
+	    if (!Files.exists(uploadPath)) {
+	        Files.createDirectories(uploadPath);
+	    }
+
+	    // 고유한 파일 이름 생성
+	    String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+	    Path filePath = uploadPath.resolve(fileName);
+
+	    // 파일 저장
+	    file.transferTo(filePath.toFile());
+
+	    return fileName;
+	}
+	
 
 	/**
 	 * InitBinder: 날짜 포맷 설정
@@ -51,6 +76,7 @@ public class AdminController {
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, "startDate", new CustomDateEditor(dateFormat, true));
 		binder.registerCustomEditor(Date.class, "endDate", new CustomDateEditor(dateFormat, true));
+		binder.registerCustomEditor(Date.class, "openDate", new CustomDateEditor(dateFormat, true));
 	}
 
 	/**
@@ -74,6 +100,9 @@ public class AdminController {
 		model.addAttribute("totalMembers", totalMembers);
 		return "admin/adminUserList";
 	}
+	
+	@Autowired
+	private AdminShowService adminShowService;
 
 	/**
 	 * 공연 리스트 조회 (수동 페이징 처리)
@@ -100,9 +129,9 @@ public class AdminController {
 	/**
 	 * 공연 상세 조회
 	 */
-	@GetMapping("/showDetail/{showNo}")
-	public String showDetail(@PathVariable int showNo, Model model) {
-		Show show = adminService.getShowById(showNo);
+	@GetMapping("/showDetail")
+	public String showDetail(@RequestParam int showNo, Model model) {
+		Show show = adminShowService.getShowByShowNo(showNo);
 		if (show != null) {
 			model.addAttribute("show", show);
 			return "admin/adminShowDetail";
@@ -133,81 +162,72 @@ public class AdminController {
 		adminService.updateShow(show);
 		return "redirect:/admin/showList";
 	}
+	
+	
 
 	/**
 	 * 공연 등록 폼
 	 */
-	/*
-	 * @GetMapping("/showInsert") public String showInsertForm(Model model) {
-	 * AdminShowDTO adminShowDTO = new AdminShowDTO();
-	 * model.addAttribute("adminShowDTO", adminShowDTO); return
-	 * "admin/adminShowInsert"; // 입력 페이지 이름 }
-	 * 
-	 *//**
-		 * 공연 등록 처리
-		 *//*
-			 * @PostMapping("/showInsert") public String insertShow(@ModelAttribute
-			 * AdminShowDTO adminShowDTO,
-			 * 
-			 * @RequestParam("showImage") MultipartFile file, BindingResult result, Model
-			 * model) { if (result.hasErrors()) { model.addAttribute("message",
-			 * "입력값에 오류가 있습니다."); return "admin/adminShowInsert"; // 오류가 있을 경우 다시 폼으로 돌아감 }
-			 * 
-			 * if (adminShowDTO.getShowCate() == null ||
-			 * adminShowDTO.getShowCate().isEmpty()) { model.addAttribute("message",
-			 * "공연 카테고리를 선택해야 합니다."); return "admin/adminShowInsert"; }
-			 * 
-			 * // Show 엔티티 생성 Show show = new Show();
-			 * show.setShowNo(adminShowDTO.getShowNo());
-			 * show.setShowPrice(adminShowDTO.getShowPrice());
-			 * show.setStartDate(adminShowDTO.getStartDate());
-			 * show.setEndDate(adminShowDTO.getEndDate());
-			 * show.setShowTitle(adminShowDTO.getShowTitle());
-			 * show.setShowInfo(adminShowDTO.getShowInfo());
-			 * show.setTotSeat(adminShowDTO.getTotSeat());
-			 * show.setLeftSeat(adminShowDTO.getLeftSeat());
-			 * show.setShowCate(adminShowDTO.getShowCate());
-			 * show.setShowTime(adminShowDTO.getShowTime());
-			 * show.setShowPlace(adminShowDTO.getShowPlace());
-			 * show.setShowPlayTime(adminShowDTO.getShowPlayTime());
-			 * show.setShowRating(adminShowDTO.getShowRating());
-			 * 
-			 * // Show 엔티티 저장 adminService.insertShow(show);
-			 * 
-			 * // 파일 업로드 처리 if (!file.isEmpty()) { try { String fileName =
-			 * saveUploadedFile(file); ShowActorFile showActorFile = new ShowActorFile();
-			 * showActorFile.setFilePath(Paths.get(uploadDir, fileName).toString());
-			 * showActorFile.setFileName(fileName); showActorFile.setShow(show);
-			 * adminService.saveShowActorFile(showActorFile, show, null); } catch
-			 * (IOException e) { e.printStackTrace(); model.addAttribute("message",
-			 * "파일 업로드 중 오류가 발생했습니다."); return "admin/adminShowInsert"; } }
-			 * 
-			 * model.addAttribute("message", "공연이 성공적으로 등록되었습니다."); return
-			 * "redirect:/admin/showList"; }
-			 */
+	@GetMapping("/showInsertForm")
+	public String showInsertForm(Model model){
 
-	/**
-	 * 파일 저장 처리
-	 */
-	private String saveUploadedFile(MultipartFile file) throws IOException {
-	    // 애플리케이션 루트 디렉토리 기준으로 경로 설정
-	    Path uploadPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static", "uploads");
 
-	    // 디렉토리가 존재하지 않으면 생성
-	    if (!Files.exists(uploadPath)) {
-	        Files.createDirectories(uploadPath);
+		return "admin/adminShowInsert";
+	}
+
+	@PostMapping("/showInsert")
+	public String showInsert(@RequestParam("file") MultipartFile file, @ModelAttribute Show show) {
+		if (show.getStartDate() != null) {
+	        // Calculate openDate as 7 days before startDate
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.setTime(show.getStartDate());
+	        calendar.add(Calendar.DAY_OF_YEAR, -7);
+	        Date openDate = calendar.getTime();
+	        
+	        // Set the calculated openDate to the Show object
+	        show.setOpenDate(openDate);
 	    }
 
-	    // 고유한 파일 이름 생성
-	    String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-	    Path filePath = uploadPath.resolve(fileName);
+	    String fileName;
+	    try {
+	        fileName = saveUploadedFile(file);
+	        String fileNo = fileName; // UUID + "_" + originalFileName 사용
+	        
+	        ShowActorFile showActorFile = new ShowActorFile();
+	        showActorFile.setFileNo(fileNo);
+	        showActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString());
+	        showActorFile.setFileName(file.getOriginalFilename());
+	        showActorFile.setFileDate(new Date());
 
-	    // 파일 저장
-	    file.transferTo(filePath.toFile());
+	        // Show와 ShowActorFile을 저장합니다.
+	        adminShowService.saveShow(show);
+	        
+	        // show에 actorFile 설정
+	        showActorFile.setShow(show);
+	        adminShowService.saveShowActorFile(showActorFile);
+	        
+	        // Show 정보 업데이트
+	        show.setShowActorFile(showActorFile);
+	        show.setFileNo(showActorFile.getFileNo());
+	        adminShowService.saveShow(show);
+	        
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return "redirect:/admin/showInsertForm?error=uploadFailed";
+	    }
 
-	    return fileName;
+	    return "redirect:/admin/showList";
 	}
+
 	
+	@GetMapping("/actorSearch")
+    @ResponseBody // JSON 응답을 반환할 경우 필요
+    public List<Actor> actorSearch() {
+        // 데이터 처리 로직
+        return adminActorService.findAllActor(Sort.by(Sort.Direction.DESC,"actorNo")); // 예시로 모든 배우를 반환
+    }
+
+
 	
 	
 	

@@ -232,10 +232,10 @@
 </style>
 </head>
 <body>
-	<section class="text-area">
+	<section class="text-area" th:object="${show}">
 		<div class="posterBox">
-            <div class="poster" id="poster">
-                사진을 선택해주세요
+            <div class="poster" id="poster" th:style="'background-image: url(/uploads/' + ${show.showActorFile.fileNo} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
+                
             </div>
             <input type="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .png"/>
         </div>
@@ -248,6 +248,16 @@
                 <span class="title">공연 장소</span>
                 <input type="text" class="place-field input"  value="고정 장소" readonly style="width: 280px;"/>
             </div>
+            <div class="category-container">
+                    <span class="title">공연 카테고리</span>
+                    <select name="showCate" th:field="*{showCate}" class="input" disabled>
+                        <option value="">선택하세요</option>
+                        <option value="뮤지컬" th:selected="${show.showCate == '뮤지컬'}">뮤지컬</option>
+                        <option value="연극" th:selected="${show.showCate == '연극'}">연극</option>
+                        <option value="콘서트" th:selected="${show.showCate == '콘서트'}">콘서트</option>
+                        <option value="기타" th:selected="${show.showCate == '기타'}">기타</option>
+                    </select>
+                </div>
             <div class="date-container">
                 <span class="title">공연 기간</span>
                 <input type="text" id="startDateField" th:value="${show.startDate}" class="start-date-field input" placeholder="시작 날짜" readonly style="width: 115px; margin-right: 8px;"/>
@@ -256,19 +266,19 @@
             </div>
             <div class="count-container">
                 <span class="title">회 차</span>
-                <input type="text" id="countInput1" class="input-field input" value="1회" readonly style="margin-left: 54px;margin-right: 16px;"/>
+                <input type="text" id="countInput1" class="input-field input" th:value="'1회 ' + ${show.showStartTime}" readonly style="margin-left: 54px;margin-right: 16px;"/>
                 <input type="time" id="timeInput1" style="display: none;" step="3600" />
-
-                <input type="text" id="countInput2" class="input-field input" value="2회" readonly />
-                <input type="time" id="timeInput2" style="display: none;" step="3600" />
+                <span class="title">러닝 타임</span>
+                    <input type="text" id="playtime" th:value="${show.showPlayTime}" class="input-showPlayTime-field input" placeholder="몇분" style="width: 100px; margin-left: 53px;">
+                    <span class="minute">분</span>
             </div>
             <div class="age-seat-container">
                 <span class="title">관람 연령</span>
-                <select id="ageSelect" class="age-select input" style="margin-left: 17px;" disabled>
-                    <option value="all">전체 이용가</option>
-                    <option value="12">12세</option>
-                    <option value="15">15세</option>
-                    <option value="19">19세</option>
+                <select id="ageSelect" th:field="*{showRating}" class="age-select input" style="margin-left: 17px;" disabled>
+                    <option value="all" th:selected="${show.showRating == 'all'}">전체 이용가</option>
+                    <option value="12" th:selected="${show.showRating == '12'}">12세</option>
+                    <option value="15" th:selected="${show.showRating == '15'}">15세</option>
+                    <option value="19" th:selected="${show.showRating == '19'}">19세</option>
                 </select>
                 <span class="title input">좌석 수</span>
                 <input type="text" class="input-price-field input" value="123석" readonly style="width: 51px;"/>

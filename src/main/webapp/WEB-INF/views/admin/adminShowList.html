@@ -51,7 +51,7 @@
 					<td class="showNum" th:text=${show.showNo}>1</td>
 					<td class="showCate" th:text=${show.showCate}>뮤지컬</td>
 					<td class="showTitle">
-    					<a th:href="@{/admin/showDetail/{showNo}(showNo=${show.showNo})}" th:text="${show.showTitle}">공연 제목 인데</a>
+    					<a th:href="@{/admin/showDetail(showNo=${show.showNo})}" th:text="${show.showTitle}">공연 제목 인데</a>
 					</td>
 					<td class="showActor" th:text=${show.showNo}>ㅇㅇㅇ 외3인</td>
 					<td class="showStartDate" th:text=${show.startDate}>24.12.15</td>

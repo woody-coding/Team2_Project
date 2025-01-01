@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="/js/jquery-3.7.1.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
@@ -232,7 +233,40 @@
     cursor: pointer; /* hover 시 커서 변경 */
 }
 
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 </style>
+
 </head>
 <body>
     <form action="/admin/showInsert" method="post" enctype="multipart/form-data">
@@ -241,7 +275,7 @@
                 <div class="poster" id="poster">
                     사진을 선택해주세요
                 </div>
-                <input type="file" id="fileInput" name="showImage" style="display: none;" accept=".jpg, .jpeg, .png"/>
+                <input type="file" name="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .png"/>
             </div>
             <div class="showInfoBox" style="margin-left: 50px;margin-right: 50px;">
                 <div class="title-input-container">
@@ -252,20 +286,30 @@
                     <span class="title">공연 장소</span>
                     <input type="text" name="showPlace" class="place-field input" value="고정 장소" readonly style="width: 280px;"/>
                 </div>
+                <div class="category-container">
+                    <span class="title">공연 카테고리</span>
+                    <select name="showCate" class="input" required>
+                        <option value="">선택하세요</option>
+                        <option value="뮤지컬">뮤지컬</option>
+                        <option value="연극">연극</option>
+                        <option value="콘서트">콘서트</option>
+                        <option value="기타">기타</option>
+                    </select>
+                </div>
                 <div class="date-container">
                     <span class="title">공연 기간</span>
                     <input type="text" id="startDateField" name="startDate" class="start-date-field input" placeholder="시작 날짜" readonly style="width: 115px; margin-right: 8px;"/>
                     <span class="title">~</span>
                     <input type="text" id="endDateField" name="endDate" class="end-date-field input" placeholder="종료 날짜" readonly style="width: 115px; margin-left: 8px;"/>
+                	<input type="hidden" name="openDate" id="openDateField" />
                 </div>
                 <div class="count-container">
     				<span class="title">회 차</span>
-    
 				    <input type="text" id="countInput1" class="input-field input" value="1회" readonly style="margin-left: 54px; margin-right: 16px;" />
-    <input type="time" id="timeInput1" name="showPlayTime" step="3600" required style="display: inline-block;" />
-
-    <input type="text" id="countInput2" class="input-field input" value="2회" readonly />
-    <input type="time" id="timeInput2" name="showPlayTime2" step="3600" required style="display: inline-block;" />
+    <input type="time" id="timeInput1" name="showStartTime" step="3600" required style="display: inline-block;" />
+					<span class="title">러닝 타임</span>
+                    <input type="text" id="playtime" name="showPlayTime" class="input-showPlayTime-field input" placeholder="몇분" style="width: 100px; margin-left: 53px;">
+                    <span class="minute">분</span>
 				</div>
 
                 <div class="age-seat-container">
@@ -284,16 +328,6 @@
                     <input type="text" id="inputPriceField" name="showPrice" class="input-price-field input" placeholder="가격" style="width: 100px; margin-left: 53px;">
                     <span class="won">원</span>
                 </div>  
-                <div class="category-container">
-                    <span class="title">공연 카테고리</span>
-                    <select name="showCate" class="input" required>
-                        <option value="">선택하세요</option>
-                        <option value="뮤지컬">뮤지컬</option>
-                        <option value="연극">연극</option>
-                        <option value="콘서트">콘서트</option>
-                        <option value="기타">기타</option>
-                    </select>
-                </div>
             </div>
             <div class="calender-container" style="border: 1px solid #dddddd;height: 285px;margin-top: -22px;border-radius: 6px;width: 320px;">
                 <div class="calendar-header">
@@ -306,19 +340,66 @@
             <button type="button" id="resetSelection" class="fixed-button">재선택</button>    
         </section>
         <section class="actor-area">
-            <div class="actor-container">
-                <span class="title title-actor" style="margin-right: 1002px;">출연 배우</span>
-                <div class="actor-input-container">
-                    <!-- 배우 정보 입력 -->
+        <div class="actor-container">
+            <span class="title title-actor" style="margin-right: 1002px;">출연 배우</span>
+            <div class="actor-input-container">
+                <div class="actBox">
+                    <div class="actImg">
+                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
+                    </div>
+                    <div class="actName" style="margin-top: 10px;">박상철</div>
+                </div>
+                <div class="actBox">
+                    <div class="actImg">
+                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
+                    </div>
+                    <div class="actName" style="margin-top: 10px;">이름이</div>
+                </div>
+                <div class="actBox">
+                    <div class="actImg">
+                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
+                    </div>
+                    <div class="actName" style="margin-top: 10px;">이름이</div>
+                </div>
+                <div class="actBox">
+                    <div class="actImg">
+                        <img alt="" src="" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
+                    </div>
+                    <div class="actName" style="margin-top: 10px;">이름이</div>
+                </div>
+                <div class="actBox">
+                    <div class="actImg">
+                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
+                    </div>
+                    <div class="actName" style="margin-top: 10px;">이름이</div>
+                </div>
+                <div class="actBox">
+                    <div class="actImg">
+                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
+                    </div>
+                    <div class="actName" style="margin-top: 10px;">이름이</div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
         <section class="show-text-area">
             <div class="show-text-container" style="margin-top: 62px;margin-left: -85px;">
                 <span class="title title-actor">공연 정보</span>
                 <textarea name="showInfo" class="show-text-field" placeholder="공연정보를 입력해 주세요" style="width: 993px; height: 250px; display: block; margin-top: 10px; resize: none;" ></textarea>
                 <button type="submit" class="register-button" style="margin-left: 93.3%;margin-top: 20px;padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">등록</button>
             </div>
+            <!-- 모달 컨테이너 -->
+<div id="actorModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <div class="search-bar">
+            <input type="text" id="actorSearchInput" placeholder="배우 이름을 입력하세요">
+            <button id="actorSearchButton">검색</button>
+        </div>
+        <div class="separator"></div>
+        <section class="actor-area" id="actorSearchResults"></section>
+    </div>
+</div>
         </section>
     </form>
     <script>
@@ -350,7 +431,7 @@
                 var selectedTime = this.value; // 선택된 시간
                 var formattedTime = selectedTime + ':00'; // 분 단위를 항상 00으로 설정
 
-                document.getElementById(countInputId).value = (countInputId === 'countInput1' ? '1회 ' : '2회 ') + formattedTime;
+                document.getElementById(countInputId).value = (countInputId === '1회 ') + formattedTime;
                 // 필요에 따라 시간 입력 필드를 숨길 수 있습니다.
                 // this.style.display = 'none'; // 필드를 숨김 (선택적으로 사용)
             });
@@ -358,7 +439,6 @@
 
         // 각 회차에 대해 시간 입력 필드 설정
         setupTimeInput('countInput1', 'timeInput1');
-        setupTimeInput('countInput2', 'timeInput2');
 
         document.getElementById('inputPriceField').addEventListener('input', function(e) {
             // 숫자만 남기기
@@ -478,13 +558,79 @@
 	// 초기 달력 렌더링
 	renderCalendar();
 	
-	// Add event listeners to each actBox
-	document.querySelectorAll('.actBox').forEach(function(actBox) {
-	    actBox.addEventListener('click', function() {
-	        // Open a new window with specified dimensions
-	        window.open('', 'ActorPopup', 'width=350,height=350');
+	
+	document.addEventListener('DOMContentLoaded', function () {
+	    // actBox 클릭 이벤트 위임
+	    document.querySelector('.actor-input-container').addEventListener('click', function (event) {
+	        const actBox = event.target.closest('.actBox'); // 클릭한 요소의 부모 중 .actBox 찾기
+	        if (actBox) {
+	            console.log('Clicked on actBox:', actBox); // 디버깅용
+	            openActorModal(actBox); // 모달 열기
+	        }
 	    });
+
+	    // 모달 열기
+	    function openActorModal(actBox) {
+	        const actorName = actBox.querySelector('.actName').textContent; // 배우 이름 가져오기
+	        const actorImage = actBox.querySelector('.actImg img').src; // 배우 이미지 가져오기
+
+	        const modal = document.getElementById('actorModal');
+	        modal.style.display = 'flex'; // 모달 보이기
+
+	        // 모달에 배우 정보 표시
+	        modal.querySelector('.modal-actor-name').textContent = actorName;
+	        modal.querySelector('.modal-actor-image').src = actorImage;
+
+	        console.log(`Modal opened for actor: ${actorName}`);
+
+	        // 모달 닫기 버튼
+	        modal.querySelector('.close-button').addEventListener('click', function () {
+	            closeActorModal();
+	        });
+
+	        // 모달 외부 클릭 시 닫기
+	        modal.addEventListener('click', function (event) {
+	            if (event.target === modal) {
+	                closeActorModal();
+	            }
+	        });
+	    }
+
+	    // 모달 닫기
+	    function closeActorModal() {
+	        const modal = document.getElementById('actorModal');
+	        modal.style.display = 'none'; // 모달 숨기기
+	        console.log('Modal closed');
+	    }
 	});
+
+    // 날짜를 yyyy-mm-dd 형식으로 파싱하는 함수
+    function parseDate(dateString) {
+        var parts = dateString.split('-');
+        return new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+
+    // startDate를 기준으로 7일 전 날짜 계산
+    function calculateOpenDate() {
+        var startDateField = document.getElementById('startDateField');
+        var startDate = startDateField.value;
+
+        if (startDate) {
+            var startDateObj = parseDate(startDate);
+            var openDateObj = new Date(startDateObj);  // startDate 복제
+            openDateObj.setDate(startDateObj.getDate() - 7);  // 7일 전으로 설정
+
+            // openDateField에 계산된 날짜 설정
+            var openDateField = document.getElementById('openDateField');
+            var formattedDate = openDateObj.toISOString().split('T')[0];  // yyyy-mm-dd 형식
+            openDateField.value = formattedDate;
+        }
+    }
+
+    // startDate가 변경될 때마다 openDate를 계산하도록 설정
+    document.getElementById('startDateField').addEventListener('change', calculateOpenDate);
+	
+
 </script>
 </body>
 </html>
