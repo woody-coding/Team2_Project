@@ -379,17 +379,6 @@
 			day.addEventListener('click', event => event.preventDefault());
 		});
 
-		// Disable actor box popup
-		document.querySelectorAll('.actBox').forEach(actBox => {
-			actBox.addEventListener('click', event => event.preventDefault());
-		});
-
-		// Disable file input popup
-		document.getElementById('poster').addEventListener('click', event => event.preventDefault());
-
-		document.getElementById('poster').addEventListener('click', function() {
-			document.getElementById('fileInput').click();
-		});
 
 		function setupTimeInput(countInputId, timeInputId, previousTimeInputId) {
 			document.getElementById(countInputId).addEventListener('click', function() {
@@ -397,32 +386,9 @@
 				timeInput.style.display = 'block';
 				timeInput.focus();
 			});
-
-			document.getElementById(timeInputId).addEventListener('change', function() {
-				var selectedTime = this.value;
-				var [hour, minute] = selectedTime.split(':');
-				var formattedTime = hour + ':00';
-
-				if (previousTimeInputId) {
-					var previousTime = document.getElementById(previousTimeInputId).value;
-					var [prevHour, prevMinute] = previousTime.split(':');
-					var prevTimeInMinutes = parseInt(prevHour) * 60 + parseInt(prevMinute);
-					var selectedTimeInMinutes = parseInt(hour) * 60;
-
-					if (selectedTimeInMinutes <= prevTimeInMinutes || selectedTimeInMinutes - prevTimeInMinutes < 120) {
-						alert('2회차 시간은 1회차 시간보다 최소 3시간 이상 차이가 나야 합니다.');
-						this.value = '';
-						return;
-					}
-				}
-
-				document.getElementById(countInputId).value = (countInputId === 'countInput1' ? '1회 ' : '2회 ') + formattedTime;
-				this.style.display = 'none';
-			});
 		}
 
 		setupTimeInput('countInput1', 'timeInput1');
-		setupTimeInput('countInput2', 'timeInput2', 'timeInput1');
 
 		document.getElementById('inputPriceField').addEventListener('input', function(e) {
 			// 숫자만 남기기
@@ -461,37 +427,44 @@ function renderCalendar() {
         dayCell.classList.add('day');
         const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         dayCell.setAttribute('data-date', dateStr);
-
-        const selectedDate = new Date(dateStr);
-
-
-    
-
         calendarDays.appendChild(dayCell);
+    }
+
+    highlightSelectedDates();
+}
+
+function highlightSelectedDates() {
+    const startDate = document.getElementById('startDateField').value;
+    const endDate = document.getElementById('endDateField').value;
+
+    // 시작 날짜와 종료 날짜가 존재할 때만 실행
+    if (startDate && endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        document.querySelectorAll('.day').forEach(day => {
+            const dayDate = new Date(day.getAttribute('data-date'));
+
+            // 시작 날짜 이전과 종료 날짜 이후의 날짜를 회색으로 변경
+            if (dayDate < start || dayDate > end) {
+                day.classList.add('disabled'); // 회색으로 표시
+                day.classList.remove('selected'); // 강조 해제
+            } else {
+                day.classList.remove('disabled'); // 기본 상태로 복원
+                if (dayDate >= start && dayDate <= end) {
+                    day.classList.add('selected'); // 강조 표시
+                } else {
+                    day.classList.remove('selected'); // 강조 해제
+                }
+            }
+        });
     }
 }
 
-document.getElementById('prevMonth').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar();
-});
+document.getElementById('startDateField').addEventListener('change', highlightSelectedDates);
+document.getElementById('endDateField').addEventListener('change', highlightSelectedDates);
 
-document.getElementById('nextMonth').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    renderCalendar();
-});
 
-document.getElementById('resetSelection').addEventListener('click', () => {
-    // 선택 초기화
-    isStartDateSelected = false;
-    startDate = null;
-    endDate = null;
-    document.getElementById('startDateField').value = '';
-    document.getElementById('endDateField').value = '';
-    document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
-    document.querySelectorAll('.disabled').forEach(el => el.classList.remove('disabled'));
-    document.querySelectorAll('.selected-range').forEach(el => el.classList.remove('selected-range'));
-});
 
 // 초기 달력 렌더링
 renderCalendar();
