@@ -253,9 +253,12 @@
                     <select name="showCate" th:field="*{showCate}" class="input" disabled>
                         <option value="">선택하세요</option>
                         <option value="뮤지컬" th:selected="${show.showCate == '뮤지컬'}">뮤지컬</option>
+                        <option value="콘서트" th:selected="${show.showCate == '콘서트'}">연극</option>
+                        <option value="스포츠" th:selected="${show.showCate == '스포츠'}">콘서트</option>
+                        <option value="전시/행사" th:selected="${show.showCate == '전시/행사'}">전시/행사</option>
+                        <option value="클래식" th:selected="${show.showCate == '클래식'}">클래식</option>
+                        <option value="아동/가족" th:selected="${show.showCate == '아동/가족'}">아동/가족</option>
                         <option value="연극" th:selected="${show.showCate == '연극'}">연극</option>
-                        <option value="콘서트" th:selected="${show.showCate == '콘서트'}">콘서트</option>
-                        <option value="기타" th:selected="${show.showCate == '기타'}">기타</option>
                     </select>
                 </div>
             <div class="date-container">
@@ -269,13 +272,13 @@
                 <input type="text" id="countInput1" class="input-field input" th:value="'1회 ' + ${show.showStartTime}" readonly style="margin-left: 54px;margin-right: 16px;"/>
                 <input type="time" id="timeInput1" style="display: none;" step="3600" />
                 <span class="title">러닝 타임</span>
-                    <input type="text" id="playtime" th:value="${show.showPlayTime}" class="input-showPlayTime-field input" placeholder="몇분" style="width: 100px; margin-left: 53px;">
+                    <input type="text" id="playtime" th:value="${show.showPlayTime}" class="input-showPlayTime-field input" placeholder="몇분" style="width: 42px; margin-left: 10px;">
                     <span class="minute">분</span>
             </div>
             <div class="age-seat-container">
                 <span class="title">관람 연령</span>
                 <select id="ageSelect" th:field="*{showRating}" class="age-select input" style="margin-left: 17px;" disabled>
-                    <option value="all" th:selected="${show.showRating == 'all'}">전체 이용가</option>
+                    <option value="all" th:selected="${show.showRating == '전체 이용가'}">전체 이용가</option>
                     <option value="12" th:selected="${show.showRating == '12'}">12세</option>
                     <option value="15" th:selected="${show.showRating == '15'}">15세</option>
                     <option value="19" th:selected="${show.showRating == '19'}">19세</option>
