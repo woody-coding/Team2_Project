@@ -2,12 +2,14 @@ package com.team2.project.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,23 +17,30 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kakao.app.KakaoAPI;
+import com.team2.project.DTO.LoginDTO;
 import com.team2.project.model.Member;
 import com.team2.project.repository.MemberRepository;
+import com.team2.project.service.MemberService;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+
 
 @RestController
 @RequestMapping()
 @Controller
+@RequiredArgsConstructor
 public class MemberController {
 	
 	
 	@Autowired
 	private MemberRepository memberRepo;
 	
+	private final MemberService memberService;
+	
 	KakaoAPI kakaoApi = new KakaoAPI();
 	
-	@GetMapping(value="/login")
+	@GetMapping(value="/kakaologin")
 	public ModelAndView login(@RequestParam("code") String code, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		// 1번 인증코드 요청 전달
@@ -81,11 +90,20 @@ public class MemberController {
 		mav.setViewName("redirect:/");
 		return mav;
 	}
-	@PostMapping("/login")
-	public ModelAndView login() {
-		
+	
+	@PostMapping("login")
+	public ModelAndView login(LoginDTO dto, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		return mav;
+		Optional<Member> Memberlogin = memberService.getMemberLoginCheck(dto);
+		System.out.println(dto.toString());
+		if(Memberlogin.isEmpty()) {
+			mav.setViewName("redirect:/");
+			return mav;
+		}
+		else {
+			System.out.println("로그인 완료");;
+			session.setAttribute("login", Memberlogin);
+			return mav;
+		}
 	}
-
 }	

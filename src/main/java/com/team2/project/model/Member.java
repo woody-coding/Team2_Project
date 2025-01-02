@@ -1,12 +1,14 @@
 package com.team2.project.model;
 
 import java.util.Date;
+import java.util.Optional;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -23,7 +25,8 @@ public class Member {
 	
 	@Id
 	@Column(name="MEMBER_NO", nullable=false)
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "memberno_seq")
+    @SequenceGenerator(name = "memberno_seq", sequenceName = "MULTI24_MEMBERNO_SEQ", allocationSize = 1)
 	private int memberNo;
 	
 	@Column(name="MEMBER_ID", nullable=false)
@@ -66,6 +69,8 @@ public class Member {
 		this.memberStatus = memberStatus;
 		this.memberDate = memberDate;
 	}
+
+
 
 	
 	
