@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kakao.app.KakaoAPI;
+import com.team2.project.DTO.FindDTO;
 import com.team2.project.DTO.LoginDTO;
 import com.team2.project.model.Member;
 import com.team2.project.repository.MemberRepository;
@@ -90,20 +91,48 @@ public class MemberController {
 		mav.setViewName("redirect:/");
 		return mav;
 	}
-	
 	@PostMapping("login")
 	public ModelAndView login(LoginDTO dto, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Optional<Member> Memberlogin = memberService.getMemberLoginCheck(dto);
-		System.out.println(dto.toString());
 		if(Memberlogin.isEmpty()) {
 			mav.setViewName("redirect:/");
 			return mav;
 		}
 		else {
-			System.out.println("로그인 완료");;
+			System.out.println("로그인 완료");
+			//System.out.println(dto.getID());
 			session.setAttribute("login", Memberlogin);
 			return mav;
+		}
+	}
+	@PostMapping("searchId")
+	public String findId(FindDTO dto) {
+		//ModelAndView mav = new ModelAndView();
+		Optional<Member> findId = memberService.FindId(dto);
+		if(findId.isEmpty()) {
+			//mav.setViewName("redirect:/findID");
+			return "조회된 ID가 없습니다.";
+		}
+		else {
+			System.out.println("조회 완료");
+			System.out.println(findId);
+			return "조회된 ID : "+findId.get().getMemberId();
+		}
+	}
+	@PostMapping("searchIdPW")
+	public String findIdPW(FindDTO dto) {
+		//ModelAndView mav = new ModelAndView();
+		Optional<Member> findIdPw = memberService.FindIdPw(dto);
+		if(findIdPw.isEmpty()) {
+			//mav.setViewName("redirect:/findPW");
+			return "조회된 PW가 없습니다.";
+		}
+		else {
+			System.out.println("조회 완료");
+			System.out.println(findIdPw);
+			return 	"조회된 ID : "+findIdPw.get().getMemberId()+"\n"  
+					+ "조회된 PW : "+findIdPw.get().getMemberPw();
 		}
 	}
 }	
