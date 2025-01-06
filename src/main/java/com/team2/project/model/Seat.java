@@ -49,4 +49,12 @@ public class Seat {
 	@JoinColumn(name = "SHOW_NO" , insertable = false, updatable = false)
 	private Show show;
 
+	//Show Entity에 있던 total,left seat 컬럼 이동
+
+	@Column(name = "TOT_SEAT", nullable = false)
+	private int totSeat;
+	
+	@Column(name = "LEFT_SEAT", nullable = false)
+	private int leftSeat;
+
 }
