@@ -131,7 +131,7 @@ public class MemberController {
 		else {
 			System.out.println("조회 완료");
 			System.out.println(findIdPw);
-			return 	"조회된 ID : "+findIdPw.get().getMemberId()+"\n"  
+			return 	"조회한 ID : "+findIdPw.get().getMemberId()+"\n"  
 					+ "조회된 PW : "+findIdPw.get().getMemberPw();
 		}
 	}
