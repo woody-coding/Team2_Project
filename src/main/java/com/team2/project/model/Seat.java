@@ -64,4 +64,4 @@ public class Seat {
     @ManyToOne // 하나의 결제에 여러 개의 좌석이 연결될 수 있음
     @JoinColumn(name = "PAYMENT_ID", nullable = true) // 외래 키 설정 (결제 ID), null 허용
     private Payment payment;
-}
+
