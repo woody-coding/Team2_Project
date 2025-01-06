@@ -50,12 +50,6 @@ public class Show {
 	@Column(name = "SHOW_INFO", length = 4000, nullable = false)
 	private String showInfo;
 	
-	@Column(name = "TOT_SEAT", nullable = false)
-	private int totSeat;
-	
-	@Column(name = "LEFT_SEAT", nullable = false)
-	private int leftSeat;
-	
 	@Column(name = "SHOW_CATE", length = 30, nullable = false)
 	private String showCate;
 	
@@ -75,9 +69,11 @@ public class Show {
 	@Column(name = "FILE_NO") 
 	private String fileNo;
 
-	//추가?
+	//추가 - 수빈님요청으로 추가된 컬럼
 	@Column(name = "OPEN_DATE", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date openDate;
+
+	//Show Entity에 있던 total,left seat 컬럼 Seat Entity로 이동
 
 }
