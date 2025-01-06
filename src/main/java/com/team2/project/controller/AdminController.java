@@ -29,10 +29,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -123,6 +125,7 @@ public class AdminController {
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalShows", totalShows);
+		
 		return "admin/adminShowList";
 	}
 
@@ -181,7 +184,7 @@ public class AdminController {
 	        // Calculate openDate as 7 days before startDate
 	        Calendar calendar = Calendar.getInstance();
 	        calendar.setTime(show.getStartDate());
-	        calendar.add(Calendar.DAY_OF_YEAR, -7);
+	        calendar.add(Calendar.DAY_OF_YEAR, -20);
 	        Date openDate = calendar.getTime();
 	        
 	        // Set the calculated openDate to the Show object
@@ -211,6 +214,9 @@ public class AdminController {
 	        show.setFileNo(showActorFile.getFileNo());
 	        adminShowService.saveShow(show);
 	        
+	        //중간날짜 좌석 생성
+	        adminShowService.createSeatsForShow(show);
+	        
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	        return "redirect:/admin/showInsertForm?error=uploadFailed";
@@ -219,14 +225,18 @@ public class AdminController {
 	    return "redirect:/admin/showList";
 	}
 
-	
-	@GetMapping("/actorSearch")
-    @ResponseBody // JSON 응답을 반환할 경우 필요
-    public List<Actor> actorSearch() {
-        // 데이터 처리 로직
-        return adminActorService.findAllActor(Sort.by(Sort.Direction.DESC,"actorNo")); // 예시로 모든 배우를 반환
-    }
+	@RequestMapping("/searchActor")
+	@ResponseBody
+	public List<Actor> searchActor(@RequestParam String actorName) {
+	    if (actorName == null || actorName.trim().isEmpty()) {
+	        return new ArrayList<>();  // 검색어가 없는 경우 빈 리스트 반환
+	    }
 
+	    List<Actor> actors = adminActorService.findAllActor(Sort.by(Sort.Direction.DESC, "actorNo"));
+	    return actors.stream()
+	                 .filter(actor -> actor.getActorName().contains(actorName))
+	                 .collect(Collectors.toList());
+	}
 
 	
 	

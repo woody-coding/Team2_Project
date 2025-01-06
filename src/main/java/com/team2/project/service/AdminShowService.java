@@ -4,16 +4,22 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.team2.project.model.Seat;
 import com.team2.project.model.Show;
 import com.team2.project.model.ShowActorFile;
+import com.team2.project.model.id.SeatId;
 import com.team2.project.repository.AdminShowRepository;
+import com.team2.project.repository.SeatRepository;
 import com.team2.project.repository.ShowActorFileRepository;
 
 @Service
@@ -24,6 +30,52 @@ public class AdminShowService {
 	
 	@Autowired
 	ShowActorFileRepository showActorFileRepository;
+	
+	@Autowired
+	private SeatRepository seatRepository;
+	
+	@Transactional
+	public void createSeatsForShow(Show show) {
+	    LocalDate startDate = show.getStartDate().toInstant()
+	                                .atZone(ZoneId.systemDefault())
+	                                .toLocalDate();
+	    LocalDate endDate = show.getEndDate().toInstant()
+	                            .atZone(ZoneId.systemDefault())
+	                            .toLocalDate();
+
+	    List<Seat> seats = new ArrayList<>();
+	    for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+	        for (int seatNo = 1; seatNo <= 20; seatNo++) { // 좌석 번호 1~20
+	            // 복합 키 객체 생성
+	            SeatId seatId = new SeatId(seatNo, show.getShowNo(), java.sql.Date.valueOf(date));
+	            
+	            // 중복 체크
+	            if (!seatRepository.existsById(seatId)) {
+	                Seat seat = new Seat();
+	                seat.setSeatNo(seatNo); // 각 필드 개별 설정
+	                seat.setShowNo(show.getShowNo());
+	                seat.setShowDate(java.sql.Date.valueOf(date));
+	                seat.setSeatSpace("A" + seatNo);
+	                seat.setIsBook("N"); // 기본값: 예약되지 않음
+	                seat.setTotSeat(20);
+	                seat.setLeftSeat(20);
+	                seat.setShowTime(show.getShowStartTime());
+	                seats.add(seat);
+	            } else {
+	                System.out.println("중복된 좌석: " + seatNo + ", 날짜: " + date);
+	            }
+	        }
+	    }
+	    // 일괄 저장
+	    if (!seats.isEmpty()) {
+	        seatRepository.saveAll(seats);
+	    } else {
+	        System.out.println("저장할 좌석이 없습니다.");
+	    }
+	}
+
+
+
 	
 	
 	public List<Show> findAllShow(Sort sort){
