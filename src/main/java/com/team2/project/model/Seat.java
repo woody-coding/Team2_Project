@@ -65,3 +65,4 @@ public class Seat {
     @JoinColumn(name = "PAYMENT_ID", nullable = true) // 외래 키 설정 (결제 ID), null 허용
     private Payment payment;
 
+}
