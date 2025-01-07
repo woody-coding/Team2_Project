@@ -5,17 +5,13 @@ import java.util.HashMap;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.kakao.app.KakaoAPI;
 import com.team2.project.DTO.FindDTO;
 import com.team2.project.DTO.LoginDTO;
@@ -133,6 +129,16 @@ public class MemberController {
 			System.out.println(findIdPw);
 			return 	"조회한 ID : "+findIdPw.get().getMemberId()+"\n"  
 					+ "조회된 PW : "+findIdPw.get().getMemberPw();
+		}
+	}
+	
+	@PostMapping("idchk")
+	public boolean idchk(String id) {
+		Optional<Member> idchk = memberService.idchk(id);
+		if(idchk.isEmpty()) {
+			return false;
+		}else {
+			return true;
 		}
 	}
 }	
