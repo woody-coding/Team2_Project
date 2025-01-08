@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1대1 문의접수 조회</title>
+    <link rel="stylesheet" href="inquiry-view.css" th:href="@{/css/inquiry/inquiry-view.css}"/>
+    <script src="inquiry-view.js" th:src="@{/js/inquiry/inquiry-view.js}"></script>
+</head>
+<body>
+    <div class="inquiry-container">
+        <div class="head-box">
+            <div><h2>1:1문의</h2></div>
+            <form class="inquiry-header" th:action="@{/inquiry/findByDate}" method="get">
+                <div class="select-wrapper">
+                    <select id="inquiry-type" class="custom-date" name="inquiryCategory">
+                        <option value="" selected>직접설정</option>
+                        <option value="inquiryView10s">10초</option>
+                        <option value="inquiryView1m">1개월</option>
+                        <option value="inquiryView3m">3개월</option>
+                    </select>
+                    <span id="selectArrow" class="select-arrow">&#9660;</span>
+                </div>
+                
+                <div>
+                    <button type="button" class="date-range">
+                        <input class="date-text" type="date" name="startDate">시작 날짜 선택</input><span> &#128197;</span>
+                    </button>
+                </div>
+                <div class="dateBetween">~</div>
+                <div>
+                    <button type="button" class="date-range">
+                        <input class="date-text" type="date" name="endDate">종료 날짜 선택</input><span> &#128197;</span>
+                    </button>
+                </div>
+                <div><button type="submit" class="search-button">조회</button></div>
+                <div>
+                    <a th:href="@{/inquiry/add}" class="inquiry-active">1:1 문의하기</a>
+                </div>
+            </form>
+
+            <div class="calendar">
+                <div class="calendar-header">
+                    <button id="prevMonth">&lt;</button>
+                    <span id="monthYear">December 2024</span>
+                    <button id="nextMonth">&gt;</button>
+                </div>
+                <div class="calendar-days" id="calendarDays"></div>
+            </div>
+
+            <div class="inquiry-notice"><span>1:1 문의 내역 조회는 최대 3개월까지 가능합니다.</span></div>
+        </div>
+
+        <div class="inquiry-board">
+            <div class="process-tab">
+                <div class="process-button" th:onclick="'location.href=\'' + @{/inquiry(status=ALL)} + '\''">전체</div>
+                <div class="process-button" th:onclick="'location.href=\'' + @{/inquiry(status=PROCESSING)} + '\''">처리중</div>
+                <div class="process-button" th:onclick="'location.href=\'' + @{/inquiry(status=CHOSEN)} + '\''">답변완료</div>
+            </div>
+            <hr>
+
+            <!-- 문의 내역 반복 -->
+            <div th:if="${#lists.isEmpty(inquirys)}">
+                <p style="text-align: center;">문의 내역이 없습니다.</p>
+            </div>
+            <div th:if="${not #lists.isEmpty(inquirys)}" th:each="inquiry : ${inquirys}" class="answer-box">
+                <div class="answer-menu">
+                    <div 
+                        th:class="${inquiry.inquiryStatus.name() == 'ANSWER_PROCESSING' ? 'answer-button answerProcessing' : 'answer-button answerChosen'}"
+                        th:text="${inquiry.inquiryStatus.name() == 'ANSWER_PROCESSING' ? '처리중' : inquiry.inquiryStatus.name() == 'ANSWER_CHOSEN' ? '답변완료' : ''}">
+                    </div>
+                    <span class="separator">|</span>
+                    <div 
+                        th:text="${inquiry.inquiryCategory.name() == 'RESERVATION' ? '예매/결제/환불' : 
+                                  inquiry.inquiryCategory.name() == 'TICKET' ? '티켓/공연정보' : 
+                                  inquiry.inquiryCategory.name() == 'MEMBER' ? '회원정보서비스' : 
+                                  inquiry.inquiryCategory.name() == 'SYSTEM' ? '시스템 불편사항' : '기타'}">
+                    </div>
+                </div>
+
+                <div class="inquiry-titlebar">
+                    <div class="inquiry-title"><h3 th:text="${inquiry.inquiryTitle}">사이트가 불편해요</h3></div>
+                    <div class="contentDate" th:text="${#temporals.format(inquiry.inquiryDate, 'MM.dd')}">12.17</div>
+                    <div class="open-close"> &#9660;</div>
+                </div>
+
+                <div class="content-open content-close" style="display : none">
+                    <div class="inquiry-content"><p th:text="${inquiry.inquiryContent}">사이트가 전반적으로 불편한것같아요 ㅠㅠㅠㅠㅠ (추후 이미지 첨부)</p>
+
+                        <!-- 업로드된 이미지 표시 -->
+                        <div th:if="${not #lists.isEmpty(inquiry.inquiryFiles)}">
+                            <ul>
+								<img th:src="@{/uploads/{fileName}(fileName=${file.inquiryStoreFileName})}" alt="" style="width: 120px; height: 120px;">
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="button-align">
+                        <div th:if="${inquiry.inquiryStatus.name() == 'ANSWER_PROCESSING'}">
+                            <button 
+                                th:onclick="'location.href=\'' + @{/inquiry/edit/{id}(id=${inquiry.inquiryNo})} + '\''"  
+                                class='inquiry-modify'>수정</button>
+                        </div>
+                        <form th:action="@{/inquiry/delete/{id}(id=${inquiry.inquiryNo})}" method='post'>
+                            <button type='submit' class='inquiry-delete'>삭제</button> 
+                        </form> 
+                    </div>
+                </div> 
+                
+                <div class="answer-content" th:if="${inquiry.inquiryStatus.name() == 'ANSWER_CHOSEN'}">
+                    <span><h4 class="answer-icon"> 답변</h4></span>
+                    <p th:text="${inquiry.inquiryAnswer}">안녕하세요, 고객님 문의주신 내용확인하였습니다. 말씀주신 사항은 내부 전달드려 개선될수있도록 하겠습니다. 소중한 의견 감사합니다.</p>
+                </div>
+            </div>
+
+            <hr class='contentLine'>
+        </div>
+    </div>        
+</body>
+</html>

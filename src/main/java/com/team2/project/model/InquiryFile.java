@@ -25,23 +25,25 @@ public class InquiryFile {
 	@Id
 	@Column(name = "INQUIRY_FILE_NO")
 	private String inquiryFileNo;
+
+	@Column(name = "INQUIRY_FILE_NAME", nullable = false, length = 255)
+	private String inquiryFileName;
+	
+	@Column(name = "INQUIRY_STORE_FILE_NAME", nullable = false, length = 255)
+	private String inquiryStoreFileName;
 	
 	@ManyToOne
-	@JoinColumn(name = "INQUIRY_NO", insertable = false, updatable = false)
+	@JoinColumn(name = "INQUIRY_NO", updatable = false)
 	private Inquiry inquiry;
 	
 	@Column(name = "INQUIRY_FILE_PATH", nullable = false, length = 255)
 	private String inquiryFilePath;
-	
-	@Column(name = "INQUIRY_FILE_NAME", nullable = false, length = 255)
-	private String inquiryFileName;
 	
 	@Column(name = "INQUIRY_FILE_DATE", nullable = false)
 	private LocalDate inquiryFileDate;
 	
 	public InquiryFile() {
 		this.inquiryFileNo = UUID.randomUUID().toString();
-		this.inquiryFileDate = LocalDate.now();
 	}
 	
 }
