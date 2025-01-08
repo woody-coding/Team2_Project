@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>토스페이먼츠 결제 진행 중</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .box_section {
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+<div class="box_section" style="width: 600px">
+    <div class="spinner"></div>
+    <h2>결제가 진행 중입니다</h2>
+
+    <div class="p-grid typography--p" style="margin-top: 20px">
+        <div class="p-grid-col text--center">잠시만 기다려 주세요...</div>
+    </div>
+</div>
+
+<div style="display: none;">
+    <span id="showDate" th:text="${showDate}"></span>
+    <span id="showNo" th:text="${showNo}"></span>
+    <span id="seatNo1" th:text="${seatNo1}"></span>
+    <span id="seatNo2" th:if="${seatNo2 != null}" th:text="${seatNo2}"></span>
+</div>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    const seatNo1 = document.getElementById("seatNo1").textContent;
+    
+    const seatNo2Element = document.getElementById("seatNo2");
+    const seatNo2 = seatNo2Element ? seatNo2Element.textContent : '0';
+    
+    const showNo = document.getElementById("showNo").textContent;
+    const showDate = document.getElementById("showDate").textContent;
+    console.log("Processing seatNo1 : " + seatNo1);
+    console.log("Processing seatNo2 : " + seatNo2);
+    console.log("Processing showNo : " + showNo);
+    console.log("Processing showDate : " + showDate);
+                   
+    async function confirm() {
+      var requestData = {
+        paymentKey: urlParams.get("paymentKey"),
+        orderId: urlParams.get("orderId"),
+        amount: urlParams.get("amount"),
+      };
+
+      const response = await fetch("/payment/confirm?showNo=" + showNo +  "&showDate=" + showDate + "&seatNo1=" + seatNo1 + "&seatNo2=" + seatNo2, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw { message: json.message, code: json.code };
+      }
+
+      return json;
+    }
+
+    confirm()
+      .then(function (data) {
+        window.location.href = '/payment/approve/success?paymentId=' + data.paymentId;
+      })
+      .catch((err) => {
+        window.location.href = '/payment/approve/fail';
+      });
+</script>
+</body>
+</html>

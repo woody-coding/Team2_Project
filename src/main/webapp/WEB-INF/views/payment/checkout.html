@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png" />
+    <link rel="stylesheet" th:href="@{/css/payment/payment.css}"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>토스페이먼츠 결제</title>
+	<style>
+		#payment-method {
+		    display: flex;
+		    justify-content: space-between;
+		    width: 100%;
+		    margin-top: 20px;
+		}
+
+		.button2 {
+		    flex: 1;
+		    margin: 0 5px;
+		    padding: 10px;
+		    font-size: 16px;
+		    cursor: pointer;
+		    border: 1px solid #ccc;
+		    background-color: #f8f8f8;
+		    border-radius: 4px;
+		}
+
+		.button2:first-child {
+		    margin-left: 0;
+		}
+
+		.button2:last-child {
+		    margin-right: 0;
+		}
+	</style>
+    <!-- SDK 추가 -->
+    <script src="https://js.tosspayments.com/v2/standard"></script>
+</head>
+
+<body>
+	
+<!-- 세션이 저장된 로그인한 회원 -->
+<div id="sessionId" th:data-member-no="${session.login.memberNo}"></div>	
+
+
+<!-- 주문서 영역 -->
+<div class="wrapper">
+    <div class="box_section" style="padding: 40px 30px 50px 30px; margin-top: 30px; margin-bottom: 50px">
+        <h1>일반 결제</h1>
+        <!-- 결제 UI -->
+        <div id="payment-method" style="display: flex">
+            <button id="CARD" class="button2" onclick="selectPaymentMethod('CARD')">카드</button>
+            <button id="TRANSFER" class="button2" onclick="selectPaymentMethod('TRANSFER')">계좌이체</button>
+            <button id="MOBILE_PHONE" class="button2" onclick="selectPaymentMethod('MOBILE_PHONE')">휴대폰</button>
+        </div>
+        <!-- 결제하기 버튼 -->
+        <button class="button" style="margin-top: 30px" onclick="requestPayment()">결제하기</button>
+    </div>
+    
+</div>
+
+<div style="display: none;">
+	<span id="showDate" th:text="${showDate}"></span>
+	<span id="showNo" th:text="${showNo}"></span>
+    <span id="seatNo1" th:text="${seatNo1}"></span>
+    <span id="seatNo2" th:if="${seatNo2 != null}" th:text="${seatNo2}"></span>
+	<span id="orderName" th:text="${orderName}"></span>
+	<span id="amount" th:text="${amount}"></span>
+</div>
+
+<script th:if="${not #strings.isEmpty(message)}">
+    document.addEventListener('DOMContentLoaded', function() {
+        alert('[[${message}]]');
+        window.location.href = '/payment/seat';
+    });
+</script>
+
+<script>
+	
+	// html(타임리프)로부터 session에 저장된 현재 로그인한 회원 값 끌어오기
+	let memberNo = document.getElementById('sessionId').dataset.memberNo;
+	console.log("로그인한 회원", memberNo);
+	
+    const amount = {
+      currency: "KRW",
+      value: Number(document.getElementById('amount').textContent),
+    };
+	
+	const orderName = document.getElementById('orderName').textContent;
+	const customerName = memberNo;
+	const customerEmail = "";
+	const orderId = generateRandomString();
+	
+	
+	console.log("가격 : ", amount.value);
+	console.log("주문명 : ", orderName);
+	
+
+    let selectedPaymentMethod = null;
+
+    function selectPaymentMethod(method) {
+      if (selectedPaymentMethod != null) {
+        document.getElementById(selectedPaymentMethod).style.backgroundColor = "#ffffff";
+      }
+
+      selectedPaymentMethod = method;
+
+      document.getElementById(selectedPaymentMethod).style.backgroundColor = "rgb(229 239 255)";
+    }
+
+    // ------  SDK 초기화 ------
+    // @docs https://docs.tosspayments.com/sdk/v2/js#토스페이먼츠-초기화
+    const clientKey = "test_ck_Z1aOwX7K8mv1jey7kRd93yQxzvNP";
+    const customerKey = generateRandomString();
+    const tossPayments = TossPayments(clientKey);
+	
+    // 회원 결제
+    // @docs https://docs.tosspayments.com/sdk/v2/js#tosspaymentspayment
+    const payment = tossPayments.payment({
+      customerKey
+    });
+
+	
+	// 결제를 요청하기 전에 orderId, amount를 서버에 저장해야함 (추후 검증용)
+	async function saveOrderDetails() {
+	  const response = await fetch('/payment/save', {
+	    method: 'POST',
+	    headers: {
+	      'Content-Type': 'application/json',
+	    },
+	    body: JSON.stringify({
+	      orderId: orderId,
+	      amount: amount.value
+	    })
+	  });
+	  if (!response.ok) {
+	    throw new Error('주문 정보 저장 실패');
+	  }
+	}
+	
+    // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
+    // @docs https://docs.tosspayments.com/sdk/v2/js#paymentrequestpayment
+	async function requestPayment() {
+      
+		try {
+		   await saveOrderDetails();
+		   
+		   // seatNo 값을 HTML 요소에서 가져오기
+	           const seatNo1 = document.getElementById("seatNo1").textContent;
+			   
+			   // seatNo2 처리: 요소가 존재하지 않으면 0으로 설정
+	           const seatNo2Element = document.getElementById("seatNo2");
+	           const seatNo2 = seatNo2Element ? seatNo2Element.textContent : '0';
+					   
+			   const showNo = document.getElementById("showNo").textContent;
+			   const showDate = document.getElementById("showDate").textContent;
+			   console.log("seatNo1 : " + seatNo1);
+			   console.log("seatNo2 : " + seatNo2);
+			   console.log("showNo : " + showNo);
+			   console.log("showDate : " + showDate);
+		   
+		   
+		         switch (selectedPaymentMethod) {
+		           case "CARD":
+		             await payment.requestPayment({
+		               method: "CARD", // 카드 및 간편결제
+		               amount,
+		               orderId,
+		               orderName,
+					successUrl: window.location.origin + "/payment/request/success?showNo=" + showNo + "&showDate=" + showDate + "&seatNo1=" + seatNo1 + "&seatNo2=" + seatNo2,
+		   			failUrl: window.location.origin + "/payment/request/fail",
+		               customerName,
+		   			customerEmail,
+		               card: {
+		                 useEscrow: false,
+		                 flowMode: "DEFAULT",
+		                 useCardPoint: false,
+		                 useAppCardOnly: false,
+		               },
+		             });
+		           case "TRANSFER":
+		             await payment.requestPayment({
+		               method: "TRANSFER", // 계좌이체 결제
+		               amount,
+		               orderId,
+		               orderName,
+					   successUrl: window.location.origin + "/payment/request/success?showNo=" + showNo + "&showDate=" + showDate + "&seatNo1=" + seatNo1 + "&seatNo2=" + seatNo2,
+					   failUrl: window.location.origin + "/payment/request/fail",
+		               customerName,
+		   			customerEmail,
+		               transfer: {
+		                 cashReceipt: {
+		                   type: "소득공제",
+		                 },
+		                 useEscrow: false,
+		               },
+		             });
+		           case "MOBILE_PHONE":
+		             await payment.requestPayment({
+		               method: "MOBILE_PHONE", // 휴대폰 결제
+		               amount,
+		               orderId,
+		               orderName,
+					   successUrl: window.location.origin + "/payment/request/success?showNo=" + showNo + "&showDate=" + showDate + "&seatNo1=" + seatNo1 + "&seatNo2=" + seatNo2,
+		               failUrl: window.location.origin + "/payment/request/fail",
+		               customerName,
+		   			customerEmail,
+		             });
+		         }
+		 } catch (error) {
+		   console.error('주문 정보 저장 중 오류:', error);
+		   // 사용자에게 오류 메시지 표시 등 처리
+		 }
+      
+    }
+
+
+    function generateRandomString() {
+      return window.btoa(Math.random()).slice(0, 20);
+    }
+</script>
+</body>
+</html>
