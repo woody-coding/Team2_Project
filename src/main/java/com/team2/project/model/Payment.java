@@ -1,5 +1,6 @@
 package com.team2.project.model;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class Payment {
     @Column(name = "payment_paysuccess_yn")
     private boolean paySuccessYN;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "memberNo")
     private Member member;
     
@@ -59,6 +60,18 @@ public class Payment {
     
     @Column(name = "payment_date")
     private LocalDateTime paymentDate;
+    
+    @Column(name = "show_date")
+    private Date showDate;
+
+    @Column(name = "show_time")
+    private String showTime;
+
+    @Column(name = "seat_spaces")
+    private String seatSpaces;
+    
+    @Column(name = "member_name")
+    private String memberName;
     
     // 좌석과의 관계 설정 (1:N)
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)

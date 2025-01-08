@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/payment/payment.css}"/>
+    <title>결제 확인</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f0f0f0; }
+        .box_section { max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; text-align: center; }
+        .container { margin-top: 20px; }
+        .info-item { display: flex; justify-content: space-between; margin-bottom: 15px; padding: 10px; background-color: #f9f9f9; border-radius: 5px; }
+        .label { font-weight: bold; color: #555; }
+        .value { color: #333; }
+        .main-button { display: block; width: 200px; margin: 30px auto 0; padding: 10px; background-color: #ff9400; color: white; text-align: center; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .main-button:hover { background-color: #ff9400; }
+    </style>
+</head>
+<body>
+    <div class="box_section">
+        <img width="100px" src="https://static.toss.im/illusts/check-blue-spot-ending-frame.png" />
+        <h2>결제를 완료했어요</h2>
+        
+        <div class="container">
+            <h1>티켓 확인</h1>
+            <div class="info-item">
+                <span class="label">예매자</span>
+                <span class="value" th:text="${payment.memberName}"></span>
+            </div>
+            <div class="info-item">
+                <span class="label">공연 제목</span>
+                <span class="value" th:text="${payment.orderName}"></span>
+            </div>
+            <div class="info-item">
+                <span class="label">결제 금액</span>
+                <span class="value" th:text="${#numbers.formatDecimal(payment.amount, 0, 'COMMA', 0, 'POINT')} + '원'"></span>
+            </div>
+            <div class="info-item">
+                <span class="label">결제 일시</span>
+                <span class="value" th:text="${#temporals.format(payment.paymentDate, 'yyyy년 MM월 dd일 HH:mm')}"></span>
+            </div>
+            <div class="info-item">
+                <span class="label">공연 날짜</span>
+                <span class="value" th:text="${#dates.format(payment.showDate, 'yyyy년 MM월 dd일')}"></span>
+            </div>
+            <div class="info-item">
+                <span class="label">공연 시간</span>
+                <span class="value" th:text="${payment.showTime}"></span>
+            </div>
+            <div class="info-item">
+                <span class="label">좌석</span>
+                <span class="value" th:text="${payment.seatSpaces}"></span>
+            </div>
+        </div>
+        
+        <a href="/seat.html" class="main-button">메인 페이지로 돌아가기</a>
+    </div>
+</body>
+</html>
