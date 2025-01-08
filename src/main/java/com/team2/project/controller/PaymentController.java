@@ -70,7 +70,7 @@ public class PaymentController {
     	if (!paymentService.areSeatAvailable(showNo, seatNo1, seatNo2, showDate)) {
     	    // 좌석이 이미 결제되었거나 사용 불가능한 경우
     	    model.addAttribute("message", "이미 결제된 좌석입니다.");
-    	    return "/payment/checkout";  // 같은 페이지로 다시 렌더링
+    	    return "payment/checkout";  // 같은 페이지로 다시 렌더링
     	}
 
 
@@ -82,7 +82,7 @@ public class PaymentController {
         if (seatNo2 != 0) {
             model.addAttribute("seatNo2", seatNo2);
         }
-        return "/payment/checkout";
+        return "payment/checkout";
     }
     
     
@@ -120,7 +120,7 @@ public class PaymentController {
         if (seatNo2 != 0) {
             model.addAttribute("seatNo2", seatNo2);
         }
-    	return "/payment/processing";
+    	return "payment/processing";
     }
     
     
@@ -196,7 +196,7 @@ public class PaymentController {
     		Model model) {
         Optional<Payment> payment = paymentService.getPaymentById(paymentId);
         model.addAttribute("payment", payment.orElseThrow(() -> new IllegalArgumentException("결제 정보가 존재하지 않습니다.")));
-        return "/payment/success";
+        return "payment/success";
     }
     
     
@@ -217,12 +217,12 @@ public class PaymentController {
     		@SessionAttribute("login") Member member) {
     	
         model.addAttribute("message", request.getParameter("message"));
-        return "/payment/fail";
+        return "payment/fail";
     }
     
     
     @GetMapping("/error")
     public String toErrorPage() {
-    	return "/payment/error";
+    	return "payment/error";
     }
 }
