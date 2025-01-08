@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -299,6 +299,8 @@ document.querySelectorAll('.auto-resize').forEach(textarea => {
     });
 });
 
+
+//파일 관련
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('actor_img').addEventListener('click', function() {
         document.getElementById('fileInput').click();
@@ -314,31 +316,41 @@ document.addEventListener('DOMContentLoaded', function() {
             reader.readAsDataURL(file);
         }
     });
+ // 폼 제출 전에 파일이 선택되었는지 확인
+    document.querySelector('form').addEventListener('submit', function(event) {
+        const fileInput = document.getElementById('fileInput');
+        if (fileInput.files.length === 0) {
+            event.preventDefault(); // 제출 막기
+            alert('파일을 선택해야 합니다!');
+        }
+    });
 });
+
 </script>
 <body>
     <div id="main">
+    <form th:action="@{/admin/actorInsert}" method="post" enctype="multipart/form-data">
         <div id="actor_info">
             <div class="actor_detail">
                 <div id="actor_img" class="actor_img" style="border: 1px solid; width: 264px; height: 309px; cursor: pointer; background-size: cover; /* cover: 배경 이미지를 요소를 완전히 덮도록 설정 */
                 background-position: center; /* 중앙 정렬 */
                 background-repeat: no-repeat; /* 이미지를 반복하지 않도록 설정 */">
-                    <input type="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .png"/>
+                   <input type="file" name="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .png"/>
                 </div>               
                 <div class="actor_cont">
-                    <textarea class="auto-resize name" style="width: 175px;height: 48px;margin-left: -454px;">최재림</textarea>
+                    <textarea name="actorName" class="auto-resize name" style="width: 175px;height: 48px;margin-left: -454px;"></textarea>
                     <ul class="text">
                         <li>
-                            출생 | <textarea class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;">1985년</textarea>
+                            출생 | <input type="date" name="actorBirth" class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"/>
                         </li>
                         <li>
-                            국적 | <textarea class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;">대한민국</textarea>
+                            국적 | <textarea name="actorNation" class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"></textarea>
                         </li>
                         <li>
-                            학력 | <textarea class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;">대한민국</textarea>
+                            학력 | <textarea name="actorEdu" class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"></textarea>
                         </li>
                         <li>
-                            데뷔 | <textarea class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;">대한민국</textarea>
+                            데뷔 | <input type="date" name="actorDebut" class="auto-resize birth" style="width:200px; margin-bottom: -10px;line-height: 0.8;"/>
                         </li>
                     </ul>   
                 </div>
@@ -347,17 +359,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <div id="actor_career">
             <div class="cont_title">수상</div>
-            <textarea class="award-list auto-resize" style="resize: none;">2018년 제6회 대한민국 예술문화인상 뮤지컬 부문
-2019년 제3회 한국뮤지컬어워즈 남우주연상 마틸다
-2022년 제6회 한국뮤지컬어워즈 남우조연상 시카고
-2022년 제16회 DIMF 어워즈 올해의스타상 시카고
-2024년 제18회 DIMF 어워즈 올해의스타상 오페라의 유령, 레미제라블
-2024년 제15회 대중문화예술상 국무총리 표창
+            <textarea name="actorInfo" class="award-list auto-resize" style="resize: none;">
             </textarea>
         </div>
         <div class="update-button" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-            <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">등록</button>
+            <button type="submit" class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">등록</button>
         </div>
+        </form>
     </div>
 </body>
 </html>

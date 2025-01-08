@@ -1,16 +1,7 @@
 package com.team2.project.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Date;
 import java.util.UUID;
@@ -36,21 +27,17 @@ public class ShowActorFile {
     @Column(name = "FILE_DATE", nullable = false)
     private Date fileDate;
 
-    @Column(name = "SHOW_NO")
-    private Integer showNo; 
-
-    @Column(name = "ACTOR_NO")
-    private Integer actorNo;
-    
-    @ManyToOne
-    @JoinColumn(name = "SHOW_NO", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.PERSIST) // 또는 CascadeType.ALL
+    @JoinColumn(name = "SHOW_NO", referencedColumnName = "SHOW_NO")
     private Show show;
-    
-    @ManyToOne
-    @JoinColumn(name = "ACTOR_NO", insertable = false, updatable = false)
+
+    @ManyToOne(cascade = CascadeType.PERSIST) // 또는 CascadeType.ALL
+    @JoinColumn(name = "ACTOR_NO", referencedColumnName = "ACTOR_NO")
     private Actor actor;
 
+    // 기본 생성자에서 UUID와 날짜 초기화
     public ShowActorFile() {
         this.fileNo = UUID.randomUUID().toString(); // UUID 생성
-    }	
+        this.fileDate = new Date(); // 현재 날짜
+    }
 }

@@ -50,25 +50,15 @@ public class Show {
 	@Column(name = "SHOW_INFO", length = 4000, nullable = false)
 	private String showInfo;
 	
-	@Column(name = "TOT_SEAT", nullable = false)
-	private int totSeat;
-	
-	@Column(name = "LEFT_SEAT", nullable = false)
-	private int leftSeat;
-	
 	@Column(name = "SHOW_CATE", length = 30, nullable = false)
 	private String showCate;
 	
-	@Column(name = "SHOW_TIME", nullable = false)
-	@Temporal(TemporalType.TIME)
-	private Date showTime;
+	@Column(name = "SHOW_START_TIME" , length = 20,  nullable = false)
+	private String showStartTime;
 	
 	@ManyToOne
 	@JoinColumn(name = "FILE_NO", insertable = false, updatable = false)
 	private ShowActorFile showActorFile;
-	
-	@Column(name = "SHOW_PLACE", length = 40, nullable = false)
-	private String showPlace;
 	
 	@Column(name = "SHOW_PLAYTIME", nullable = false)
 	private Integer showPlayTime;
@@ -76,4 +66,14 @@ public class Show {
 	@Column(name = "SHOW_RATING", length = 20, nullable = false)
 	private String showRating;
 	
+	@Column(name = "FILE_NO") 
+	private String fileNo;
+
+	//추가 - 수빈님요청으로 추가된 컬럼
+	@Column(name = "OPEN_DATE", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date openDate;
+
+	//Show Entity에 있던 total,left seat 컬럼 Seat Entity로 이동
+
 }
