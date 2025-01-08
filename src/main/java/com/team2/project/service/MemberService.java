@@ -26,4 +26,8 @@ public class MemberService {
 	public Optional<Member> FindIdPw(FindDTO dto) {
 		return memberRepo.findByMemberIdAndMemberNameAndMemberPhone(dto.getMemberId(),dto.getMemberName(),dto.getMemberPhone());
 	}
+	
+	public Optional<Member> idchk(String id) {
+		return memberRepo.findByMemberId(id);
+	}
 }
