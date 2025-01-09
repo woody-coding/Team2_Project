@@ -53,16 +53,21 @@
       var p1 = document.getElementById('memberPw').value;
       var p2 = document.getElementById('memberPwre').value;
       var chk = localStorage.getItem('pwchk');
-      if( p1 != p2 ) {
-        alert("비밀번호가 일치 하지 않습니다");
-        return false;
-      } else{
-        alert("비밀번호가 일치합니다");
-        localStorage.setItem('pwchk',true);
-       	return true;
-      }
-   	}
-    var pnumchk = false;
+      const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+     if(regex.test(p1)){
+    	 if( p1 != p2 ) {
+             alert("비밀번호가 일치 하지 않습니다");
+             return false;
+           } else{
+             alert("비밀번호가 일치합니다");
+             localStorage.setItem('pwchk',true);
+            	return true;
+           }
+     }else{
+    	 alert('비밀번호는 최소 8자에서 16자까지, 영문자, 숫자 및 특수 문자를 포함해야 합니다.');
+     }
+    }     
+     var pnumchk = false;
     function phonenumchk(){
     	var p = document.getElementById('memberPhone').value;
     	if(p==''){
