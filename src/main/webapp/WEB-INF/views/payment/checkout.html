@@ -41,7 +41,8 @@
 <body>
 	
 <!-- 세션이 저장된 로그인한 회원 -->
-<div id="sessionId" th:data-member-no="${session.login.memberNo}"></div>	
+<div id="sessionId" th:data-member-no="${session.login.isPresent() ? session.login.get().memberNo : ''}"></div>
+
 
 
 <!-- 주문서 영역 -->

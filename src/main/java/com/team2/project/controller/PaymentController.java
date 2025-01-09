@@ -39,7 +39,7 @@ public class PaymentController {
     // 결제 요청 전, 결제 방식 선택하는 페이지로 이동
     @GetMapping("/checkout")
     public String showCheckoutPage(
-    		@SessionAttribute("login") Member member,
+    		@SessionAttribute("login") Optional<Member> optionalMember,
     		@RequestParam(required = false) Date showDate,
     		@RequestParam(required = false) Integer showNo,
     		@RequestParam(required = false) List<String> selectedSeats,
@@ -90,8 +90,10 @@ public class PaymentController {
     // 결제 요청 전, 미리 orderId, amount 값을 임시 저장해두기
     @PostMapping("/save")
     public ResponseEntity<String> saveOrderDetails(
-    		@SessionAttribute("login") Member member,
+    		@SessionAttribute("login") Optional<Member> optionalMember,
     		@RequestBody OrderDetailsDTO orderDetails) {
+    	 Member member = optionalMember.orElseThrow(() -> new IllegalStateException("로그인이 필요합니다."));
+    	
         try {
             paymentService.saveOrderDetails(orderDetails, member);
             return ResponseEntity.ok("주문 정보 저장 성공");
@@ -105,7 +107,7 @@ public class PaymentController {
     // 결제 요청 성공 시, 결제 진행 중 페이지로 이동 (동시에 결제 승인 요청 진행)
     @GetMapping("/request/success")
     public String approveProcessingPage(
-    		@SessionAttribute("login") Member member,
+    		@SessionAttribute("login") Optional<Member> optionalMember,
     		@RequestParam(required = false) Date showDate,
     		@RequestParam(required = false) Integer showNo,
     		@RequestParam(required = false) Integer seatNo1, 
@@ -126,7 +128,7 @@ public class PaymentController {
     
     // 결제 요청 실패 시, 실패 페이지로 이동 (에러 메시지 전달하기)
     @GetMapping("/request/fail")
-    public String toRequestFailPage(@SessionAttribute("login") Member member) {
+    public String toRequestFailPage(@SessionAttribute("login") Optional<Member> optionalMember) {
     	return "redirect:/payment/fail";
     }
     
@@ -135,7 +137,7 @@ public class PaymentController {
     // 결제 승인 요청 처리
     @PostMapping("/confirm")
     public ResponseEntity<JSONObject> confirmPayment(
-    		@SessionAttribute("login") Member member,
+    		@SessionAttribute("login") Optional<Member> optionalMember,
     		@RequestParam(required = false) Date showDate,
     		@RequestParam(required = false) Integer showNo,
     		@RequestBody String jsonBody,
@@ -143,7 +145,7 @@ public class PaymentController {
             @RequestParam(required = false) Integer seatNo2,
             HttpServletRequest request,
             Model model) throws Exception {
-
+    	Member member = optionalMember.orElseThrow(() -> new IllegalStateException("로그인이 필요합니다."));
     	
     	JSONParser parser = new JSONParser();
     	JSONObject requestData = (JSONObject) parser.parse(jsonBody);
@@ -192,6 +194,7 @@ public class PaymentController {
     
     @GetMapping("/approve/success")
     public String showConfirmationPage(
+    		@SessionAttribute("login") Optional<Member> optionalMember,
     		@RequestParam Long paymentId,
     		Model model) {
         Optional<Payment> payment = paymentService.getPaymentById(paymentId);
@@ -202,7 +205,7 @@ public class PaymentController {
     
     // 결제 승인 실패 시, 실패 페이지로 이동 (에러 메시지 전달하기)
     @GetMapping("/approve/fail")
-    public String toApproveFailPage(@SessionAttribute("login") Member member) {
+    public String toApproveFailPage(@SessionAttribute("login") Optional<Member> optionalMember) {
     	return "redirect:/payment/fail";
     }
     
@@ -214,7 +217,7 @@ public class PaymentController {
     public String failPayment(
     		HttpServletRequest request,
     		Model model, 
-    		@SessionAttribute("login") Member member) {
+    		@SessionAttribute("login") Optional<Member> optionalMember) {
     	
         model.addAttribute("message", request.getParameter("message"));
         return "payment/fail";
