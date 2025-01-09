@@ -44,37 +44,33 @@ public class MemberController {
 		String accessToken = kakaoApi.getAccessToken(code);
 		// 2번 인증코드로 토큰 전달
 		HashMap<String, Object> userInfo = kakaoApi.getUserInfo(accessToken);
-		
 		System.out.println("login info : " + userInfo.toString());
 		mav.addObject("userId");
 		mav.setViewName("index");
 		return mav;
 	}
-	
-	
-	@RequestMapping(value="/join")
+	@RequestMapping(value="join")
 	public ModelAndView join() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("join");
+		mav.setViewName("login_join/join");
 		return mav;
 	}
-	
-	@RequestMapping(value="/findID")
+	@RequestMapping(value="findID")
 	public ModelAndView findID() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("findID");
+		mav.setViewName("login_join/findID");
 		return mav;
 	}
-	@RequestMapping(value="/findPW")
+	@RequestMapping(value="findPW")
 	public ModelAndView findPW() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("findPW");
+		mav.setViewName("login_join/findPW");
 		return mav;
 	}
 	@RequestMapping(value="/phonechk")
 	public ModelAndView phonenumchk() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("phonechk");
+		mav.setViewName("login_join/phonechk");
 		return mav;
 	}
 	
@@ -99,6 +95,8 @@ public class MemberController {
 			System.out.println("로그인 완료");
 			//System.out.println(dto.getID());
 			session.setAttribute("login", Memberlogin);
+			mav.setViewName("login_join/login");
+			mav.addObject(Memberlogin);
 			return mav;
 		}
 	}
