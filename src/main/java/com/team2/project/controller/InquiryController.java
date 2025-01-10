@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,7 @@ public class InquiryController {
 	private final InquiryService inquiryService;
 	
     // 1. 문의 조회 카테고리 버튼을 클릭했을 때 -> 조회 페이지로 이동 (날짜로 검색 x)
-    @GetMapping
+	@GetMapping({"", "/", "/list"})
     public String findAllList(
     		@SessionAttribute("login") Optional<Member> optionalMember,
     		@RequestParam(required = false, defaultValue = "ALL") String status,
@@ -69,14 +70,14 @@ public class InquiryController {
     @GetMapping("/findByDate")
     public String findAllListByDate(
     		@SessionAttribute("login") Optional<Member> optionalMember, 
-    		@RequestParam LocalDate startDate,
-    		@RequestParam LocalDate endDate,
+    		@RequestParam @DateTimeFormat(pattern = "yyyy.MM.dd") LocalDate startDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy.MM.dd") LocalDate endDate,
     		Model model) {
     	Member member = optionalMember.orElseThrow(() -> new IllegalStateException("로그인이 필요합니다."));
     	
         List<Inquiry> inquirys = inquiryService.findInquiryByDate(member.getMemberNo(), startDate, endDate);
         model.addAttribute("inquirys", inquirys);
-        return "redirect:/inquiry";
+        return "inquiry/list";
     }
     
     

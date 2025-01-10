@@ -24,13 +24,13 @@
                 
                 <div>
                     <button type="button" class="date-range">
-                        <input class="date-text" type="date" name="startDate">시작 날짜 선택</input><span> &#128197;</span>
+						<span class="date-text" name="startDate">시작 날짜 선택</span><span> &#128197;</span>
                     </button>
                 </div>
                 <div class="dateBetween">~</div>
                 <div>
                     <button type="button" class="date-range">
-                        <input class="date-text" type="date" name="endDate">종료 날짜 선택</input><span> &#128197;</span>
+						<span class="date-text" name="endDate">종료 날짜 선택</span><span> &#128197;</span>
                     </button>
                 </div>
                 <div><button type="submit" class="search-button">조회</button></div>
@@ -63,14 +63,14 @@
             <div th:if="${#lists.isEmpty(inquirys)}">
                 <p style="text-align: center;">문의 내역이 없습니다.</p>
             </div>
-            <div th:if="${not #lists.isEmpty(inquirys)}" th:each="inquiry : ${inquirys}" class="answer-box">
+            <div th:if="${not #lists.isEmpty(inquirys)}" th:each="inquiry : ${inquirys}" class="answer-box"  style="border-bottom: lightgray solid 1px;">
                 <div class="answer-menu">
                     <div 
                         th:class="${inquiry.inquiryStatus.name() == 'ANSWER_PROCESSING' ? 'answer-button answerProcessing' : 'answer-button answerChosen'}"
                         th:text="${inquiry.inquiryStatus.name() == 'ANSWER_PROCESSING' ? '처리중' : inquiry.inquiryStatus.name() == 'ANSWER_CHOSEN' ? '답변완료' : ''}">
                     </div>
                     <span class="separator">|</span>
-                    <div 
+                    <div style="padding-top: 20px; padding-left: 20px; font-size: large;"
                         th:text="${inquiry.inquiryCategory.name() == 'RESERVATION' ? '예매/결제/환불' : 
                                   inquiry.inquiryCategory.name() == 'TICKET' ? '티켓/공연정보' : 
                                   inquiry.inquiryCategory.name() == 'MEMBER' ? '회원정보서비스' : 
@@ -107,7 +107,7 @@
                     </div>
                 </div> 
                 
-                <div class="answer-content" th:if="${inquiry.inquiryStatus.name() == 'ANSWER_CHOSEN'}">
+                <div class="answer-content" style="display: none;" th:if="${inquiry.inquiryStatus.name() == 'ANSWER_CHOSEN'}">
                     <span><h4 class="answer-icon"> 답변</h4></span>
                     <p th:text="${inquiry.inquiryAnswer}">안녕하세요, 고객님 문의주신 내용확인하였습니다. 말씀주신 사항은 내부 전달드려 개선될수있도록 하겠습니다. 소중한 의견 감사합니다.</p>
                 </div>
