@@ -175,26 +175,26 @@ display: flex;
 }
 
 .bookTicket {
-	border: none;
-	width: 360px;
-	padding-top: 8px;
-	padding-bottom: 8px;
-	padding-left: 20px;
-	padding-right: 20px;
-	
-	font-weight: 800;
-	font-size: 20px;
-	background-color: #ff9400;
-	border-radius: 10px;
-	color: white;
-	align-content: center;
-	cursor: pointer;
+    border: none;
+    width: 335px;
+    padding: 8px 20px;
+    font-weight: 800;
+    font-size: 20px;
+    background-color: #ff9400;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
 }
 
-/* 경인 추가 - '예매하기' 버튼이 비활성화 상태 일 때 */
-.bookTicket:disabled {
-  background-color: #cccccc;
+.bookTicket.disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    pointer-events: none; /* 클릭 비활성화 */
 }
+
 
 
 .AllRoundBtn {
@@ -463,3 +463,5 @@ display: flex;
 	padding-bottom: 30px;
 	
 }
+
+.

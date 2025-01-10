@@ -75,7 +75,15 @@
 				<br>
 
 				<!--예매하기 버튼을 누르면 좌석예매 페이지로 이동-->
-				<button class="bookTicket" disabled th:attr="data-show-no=${show.showNo}">예매하기</button>	
+
+				<!-- 티켓 예매 링크 -->
+				<a class="bookTicket disabled" 
+				id="bookTicketLink" href="#" 
+				th:href="@{/show/bookSeat/{showNo}/{memberNo}/{date}(showNo=${show.showNo}, memberNo=${memberNo != null ? memberNo : 0}, date=${date})}"
+				th:attr="data-show-no=${showNo}">
+				    티켓예매
+				</a>
+			
 			</div>
 		
 		</div>
