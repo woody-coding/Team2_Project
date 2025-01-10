@@ -46,11 +46,10 @@
 					<th scope="col" class="showStartTime">시작시간</th>
 					<th scope="col" class="showPlayTime">공연시간</th>
 					<th scope="col" class="showPrice">가격</th>
-					<th scope="col" class="showLeftSeat">남은 좌석</th>
 				</tr>
 				<tr th:each="show : ${shows}">
-					<td class="showNum" th:text=${show.showNo}>1</td>
-					<td class="showCate" th:text=${show.showCate}>뮤지컬</td>
+					<td class="showNum" th:text="${show.showNo}">1</td>
+					<td class="showCate" th:text="${show.showCate}">뮤지컬</td>
 					<td class="showTitle">
     					<a th:href="@{/admin/showDetail(showNo=${show.showNo})}" th:text="${show.showTitle}">공연 제목 인데</a>
 					</td>
@@ -59,7 +58,6 @@
 					<td class="showEndDate" th:text="${show.showStartTime}">14:00</td>
 					<td class="showEndDate" th:text="${show.showPlayTime} + '분'">60분</td>
 					<td class="showCount" th:text="${show.showPrice} + '원'">2</td>
-					<td class="showStatus" th:text="${show.leftSeat} + '석'">0</td>
 				</tr>
 			</table>
 			<div class="pagination">

@@ -308,42 +308,12 @@
         <div class="actor-container">
             <span class="title title-actor" style="margin-right: 1002px;">출연 배우</span>
             <div class="actor-input-container">
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">박상철</div>
-                </div>
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">이름이</div>
-                </div>
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">이름이</div>
-                </div>
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">이름이</div>
-                </div>
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">이름이</div>
-                </div>
-                <div class="actBox">
-                    <div class="actImg">
-                        <img alt="" src="68227042_20071227.jpg" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
-                    </div>
-                    <div class="actName" style="margin-top: 10px;">이름이</div>
-                </div>
+                <div th:each="showActor : ${showActors}" class="actBox">
+    				<div class="actImg">
+        				<img alt="" th:src="@{/uploads/{fileNo}(fileNo=${showActor.actor.fileNo})}" class="actor">
+    				</div>
+    				<div class="actName" th:text="${showActor.actor.actorName}" style="margin-top: 10px;"></div>
+				</div>
             </div>
         </div>
     </section>

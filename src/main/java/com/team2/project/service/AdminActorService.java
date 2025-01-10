@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.team2.project.DTO.AdminShowDTO;
 import com.team2.project.model.Actor;
 import com.team2.project.model.ShowActorFile;
 import com.team2.project.repository.AdminActorRepository;
@@ -69,5 +70,21 @@ public class AdminActorService {
 	    }
 	}
 	
+	//배우검색DTO
+	public AdminShowDTO convertToAdminShowDTO(Actor actor) {
+        // Actor -> AdminShowDTO 변환
+        String fileNo = null;
+        
+        if (actor.getShowActorFile() != null) {
+            fileNo = actor.getShowActorFile().getFileNo();
+        }
+
+        // AdminShowDTO에 필요한 정보 설정
+        return new AdminShowDTO(
+            actor.getActorNo(),
+            actor.getActorName(),
+            fileNo
+        );
+    }
 	
 }
