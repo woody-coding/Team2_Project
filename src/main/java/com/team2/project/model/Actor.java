@@ -2,6 +2,7 @@ package com.team2.project.model;
 
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class Actor {
 	@Column(name = "ACTOR_INFO", length = 4000)
 	private String actorInfo;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name = "FILE_NO", referencedColumnName = "FILE_NO", insertable = false, updatable = false)
 	private ShowActorFile showActorFile;
 	

@@ -16,10 +16,12 @@ import com.team2.project.model.Actor;
 import com.team2.project.model.Member;
 import com.team2.project.model.Show;
 import com.team2.project.model.ShowActorFile;
+import com.team2.project.model.ShowActor;
 import com.team2.project.repository.AdminActorRepository;
 import com.team2.project.service.AdminActorService;
 import com.team2.project.service.AdminService;
 import com.team2.project.service.AdminShowService;
+import com.team2.project.service.ShowActorService;
 
 import retrofit2.http.POST;
 
@@ -106,6 +108,9 @@ public class AdminController {
 	@Autowired
 	private AdminShowService adminShowService;
 
+	@Autowired
+	private ShowActorService showActorService;
+
 	/**
 	 * 공연 리스트 조회 (수동 페이징 처리)
 	 */
@@ -134,12 +139,20 @@ public class AdminController {
 	 */
 	@GetMapping("/showDetail")
 	public String showDetail(@RequestParam int showNo, Model model) {
-		Show show = adminShowService.getShowByShowNo(showNo);
-		if (show != null) {
-			model.addAttribute("show", show);
-			return "admin/adminShowDetail";
-		} else {
-			return "error/404"; // 공연이 없을 경우 에러 페이지로 이동
+		try {
+			Show show = adminShowService.getShowByShowNo(showNo);
+			if (show != null) {
+				List<ShowActor> showActors = showActorService.getActorsByShowNo(showNo);
+				model.addAttribute("show", show);
+				model.addAttribute("showActors", showActors);
+				return "admin/adminShowDetail";
+			} else {
+				System.out.println("Show not found for showNo: " + showNo);
+				return "error/404";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error/500";
 		}
 	}
 
@@ -179,55 +192,67 @@ public class AdminController {
 	}
 
 	@PostMapping("/showInsert")
-	public String showInsert(@RequestParam("file") MultipartFile file, @ModelAttribute Show show) {
-		if (show.getStartDate() != null) {
-	        // Calculate openDate as 7 days before startDate
-	        Calendar calendar = Calendar.getInstance();
-	        calendar.setTime(show.getStartDate());
-	        calendar.add(Calendar.DAY_OF_YEAR, -20);
-	        Date openDate = calendar.getTime();
-	        
-	        // Set the calculated openDate to the Show object
-	        show.setOpenDate(openDate);
-	    }
+	public String showInsert(@RequestParam("file") MultipartFile file, 
+							 @ModelAttribute Show show, 
+							 @RequestParam(value = "actorNo", required = false) List<Integer> actorNo, 
+							 @RequestParam(value = "roleName", required = false) List<String> roleName) {
+		try {
+			// 기존 공연 정보 저장 로직
+			if (show.getStartDate() != null) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(show.getStartDate());
+				calendar.add(Calendar.DAY_OF_YEAR, -20);
+				Date openDate = calendar.getTime();
+				show.setOpenDate(openDate);
+			}
 
-	    String fileName;
-	    try {
-	        fileName = saveUploadedFile(file);
-	        String fileNo = fileName; // UUID + "_" + originalFileName 사용
-	        
-	        ShowActorFile showActorFile = new ShowActorFile();
-	        showActorFile.setFileNo(fileNo);
-	        showActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString());
-	        showActorFile.setFileName(file.getOriginalFilename());
-	        showActorFile.setFileDate(new Date());
+			String fileName = saveUploadedFile(file);
+			String fileNo = fileName;
 
-	        // Show와 ShowActorFile을 저장합니다.
-	        adminShowService.saveShow(show);
-	        
-	        // show에 actorFile 설정
-	        showActorFile.setShow(show);
-	        adminShowService.saveShowActorFile(showActorFile);
-	        
-	        // Show 정보 업데이트
-	        show.setShowActorFile(showActorFile);
-	        show.setFileNo(showActorFile.getFileNo());
-	        adminShowService.saveShow(show);
-	        
-	        //중간날짜 좌석 생성
-	        adminShowService.createSeatsForShow(show);
-	        
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        return "redirect:/admin/showInsertForm?error=uploadFailed";
-	    }
+			ShowActorFile showActorFile = new ShowActorFile();
+			showActorFile.setFileNo(fileNo);
+			showActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString());
+			showActorFile.setFileName(file.getOriginalFilename());
+			showActorFile.setFileDate(new Date());
 
-	    return "redirect:/admin/showList";
+			adminShowService.saveShow(show);
+			showActorFile.setShow(show);
+			adminShowService.saveShowActorFile(showActorFile);
+
+			show.setShowActorFile(showActorFile);
+			show.setFileNo(showActorFile.getFileNo());
+			adminShowService.saveShow(show);
+			adminShowService.createSeatsForShow(show);
+
+			// 새로운 ShowActor 정보 저장 로직 추가
+			if (actorNo != null && roleName != null && actorNo.size() == roleName.size()) {
+				for (int i = 0; i < actorNo.size(); i++) {
+					if (actorNo.get(i) != null) { // null 값 체크
+						ShowActor showActor = new ShowActor();
+						showActor.setShowNo(show.getShowNo());
+						showActor.setActorNo(actorNo.get(i));
+						showActor.setRoleName(roleName.get(i));
+
+						showActorService.saveShowActor(showActor);
+					}
+				}
+			} else {
+				System.out.println("No actors selected or mismatch in actorNo and roleName sizes");
+			}
+
+			return "redirect:/admin/showList";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "redirect:/admin/showInsertForm?error=uploadFailed";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:/admin/showInsertForm?error=saveFailed";
+		}
 	}
 
 	@RequestMapping("/searchActor")
 	@ResponseBody
-	public List<Actor> searchActor(@RequestParam String actorName) {
+	public List<AdminShowDTO> searchActor(@RequestParam String actorName) {
 	    if (actorName == null || actorName.trim().isEmpty()) {
 	        return new ArrayList<>();  // 검색어가 없는 경우 빈 리스트 반환
 	    }
@@ -235,8 +260,10 @@ public class AdminController {
 	    List<Actor> actors = adminActorService.findAllActor(Sort.by(Sort.Direction.DESC, "actorNo"));
 	    return actors.stream()
 	                 .filter(actor -> actor.getActorName().contains(actorName))
+	                 .map(actor -> new AdminShowDTO(actor.getActorNo(), actor.getActorName(), actor.getShowActorFile() != null ? actor.getShowActorFile().getFileNo() : null))
 	                 .collect(Collectors.toList());
 	}
+
 
 	
 	
@@ -383,4 +410,6 @@ public class AdminController {
         
         return "redirect:/admin/actorList";
     }
+
+
 }
