@@ -49,6 +49,8 @@ public class ShowDetailController {
         List<Review> reviews = reviewService.getReviewsByShowNo(showNo);
         model.addAttribute("reviews", reviews);
         
+        model.addAttribute("showNo", showNo); // showNo 전달 (예매하기 페이지로..)
+        
         return "ticket/ticketDetailpage/ticket_detailpage";
         //http://localhost:8787/show/ticketDetailPage/1
     }
