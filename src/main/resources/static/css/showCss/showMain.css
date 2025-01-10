@@ -102,12 +102,16 @@ main{
 .cate_btn{
     width: 80px;
     height: 30px;
-    color: #ffffff;
     padding: 3px 15px 3px 15px;
     font-size: 18px;
     font-weight: bold;
     white-space: nowrap;
     cursor: pointer;
+}
+
+.cate_btn  a{
+	text-decoration-line: none;
+	color: #ffffff;
 }
 
 hr{
@@ -124,12 +128,12 @@ hr{
 
 .cont_title{
     margin-top: 41px;
-    margin-left: 43px;
     color: #333;
     font-size: 35px;
     font-weight: 700;
     line-height: 32px;
     text-align: center;
+    margin-bottom: 30px;
 }
 
 .cont{
@@ -173,9 +177,9 @@ hr{
 
 #open_app{
     width: 1200px;
-    height: 700px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
+    padding-bottom: 25px;
 }
 
 #open_app .cont{
@@ -183,62 +187,78 @@ hr{
     position: relative;
     padding: 0 45px 0 45px;
     flex-wrap: nowrap;
-    height: 350px;
 }
 
 .post_area{
     display: flex;
     width: 1200px;
-    height: 300px;
     position: relative;
-    justify-content: space-between;
+    justify-content: flex-start; 
     flex-wrap: wrap;
+    gap: 20px;
 }
 
 .poster{
     display: table;
-    width: clac(25%-20px);
+    width: 23%;
     height: 280px;
     text-align: center;
-    cursor: pointer;
+   	margin-bottom: 20px;
+   	box-sizing: border-box;
 }
+
 
 .img_frame{
     display: table-cell;
     vertical-align: middle;
+    position: relative;
 }
 
 .img_frame img{
-    max-width: 200px;
+    max-width: 300px;
     max-height: 280px;
+    cursor: pointer;
 }
 
-.cont_detail{
-    width: 1200px;
-    height: 100px;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 45px 0 45px;
-    text-align: center;
-    box-sizing: border-box;
+.cont_info{
+	margin-top: 20px;
+	
+}
+
+.Ddays{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 20px;
+	width: 80px;
+	color:  rgba(255, 255, 255, 0.8);
+	background-color: rgba(51, 51, 51, 0.7);
+	border: 3px solid rgba(51, 51, 51, 0.7);
+	border-radius: 30px;
+	text-align: center;
+	margin: auto;
+	font-size: 24px;
 }
 
 .data_time{
     margin-top: -10px;
     height: 41px;
-    width: 200px;
-    color: rgba(255, 143, 95, 0.73);
+    width: 100%;
+    color: rgba(255, 143, 95, 0.8);
     font-size: 20px;
     font-weight: 700;
     line-height: 23px;
+    text-align: center;
 }
 
-.show_name{
-    width: 200px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 16px;
-    margin-top: -5px;
+.show_title {
+	margin-top: -10px;
+	color: #333;
+	font-weight: 700;
+	font-size: 15px;
+	width: 100%;
+	text-align: center;
 }
 
 .more_btnArea{
@@ -256,6 +276,7 @@ hr{
     border: 3px solid #ececec;
     border-radius: 30px;
     cursor: pointer;
+    margin-top: 60px;
 }
 
 .more_btn{
@@ -266,4 +287,8 @@ hr{
     font-size: 20px;
     font-weight: 500;
     line-height: 20px;
+}
+
+.hidden{
+	display: none;
 }

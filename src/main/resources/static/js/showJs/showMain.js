@@ -4,7 +4,7 @@
 let interval;
 
 // 이미지 배열
-const images = ['/images/showMain/ad1.png', '/images/showMain/ad2.jpg', '/images/showMain/ad3.jpg'];
+let images = ['/images/showMain/ad1.png', '/images/showMain/ad2.jpg', '/images/showMain/ad3.jpg'];
 let currentIdx = 0;
 
 // 페이지 로드 후 실행될 함수
@@ -26,7 +26,7 @@ window.onload = function () {
 		buttons[currentIdx].classList.add('btn_hover');
 	}
 
-   // 1초마다 chImg 실행
+   // 7초마다 chImg 실행
    interval = setInterval(chImg, 7000);    
 
    //버튼 눌러서 변경
@@ -49,6 +49,7 @@ window.onload = function () {
 		currentIdx = index;
 	});
        });
+	      
    };
 
    function goPrev(){
@@ -87,4 +88,29 @@ window.onload = function () {
        });
        btns[currentIdx].classList.remove('btn_default');
        btns[currentIdx].classList.add('btn_hover');
+   };
+   
+   //오픈임박 더보기
+   function toggleMore(){
+		const hiddenPosts = document.querySelectorAll('.hidden');
+		const moreBtn = document.querySelector('.more_btn');
+		
+		//숨겨진 콘텐츠가 있으면 보이고 없으면 숨기기
+		if(hiddenPosts.length > 0){
+			hiddenPosts.forEach(post => {
+				post.classList.remove('hidden'); //hidden 클래스를 지워 보이게함.
+				post.classList.add('poster');
+			});
+			moreBtn.textContent = '접기 -'; //버튼 txt 변경
+		}else{
+			//모든 콘텐츠 tnarlrl
+			const allPosts = document.querySelectorAll('.poster');
+			allPosts.forEach((post, idx) => {
+				if (idx > 3){
+					post.classList.add('hidden');
+					post.classList.remove('poster');
+				}
+			});
+			moreBtn.textContent = '오픈 임박 티켓 더보기 +'; //버튼 txt 변경
+		}
    };

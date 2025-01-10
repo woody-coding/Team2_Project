@@ -1,106 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>showMain</title>
 </head>
-<link href="./css/showMain.css" rel="stylesheet" type="text/css">
-<script src="./js/jquery-3.7.1.min.js"></script>
-<script type="text/javascript">
-    let interval;
 
-    // 이미지 배열
-    const images = ['./img/ad1.png', './img/ad2.jpg', './img/ad3.jpg'];
-    let currentIdx = 0;
+<link rel="stylesheet" type="text/css" th:href="@{/css/showCss/showMain.css}">
+<script type="text/javascript" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/showJs/showMain.js}"></script>
 
-    // 페이지 로드 후 실행될 함수
-    window.onload = function () {
-        // 해당 이미지가 들어간 div
-        const imgArea = document.getElementById("adImg");
-
-        function chImg() {
-            // 다음 이미지로 순환
-            currentIdx = (currentIdx + 1) % images.length;
-            imgArea.style.backgroundImage = `url(${images[currentIdx]})`;
-
-            //버튼도 변경 
-            buttons.forEach(function(btn){
-                btn.classList.remove('btn_hover');
-                btn.classList.add('btn_default');
-            });
-            buttons[currentIdx].classList.remove('btn_default');
-            buttons[currentIdx].classList.add('btn_hover');
-        }
-
-    // 1초마다 chImg 실행
-    interval = setInterval(chImg, 7000);    
-
-    //버튼 눌러서 변경
-    const buttons = document.querySelectorAll("#dotArea > div");
-
-        buttons.forEach(function(button, index){
-            button.addEventListener('click', function(){
-                //모든 버튼에서 hover 제거 및 default 추가
-                buttons.forEach(function(btn){
-                    btn.classList.remove('btn_hover');
-                    btn.classList.add('btn_default');
-                });
-
-                //클릭한 버튼에만 hover 추가
-                button.classList.remove('btn_default');
-                button.classList.add('btn_hover');
-                
-                imgArea.style.backgroundImage = `url(${images[index]})`;
-
-                currentIdx = index;
-            });
-        });
-    };
-
-    function goPrev(){
-        const imgDiv = document.getElementById("adImg");
-        const btns = document.querySelectorAll("#dotArea > div");
-
-        if(currentIdx == 0){
-            currentIdx = 2;
-        }
-        else{
-            currentIdx -= 1;
-        }
-        //이미지바꾸기
-        imgDiv.style.backgroundImage = `url(${images[currentIdx]})`;
-        //버튼바꾸기
-        btns.forEach(function(btn){
-            btn.classList.remove('btn_hover');
-            btn.classList.add('btn_default');
-        });
-        btns[currentIdx].classList.remove('btn_default');
-        btns[currentIdx].classList.add('btn_hover');
-    };
-
-    function goNext(){
-        const imgDiv = document.getElementById("adImg");
-        const btns = document.querySelectorAll("#dotArea > div");
-
-        currentIdx = (currentIdx + 1) % images.length;
-
-        //이미지바꾸기
-        imgDiv.style.backgroundImage = `url(${images[currentIdx]})`;
-        //버튼바꾸기
-        btns.forEach(function(btn){
-            btn.classList.remove('btn_hover');
-            btn.classList.add('btn_default');
-        });
-        btns[currentIdx].classList.remove('btn_default');
-        btns[currentIdx].classList.add('btn_hover');
-    };
-
-    
-
-</script>
 <body>
     <main>
+    	<input type="hidden" id="memberNo" th:value="${memberNo}" /> <!-- memberNo가 넘어오면 연결 로그인된 상태 -->
         <div id="adFrame">
             <div id="adImg">
                 <div id="arrowArea">
@@ -114,32 +26,35 @@
                 </div>
             </div>
             <div id="btnArea">
-                <div class="cate_btn">뮤지컬</div>
-                <div class="cate_btn">콘서트</div>
-                <div class="cate_btn">스포츠</div>
-                <div class="cate_btn">전시/행사</div>
-                <div class="cate_btn">클래식</div>
-                <div class="cate_btn">아동/가족</div>
-                <div class="cate_btn">연극</div>
+            <!-- member가 세션이면 안받고 아니면 member=num 으로 받기 -->
+                <div class="cate_btn"><a th:href="@{/show/ticketMenu/뮤지컬}">뮤지컬</a></div>
+                <div class="cate_btn"><a th:href="@{/show/ticketMenu/콘서트}">콘서트</a></div>
+                <div class="cate_btn"><a th:href="@{/show/ticketMenu/스포츠}">스포츠</a></div>
+                <div class="cate_btn"><a th:href="@{/show/ticketMenu/전시}">전시/행사</a></div>
+                <div class="cate_btn"><a th:href="@{/show/ticketMenu/클래식}">클래식</a></div>
+                <div class="cate_btn"><a th:href="@{/show/ticketMenu/아동}">아동/가족</a></div>
+                <div class="cate_btn"><a th:href="@{/show/ticketMenu/연극}">연극</a></div>
             </div>
         </div>
         <hr>
         <div id="hot">
             <div class="cont_title">이번 주 인기작</div>
             <div class="cont">
-                <div class="most"></div>
-                <div class="hot2 others"></div>
-                <div class="hot3 others"></div>
-                <div class="hot4 others"></div>
-                <div class="hot5 others"></div>
-                <div class="hot6 others"></div>
-                <div class="hot7 others"></div>
-                <div class="most_info">
-                    <p class="most_tit">호두까기인형</p>
-                    <p class="most_detail">
-                        <b>2024.12.19.~2024.12.30.</b><br>
-                        세종문화회관 대극장
-                    </p>
+                <div class="hot_area">
+                    <ul class="hot_ul">
+                    	<li th:each="dto, iterStat:${list}">
+                    		<div class="big_cont" th:if="${iterStat.index == 0}">
+                    			<a th:href="@{/show/ticketDetailPage/{showNo}/{memberNo}(showNo=${dto.showNo}, memberNo=${memberNo})}">
+                                	<img th:src="${dto.filePath}" alt="Most Hot Show Img">
+                                </a>
+                    		</div>
+                    		<div class="hot_list" th:if="${iterStat.index > 0}">
+                    			<a th:href="@{/show/ticketDetailPage/{showNo}/{memberNo}(showNo=${dto.showNo}, memberNo=${memberNo})}">
+                    				<img th:src="${dto.filePath}" alt="Hot Show Img">
+                    			</a>
+                    		</div>
+                    	</li>            
+                    </ul>
                 </div>
             </div>
         </div>
@@ -148,66 +63,21 @@
             <div class="cont_title">오픈 임박 티켓</div>
             <div class="cont">
                 <div class="post_area">
-                    <div class="poster">
+                    <div class="poster" th:each="dto, iterStat:${upcoming}" th:class="${iterStat.index > 3 ? 'hidden' : 'poster'}">
                         <div class="img_frame">
-                            <img src="./img/open.jpg">
-                        </div>
-                    </div>
-                    <div class="poster">
-                        <div class="img_frame">
-                            <img src="./img/open.jpg">
-                        </div>
-                    </div><div class="poster">
-                        <div class="img_frame">
-                            <img src="./img/open.jpg">
-                        </div>
-                    </div><div class="poster">
-                        <div class="img_frame">
-                            <img src="./img/open.jpg">
-                        </div>
+                       		<a th:href="@{/show/ticketDetailPage/{showNo}/{memberNo}(showNo=${dto.showNo}, memberNo=${memberNo})}">
+                            	<img th:src="${dto.filePath}" alt="Upcoming Show Img">
+                            </a>
+                            <div class="Ddays">D-<span th:text="${dto.dayDiff}"></span></div>
+                            <div class="cont_info">
+                            	<div class="data_time" th:text="${dto.openDateString}" ></div>
+                            	<div class="show_title" th:text="${dto.showTitle}"></div>
+                            </div>
+                        </div> 
                     </div>
                 </div>       
             </div>
-            <div class="cont_detail">
-                <div class="cont_info">
-                    <p class="data_time">
-                        2024.12.13(금) &Tab;20:00
-                    </p>
-                    <p class="show_name">
-                        HI-KEY 1ST FAN CONCERT
-                    </p>
-                </div>
-                <div class="cont_info">
-                    <p class="data_time">
-                        2024.12.13(금)
-                        <br>
-                        20:00
-                    </p>
-                    <p class="show_name">
-                        HI-KEY 1ST FAN CONCERT
-                    </p>
-                </div>
-                <div class="cont_info">
-                    <p class="data_time">
-                        2024.12.13(금)
-                        <br>
-                        20:00
-                    </p>
-                    <p class="show_name">
-                        HI-KEY 1ST FAN CONCERT
-                    </p>
-                </div>
-                <div class="cont_info">
-                    <p class="data_time">
-                        2024.12.13(금)<br>
-                        20:00
-                    </p>
-                    <p class="show_name">
-                        HI-KEY 1ST FAN CONCERT
-                    </p>
-                </div>
-            </div>
-            <div class="more_btnArea">
+            <div class="more_btnArea"  onclick="toggleMore()">
                 <span class="more_btn">오픈 임박 티켓 더보기 +</span>
             </div>
         </div>
