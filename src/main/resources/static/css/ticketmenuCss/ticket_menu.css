@@ -1,17 +1,10 @@
-
-
-
 .container {
 	width: auto;
 }
 
-.header {
-	width: 100%;
-	height: 100px;
-	background-color: aquamarine;
-}
 
-.left-menu {
+
+.menu-left {
 	width: 20%;
 	float: left;
 	height: inherit;
@@ -21,27 +14,19 @@
 
 }
 
-.right {
+.menu-right {
 	width: 80%;
 	height: auto;
 	overflow: hidden;
-	
-	float: left;
+	float: right;
 	
 }
 
-.footer {
-	width: 100%;
-	height: 100px;
-	background-color: grey;
-	clear: both;
-}
 
 .row {
-	display: flex;
+	display: inline-block;
 	margin-top: 20px;
-	margin-left: 5px;
-	margin-right: 5px;
+
 }
 
 .col-sm-4 {
@@ -60,38 +45,33 @@
 	background-color: rgb(255, 148, 0);
 	font-weight: 800;
 	color: white;
-	border-radius: 10px;
+	border-radius: 5px;
 }
 
-div {
-	
-}
 
-p {
+.col-sm-4 p {
 	margin: 0;
 }
 
-h3 {
+.showLink h3 {
 	margin: 0;
 	margin-top: 10px;
 }
 
-img {
-	
-}
 
 .PageNav {
 	margin: 20px;
 	text-align: center;
 }
 
-ul {
+.ShowList {
 	list-style: none;
 	padding: 0;
 	
+	
 }
 
-li {
+.ShowList li {
 	font-size: 20px;
 	margin: 25px;
 	cursor: pointer;
@@ -125,4 +105,49 @@ li {
 
 @media screen and (max-width: 1200px){
 	
+}
+
+.showLink{
+	text-decoration: none;
+	color: #ff9400 ;
+}
+
+.PrePage{
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+}
+
+.NextPage{
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+}
+
+.ShowList li a{
+	text-decoration: none;
+	color:black;
+}
+
+.posterImg{
+	width:200px;
+	height: 250px;
+}
+
+/* 별점 컨테이너 */
+.star-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* 개별 별 아이콘 */
+.star-rating .star {
+    font-size: 18px;
+    color: #ccc; /* 기본 별 색상 (회색) */
+}
+
+/* 채워진 별 */
+.star-rating .star.filled {
+    color: #FFD700; /* 채워진 별 색상 (금색) */
 }

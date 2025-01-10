@@ -1,141 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	
-	<link rel="stylesheet" href="ticket_menu.css" />
+    <meta charset="UTF-8">
+    <!--헤더 css-->
+	<link rel="stylesheet" href="/css/headerCss/header.css" />
+    <title>공연 목록</title>
+    <link rel="stylesheet" href="/css/ticketmenuCss/ticket_menu.css" />
+	<!--푸터 css-->
+	<link rel="stylesheet" href="/css/footerCss/footer.css" />
+    
 </head>
 <body>
+<div class="container">
+    <div th:replace="~{header/header :: header}"></div>
 
-<div class="container">	
-	<div class="header"></div>
-	
-	<div class="left-menu">
-	 <div class="MenuTitle">TICKET</div>
-		<ul>
-			<li class="뮤지컬">뮤지컬</li>
-			<li class="콘서트">콘서트</li>
-			<li class="스포츠">스포츠</li>
-			<li class="전시/행사">전시/행사</li>
-			<li class="클래식">클래식</li>
-			<li class="아동/가족">아동/가족</li>
-			<li class="연극">연극</li>
-		</ul>
-	</div>
-	<div class="right">
-			<div class="ticketGenre">뮤지컬</div>
-			  <div class="row">
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>
-				  
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>
-				  
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>
-				  
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>				  			  
-			  </div>
+    <div class="menu-left">
+        <div class="MenuTitle">TICKET</div>
+        <ul class="ShowList">
+            <li><a th:href="@{/show/ticketMenu}">전체</a></li>
+            <li><a th:href="@{/show/ticketMenu/뮤지컬}">뮤지컬</a></li>
+            <li><a th:href="@{/show/ticketMenu/콘서트}">콘서트</a></li>
+            <li><a th:href="@{/show/ticketMenu/스포츠}">스포츠</a></li>
+            <li><a th:href="@{/show/ticketMenu/전시}">전시/행사</a></li>
+            <li><a th:href="@{/show/ticketMenu/클래식}">클래식</a></li>
+            <li><a th:href="@{/show/ticketMenu/아동}">아동/가족</a></li>
+            <li><a th:href="@{/show/ticketMenu/연극}">연극</a></li>
+        </ul>
+    </div>
 
-			  <div class="row">
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>
-				  
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>
-				  
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>
-				  
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>				  			  
-			  </div>
+    <div class="menu-right">
+        <div class="ticketGenre" th:text="${showCate}">전체</div>
+        <div class="row" th:each="show : ${shows}">
+            <div class="col-sm-4">
+                <a class="showLink" th:href="@{'/show/ticketDetailPage/' + ${show.showNo}}">
+                	<!-- 이미지 경로 src/main/resources/images/showPoster  파일은 ' 숫자.png ' 형식으로 통일하여 저장-->
+                    <img class="posterImg" th:src="@{/images/showPoster/{showNo}.png(showNo=${show.showNo})}" alt="공연 이미지">
+                    <h3 th:text="${show.showTitle}">공연명</h3>
+                </a>
+					<p>대학로 아트포레스트 1관</p>
+					<p th:text="${#dates.format(show.startDate, 'yyyy-MM-dd')} + ' ~ ' + ${#dates.format(show.endDate, 'yyyy-MM-dd')}">공연날짜</p>
+					<br>
+					<p>후기평점:</p>
+				    <div class="star-rating">
+				        <!-- 평균 평점을 별로 변환 -->
+				        <span th:each="i : ${#numbers.sequence(1, 5)}"
+				              th:classappend="${show.averageScore >= i ? 'star filled' : 'star'}">
+				            ★
+				        </span>
+				        <span th:text="${#numbers.formatDecimal(show.averageScore, 1, 1)}">0.0</span>
+				    </div>
+            </div>
+        </div>
 
-			  <div class="row">
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>
-				  
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>
-				  
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>
-				  
-				  <div class="col-sm-4">
-					<img src="https://via.placeholder.com/200x250">
-					<h3>공연명</h3>
-					<p>공연장소</p>
-					<p>공연날짜</p>
-					<p>후기평점 <span>5.0</span></p>
-				  </div>				  			  
-			  </div>
+        <!-- 페이지네이션 -->
+        <div class="PageNav">
+            <a th:if="${currentPage > 0}" th:href="@{'/show/ticketMenu?page=' + ${currentPage - 1}}">이전</a>
+            <span th:text="${currentPage + 1} + ' / ' + ${totalPages}"></span>
+            <a th:if="${currentPage + 1 < totalPages}" th:href="@{'/show/ticketMenu?page=' + ${currentPage + 1}}">다음</a>
+        </div>
+    </div>
 
-			  <div class="PageNav">
-			  <span class="arrowLeft"></span><span class="arrowRight"></span>
-			  </div>			  
-	</div>
-		
-
-	<div class="footer"></div>
-	
-	
-</div>	
+   <div th:replace="~{footer/footer :: footer}"></div>
+   
+</div>
 </body>
 </html>
