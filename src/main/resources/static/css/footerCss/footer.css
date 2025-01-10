@@ -1,0 +1,41 @@
+/* 푸터 스타일 */
+.footer-content {
+    background-color: #FF9400;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top :20px;
+    border-radius: 5px;
+    clear: both;
+}
+
+.footer-container{
+	clear :both;
+}
+
+footer p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.footerhr{
+	margin-top : 50px;
+	border-bottom: 1px solid #ddd; /* 메뉴 하단 경계선 */	
+
+}
+
+.GitLogo{
+	width:40px;
+	height:auto;
+	text-decoration: none;
+}
+
+.GitLogoLetter{
+	width:5%;
+	text-decoration: none;
+}
+
+.GitLink{
+	text-decoration: none;
+}
+

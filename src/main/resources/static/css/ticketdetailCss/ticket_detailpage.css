@@ -1,9 +1,4 @@
 
-.header {
-	width: 1200px;
-	height: 100px;
-	background-color: aquamarine;
-}
 
 .bodyTop {
 display: flex;
@@ -24,12 +19,7 @@ display: flex;
 	display: flex;
 }
 
-.ticketDeatilTitle {
-	margin: 
-}
 
-.ticketPoster {
-}
 
 .ticketBuy {
 	width: 30%;
@@ -42,16 +32,15 @@ display: flex;
 	
 }
 
-.bodyBottom {
-}
-
+/* 가로길이 제한 주고싶을경우에 사용
 .bodyWrapper {
- width: 1200px;
+ width: 100%;
  min-width: 1200px;
 }
+*/
 
 
-li {
+.ticketDetailList li {
 	padding: 10px;
 }
 
@@ -135,6 +124,33 @@ li {
 		}
 
 
+/* 📅 특정 기간 스타일 */
+.special-period {
+    background-color: #ffe4b5; /* 연한 주황색 */
+    color: #333; /* 검정색 글씨 */
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* 📅 비활성화 날짜 스타일 */
+.disabled-date {
+    background-color: #e0e0e0; /* 연한 회색 */
+    color: #999; /* 회색 글씨 */
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* 📅 선택된 날짜 스타일 */
+.calendar-days div.selected {
+    background-color: #ff9400; /* 진한 주황색 */
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+
+
+/*회차선택 버튼*/
 .RoundBtn {
 	width: 175px;
 	border-color: #ff9400;
@@ -149,6 +165,13 @@ li {
 	border-radius: 10px;
 	color: #ff9400;
 	cursor: pointer;
+}
+
+/* 🔥 클릭된 버튼 스타일 */
+.RoundBtn.active {
+    background-color: #ff9400;
+    color: white;
+    font-weight: bold;
 }
 
 .bookTicket {
@@ -175,11 +198,14 @@ li {
 
 
 .AllRoundBtn {
-	text-align: center;
+	display: inline-block;
 }
 
-.Seatleft {
-	margin: 10px;
+.showTimeChoice {
+	margin-top: 10px;
+	margin-bottom: 15px;
+	color:rgb(0, 64, 64);
+	
 }
 
 .InfoTab {
@@ -213,23 +239,14 @@ li {
 
 
 
-table {
+.saleInfoDetail table {
 	border: 1px solid;
 }
 
-tr {
-	
-}
-
-td {
+.saleInfoDetail td {
 	border: 1px solid;
 }
 
-.footer {
-	height: 100px;
-	clear: both;
-	background-color: aqua;
-}
 
 .InfoTab:hover {
 	color: #ff9400;
@@ -245,14 +262,6 @@ td {
 
 .playInfo {
 	border-bottom: 5px solid;
-}
-
-.saleInfo {
-
-}
-
-.playReview {
-
 }
 
 .ReviewContent {
@@ -361,6 +370,12 @@ td {
     transform: rotate(-71deg);
 }
 
+.ticketPoster{
+	width : 296px;
+	height: 398px;
+}
+
+/*배우, 공연 찜하기 즐겨찾기 하트 css*/
 
  .right_area .icon{
     display: flex;
@@ -438,4 +453,13 @@ td {
 .icon.heart img {
     width: 16px; /* 아이콘 내부 이미지 크기 */
     height: 16px;
+}
+
+/*티켓 오픈안내*/
+.BeforeTicketOpen{
+	width : 370px;
+	height: 333px;
+	border: 1px bold;
+	padding-bottom: 30px;
+	
 }

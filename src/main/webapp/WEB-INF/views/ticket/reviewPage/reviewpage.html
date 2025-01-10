@@ -3,54 +3,118 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<link href="reviewpage.css" rel="stylesheet">
+	<link href="/css/reviewCss/reviewpage.css" rel="stylesheet">
+	<!--헤더 css-->
+	<link rel="stylesheet" href="/css/headerCss/header.css" />
+	<!--푸터 css-->
+	<link rel="stylesheet" href="/css/footerCss/footer.css" />
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<style>
+		/* 에러 메시지를 취소 버튼 옆에 배치 */
+		#errorMessage {
+			color: red;
+			display: none;
+			margin-left: 10px;
+			font-size: 14px;
+			line-height: 32px; /* 버튼과 맞춰줌 */
+		}
+		.submitCancelContainer {
+			display: flex;
+			align-items: center;
+		}
+	</style>
 </head>
 <body>
   <div>
-	<div class="header"></div>
+    <div th:replace="~{header/header :: header}"></div>
 	
 	<div>
 		<div class="formFrame">
-			<form>
+			<form action="/review/reviewWrite" method="POST" id="reviewForm">
 				<div>
 					<div class="w-100">
-						<h1>공연관람후기</h1>
+					<h1>공연관람후기</h1>
+					
+				<!-- 동적으로 showNo 값 주입 -->
+				 <input type="hidden" name="showNo" th:value="${showNo}">
+				 <!-- 기존 코드 수정 : 로그인 세션 테스트용 주입 - 추후 수정필요 -->
+				<input type="hidden" name="memberNo" th:value="${loginUser.memberNo}">
+
+			        
 						<p>공연명</p>
-						<input class="formInput">
+						<input class="formInput" th:value="${showTitle}" readonly>
 					</div>
 					
 					<div class="w-100">
+						<!--공연 관람일자 자동으로 넣어주거나 선택할수있도록 or 삭제처리하고 공연을 본 사람만 작성할수있게 처리-->
 						<p>관람일시</p>
-						<input class="formInput">
+						<input class="formInput" name="viewDate" required>
 					</div>
 					<div class="w-100">
 						<p>제목</p>
-						<input class="formInput">
+						<input class="formInput" name="reviewTitle" required>
 					</div>
 					<div class="w-100">
 						<p>별점</p>
-						<span><input type="radio" checked="checked" name="star"  >★★★★★</span>
-						<span><input type="radio" name="star">★★★★</span>
-						<span><input type="radio" name="star">★★★</span>
-						<span><input type="radio" name="star">★★</span>
-						<span><input type="radio" name="star">★</span>
+						<span><input type="radio" name="reviewScore" value="5" checked="checked"  >★★★★★</span>
+						<span><input type="radio" name="reviewScore" value="4">★★★★</span>
+						<span><input type="radio" name="reviewScore" value="3">★★★</span>
+						<span><input type="radio" name="reviewScore" value="2">★★</span>
+						<span><input type="radio" name="reviewScore" value="1">★</span>
 					</div>
 					<div class="w-100">
 						<p>내용</p>
-						<textarea class="formInput text"></textarea>
+						<textarea class="formInput text" name="reviewContent" id="reviewContent" required></textarea>
 					</div>
 				</div>
-				<div>
-					<button class="submit">등록</button>
-					<button class="cancel">취소</button>
+				<div class="submitCancelContainer">
+					<button type="submit" class="submit" id="submitButton">등록</button>
+					<button type="reset" class="cancel" id="cancelButton">취소</button>
+					<!-- 에러 메시지 표시 -->
+					<div id="errorMessage">리뷰 내용은 최소 110자 이상이어야 합니다.</div>
 				</div>
 			</form>	
 		</div>
 	</div>
 		
-	
-	<div class="footer"></div>
+   <div th:replace="~{footer/footer :: footer}"></div>
  </div>
+
+<script>
+    // 리뷰 내용 및 제출 버튼 설정
+    const reviewContent = document.getElementById("reviewContent");
+    const submitButton = document.getElementById("submitButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const cancelButton = document.getElementById("cancelButton");
+
+    // 내용 입력 시 글자 수 체크
+    reviewContent.addEventListener("input", function() {
+        const textLength = reviewContent.value.length;
+
+        if (textLength < 110) {
+            submitButton.disabled = true; // 제출 버튼 비활성화
+            errorMessage.style.display = "inline";  // 에러 메시지 표시
+        } else {
+            submitButton.disabled = false; // 제출 버튼 활성화
+            errorMessage.style.display = "none";  // 에러 메시지 숨기기
+        }
+    });
+
+    // 폼 제출 시 추가 검증
+    document.getElementById("reviewForm").addEventListener("submit", function(event) {
+        if (reviewContent.value.length < 110) {
+            event.preventDefault(); // 제출 막기
+            alert("리뷰 내용은 최소 110자 이상이어야 합니다.");
+        }
+    });
+
+    // 취소 버튼 클릭 시 이전 공연 페이지로 이동
+    cancelButton.addEventListener("click", function(event) {
+        event.preventDefault();
+        // 이전 페이지 URL로 리다이렉트 (예: /show/ticketDetailPage/{showNo})
+        window.location.href = "/show/ticketDetailPage/" + document.querySelector("input[name='showNo']").value;
+    });
+</script>
+
 </body>
 </html>

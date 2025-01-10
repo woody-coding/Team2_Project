@@ -4,22 +4,29 @@
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Document</title>
-	<link rel="stylesheet" href="ticket_detailpage.css" />
+	<!-- 본문 css-->
+	<link rel="stylesheet" href="/css/ticketdetailCss/ticket_detailpage.css" />
+	<!--헤더 css-->
+	<link rel="stylesheet" href="/css/headerCss/header.css" />
+	<!--푸터 css-->
+	<link rel="stylesheet" href="/css/footerCss/footer.css" />
 	
+
 <!--제이쿼리-->
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-	<script src="timer.js"></script>
+	
 </head>
 <body>
 
-	<div class="header"></div>
+	<div th:replace="~{header/header :: header}"></div>
 	
 	<body class="bodyWrapper">
 		<div class="bodyTop">
 			<div class="ticketDetail">
 				<div>
-				<h2 class="ticketDeatilTitle">연극 늘근도둑이야기</h2>
-				<img class="ticketPoster" src="늘근도둑포스터.png">
+				<h2 class="ticketDeatilTitle" th:text="${show.showCate + ' ' + show.showTitle}">장르 + 공연 제목</h2>
+				<!-- 이미지 경로 src/main/resources/images/showPoster  파일은 ' 숫자.png ' 형식으로 통일하여 저장-->
+				<img class="ticketPoster" th:src="@{/images/showPoster/{showNo}.png(showNo=${show.showNo})}" alt ="공연 이미지">
 				<div class="right_area">
 					<a href="javascript:;" class="icon heart LikePlay">
 						<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
@@ -28,10 +35,11 @@
 				</div>
 				<ul class="ticketDetailList">
 					<li><b>장소 </b><span>대학로 아트포레스트 1관</span></li>
-					<li><b>공연기간 </b><span>2022.03.05 ~2024.12.31</span></li>
-					<li><b>공연시간 </b><span>100분</span></li>
-					<li><b>관람연령 </b><span>12세이상</span></li>
-					<li><b>가격 </b><span>전석 </span><span>50,000</span></li>
+					<li><b>공연기간 </b><span th:text="${show.startDate + '~' + show.endDate}">시작일자~종료일자</span></li>
+					<li><b>공연시간 </b><span th:text="${show.showPlayTime + '분'}">몇분</span></li>
+					<li><b>관람연령 </b><span th:text="${show.showRating}">nn세 이상</span></li>
+					<li><b>가격 </b><span>전석 </span>
+					<span th:text="${#numbers.formatInteger(show.showPrice, 0, 'COMMA')} + '원'">티켓가격</span></li>
 					<li><b>혜택 </b><span>무이자할부</span></li>
 					<li><b>프로모션 </b><span>카카오페이</span><span>5만원이상 결제시 2천원 즉시할인</span></li>
 					
@@ -39,10 +47,17 @@
 				
 			</div>
 			<div class="ticketBuy">
-				<div><b>관람일</b></div>
-				
-				 <div class="calendar">
-					<!--날짜선택시 회차 정보 매칭후 쏴줘야함.-->
+				<div class="BeforeTicketOpen">
+					<div ><h3>티켓 오픈안내</h3></div>
+					<div><span style="color:red;"><h1>D-day </h1></b></span>
+					<span>티켓오픈 : </span>
+					<span th:text="${show.openDate} + ' ' + '12:00'">티켓오픈 : </span></div>
+					<br>
+					<div>티켓 오픈 시간은 예고없이 변경될 수 있습니다.
+					</div>
+					<br>
+				</div>			
+				 <div class="calendar">	
 					<div class="calendar-header">
 						<button id="prevMonth">&lt;</button>
 						<span id="monthYear">December 2024</span>
@@ -50,18 +65,17 @@
 					</div>
 					<div class="calendar-days" id="calendarDays">
 				</div>
-				
 				</div>
 				
-				<script src="datepicker.js"></script>
-				
-				<div class="AllRoundBtn">
-				<button class="RoundBtn">1회 <span>12:00</span></button>
-				<button class="RoundBtn">2회 <span>16:00</span></button></div>
-				<!--남은 좌석 표기-->
-				<div class="Seatleft"><b>전석 </b><span>123</span></div>
+				<!-- 예매불가능일자에는 숨김처리-->
+				<div class="AllRoundBtn" id="roundButtons">
+				<div class="showTimeChoice"><b>회차선택 </b></div>
+				<button class="RoundBtn">1회 <span th:text="${show.showStartTime}">회차시간</span></button>
+				</div>
+				<br>
+
 				<!--예매하기 버튼을 누르면 좌석예매 페이지로 이동-->
-				<button class="bookTicket" disabled>예매하기</button>
+				<button class="bookTicket" disabled th:attr="data-show-no=${show.showNo}">예매하기</button>	
 			</div>
 		
 		</div>
@@ -77,64 +91,23 @@
 			<div class="playInfoDetail">
 				<div class="playInfoCast">
 					<h3>캐스팅</h3>
-					<div class="castmates">
-						<div class="right_area">
+					<div class="castmates" th:each="actor : ${actors}">
+					    <div class="right_area">
 							<a href="javascript:;" class="icon heart">
 								<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
 							</a>
 						</div>
-						<img class="castPic" src="카리나.png">
-						<h4>역할</h4>
-						<p>배우이름</p>
-					</div>
-					<div class="castmates">
-						<div class="right_area">
-							<a href="javascript:;" class="icon heart">
-								<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
-							</a>
-						</div>
-						<img class="castPic" src="카리나.png">
-						<h4>역할</h4>
-						<p>배우이름</p>
-					</div>
-					<div class="castmates">
-						<div class="right_area">
-							<a href="javascript:;" class="icon heart">
-								<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
-							</a>
-						</div>
-						<img class="castPic" src="카리나.png">
-						<h4>역할</h4>
-						<p>배우이름</p>
-					</div>
-					<div class="castmates">
-						<div class="right_area">
-							<a href="javascript:;" class="icon heart">
-								<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
-							</a>
-						</div>
-						<img class="castPic" src="카리나.png">
-						<h4>역할</h4>
-						<p>배우이름</p>
-					</div>
-					<div class="castmates">
-						<div class="right_area">
-							<a href="javascript:;" class="icon heart">
-								<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
-							</a>
-						</div>
-						<img class="castPic" src="카리나.png">
-						<h4>역할</h4>
-						<p>배우이름</p>
+						<!-- 배우 이미지 파일: 추가처리필요-->
+						<img class="castPic" src="/images/karina.png">
+						<h4 th:text="${actor.roleName}">역할</h4>
+						<p th:text="${actor.actorName}">배우이름</p>
 					</div>
 				</div>
 				
 
 				<div class="playInfoTime">
 					<h3>공연시간 정보</h3>
-					<p>예매가능시간: 관람 1시간 30분 전까지</p>
-					<p>화 7시 30분 / 수 5시, 7시 30분 / 목 8시/ 금 5시, 8시 / 토 3시,6시 / 일 및 공휴일 2시, 5시 (월 공연없음)</p>
-					<p>*12/23(월) 5시</p>
+					<p th:text="${show.showInfo}">예매가능시간: 관람 1시간 30분 전까지</p>
 				</div>
 			</div>	
 
@@ -246,23 +219,36 @@
 					사전 경고에도 불구하고 불량 게시물을 계속적으로 게재한 게시자의 경우 인터파크 티켓 게시판 작성 권한이 제한됩니다.</p>
 				</div>
 				
-				<div class="ReviewRating">
-					<div class="pentagram"></div><div><h2>평점 5.0</h2></div>
+				<!-- 리뷰가 없는경우 비노출 처리 -->
+				<div class="ReviewRating" th:unless="${#lists.isEmpty(reviews)}">
+					<div class="pentagram"></div>
+					<!--후기평점-->
+					<div><h2>평점 <span th:text="${#numbers.formatDecimal(#aggregates.avg(reviews.![reviewScore]), 1, 1)}">0.0</span></h2></div>
 				</div>
 				
-				<button class="ReivewWirte">관람후기 작성하기</button>
+				<button class="ReivewWirte" th:onclick="|location.href='/review/reviewWrite?showNo=' + ${show.showNo}|">관람후기 작성하기</button>
 				
-				<div class="ReviewBoard">
-					<div class="ReviewBox">
+				<!-- 리뷰가 없을 경우 -->
+			    <div class="ReviewBoard" th:if="${#lists.isEmpty(reviews)}">
+			        <p class="NoReview">아직 작성된 관람후기가 없습니다. &#128517; <br></p>
+			    </div>
+				
+				
+				<!-- 리뷰가 있을 경우 -->
+				<div class="ReviewBoard" th:unless="${#lists.isEmpty(reviews)}">
+					<div class="ReviewBox" th:each="review, iterStat : ${reviews}" th:id="'review-' + ${iterStat.index}">
 						<div>
-							<div><span>예매자</span><span>예매자 이름</span><span>작성날짜</span></div>
+							<div><span>예매자 : </span>
+							<span th:text="${review.member.memberName}">예매자 이름</span>
+							<span>/ 작성 날짜 : </span>
+							<span th:text="${review.reviewDate}">작성날짜</span></div>
 						</div>
 						<div>
-							<h3>제목</h3>
-							<p class="ReviewContent">
+							<h3 th:text="${review.reviewTitle}">제목</h3>
+							<p class="ReviewContent" th:text="${review.reviewContent}">
 							국가안전보장회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다. 공무원은 국민전체에 대한 봉사자이며, 국민에 대하여 책임을 진다. 정부는 예산에 변경을 가할 필요가 있을 때에는 추가경정예산안을 편성하여 국회에 제출할 수 있다.
 							대한민국의 영토는 한반도와 그 부속도서로 한다. 국회는 국민의 보통·평등·직접·비밀선거에 의하여 선출된 국회의원으로 구성한다. 탄핵소추의 의결을 받은 자는 탄핵심판이 있을 때까지 그 권한행사가 정지된다.</p>
-							<button class="ReviewMore" onclick=button_onclick()>후기 더보기</button>
+							<button class="ReviewMore" onclick="toggleReviewContent(this)">후기 더보기</button>
 
 						</div>
 					</div>
@@ -270,28 +256,16 @@
 			</div>
 		</div>
 		
-		<script>
-			
-		//후기 더보기 , 접기 버튼
-		
-		$('.ReviewMore').on('click', function() {
-			if ($('.ReviewMore').html() == '후기 더보기') {
-				// 후기 더보기 버튼 클릭 시
-				$('.ReviewContent').addClass('open'); // 열리는 클래스 추가
-				$('.ReviewMore').html('접기');
-			} else {
-				// 접기 버튼 클릭 시
-				$('.ReviewContent').removeClass('open'); // 열리는 클래스 제거
-				$('.ReviewMore').html('후기 더보기');
-			}
-		});
-			
+		<script>			
+		//후기 더보기의 버튼이 각자 동작할수있도록 재수정
+		function toggleReviewContent(button) {
+		    const reviewContent = button.closest('.ReviewBox').querySelector('.ReviewContent');
+		    reviewContent.classList.toggle('open');
+		    button.textContent = reviewContent.classList.contains('open') ? '후기 닫기' : '후기 더보기';
+		}
 		</script>
 		
 		<script>
-
-
-			
 		//하단 공연정보/판매정보/관람후기 탭 바꾸기 스크립트
 			
 			const tabs = ['saleInfo', 'playInfo', 'playReview'];
@@ -315,6 +289,24 @@
 		</script>
 		
 		<script>
+		//회차 선택 버튼
+		document.addEventListener('DOMContentLoaded', () => {
+		    const roundButtons = document.querySelectorAll('.RoundBtn'); // 모든 회차 버튼 선택
+		
+		    roundButtons.forEach(button => {
+		        button.addEventListener('click', () => {
+		            // 모든 버튼에서 active 클래스 제거
+		            roundButtons.forEach(btn => btn.classList.remove('active'));
+		            
+		            // 클릭된 버튼에 active 클래스 추가
+		            button.classList.add('active');
+		        });
+		    });
+		});
+		</script>
+		
+		<!--배우 ,공연 좋아요 즐겨찾기 찜하기 하트 js-->
+		<script>
 		$(function() {
 		// 모든 .icon.heart에 개별 클릭 이벤트 추가
 		$('.icon.heart').on('click', function() {
@@ -337,9 +329,59 @@
 			});
 		});
 		</script>
+		
+		
+<!------------ html에서만 변환 후, 외부 js파일로 변수 전달되어 아래의 js는 이동 금지---------------------------->
+		
+		<!-- [처리방법] 1. ticket.detailpage에서 변수선언 2.attribute로 할당하여 외부파일 전송 -->
+		
+		<script th:inline="javascript">
+		    // Thymeleaf에서 전달받은 공연 시작일과 종료일 변수 - datepicker로 전송
+		    
+		    const periodStart = [[${show.startDate}]]
+		    const periodEnd = [[${show.endDate}]]
+		
+		    //console.log(periodStart); // 콘솔에서 값 확인
+		    //console.log(periodEnd);
+		    
+		    //js외부파일로 전달
+		    document.body.setAttribute('data-period-start', periodStart);
+    		document.body.setAttribute('data-period-end', periodEnd);
+		</script>
+		
+		<script th:inline="javascript">
+			// 공연 오픈시간 설정 타이머
+			// Thymeleaf에서 전달받은 오픈일자 + 오픈시간 고정 조합 - timer로 전송
+			
+			document.addEventListener('DOMContentLoaded', () => {
+		    // Thymeleaf에서 전달받은 값
+		    //
+		    const targetDateStr = [[${show.openDate} + ' ' + '12:00']];
+		
+		    // 'YYYY-MM-DD HH:mm:ss' 형식으로 변환
+		    const targetDate = new Date(targetDateStr);
+		    
+		    // Date 객체를 원하는 형식으로 포맷
+		    const formattedDate = targetDate.getFullYear() + '-' +
+		                          String(targetDate.getMonth() + 1).padStart(2, '0') + '-' +
+		                          String(targetDate.getDate()).padStart(2, '0') + ' ' +
+		                          String(targetDate.getHours()).padStart(2, '0') + ':' +
+		                          String(targetDate.getMinutes()).padStart(2, '0') + ':' +
+		                          String(targetDate.getSeconds()).padStart(2, '0');
+		    
+		    //console.log(formattedDate); // 콘솔에서 값 확인
+		    document.body.setAttribute('data-target-date', formattedDate);
+		   
+		});
+			
+		</script>
+		
+		<script src="/js/ticketdetailpageJs/datepicker.js"></script>
+		<script src="/js/ticketdetailpageJs/timer.js"></script>
+		
 	</body>
 	
-	<footer class="footer"></footer>
+	<div th:replace="~{footer/footer :: footer}"></div>
 	
 	
 </body>
