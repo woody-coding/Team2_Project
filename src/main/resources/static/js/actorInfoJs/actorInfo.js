@@ -70,7 +70,7 @@ function toggleImg(){
 	
 	// AJAX 요청
 	$.ajax({
-		url: '/like-toggle',
+		url: '/actor/like-toggle',
 		type: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify({

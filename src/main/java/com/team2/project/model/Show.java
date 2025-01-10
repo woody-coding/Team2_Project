@@ -74,6 +74,10 @@ public class Show {
     @Temporal(TemporalType.DATE)
     private Date openDate;
 
+	//추가 - 공연찜하기 기능 제외로 인위적으로 추가한 공연 좋아요 수 컬럼
+	@Column(name = "Likes", nullable = false)
+	private int likes;
+
 	//Show Entity에 있던 total,left seat 컬럼 Seat Entity로 이동
 
 }

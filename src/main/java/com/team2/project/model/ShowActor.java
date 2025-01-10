@@ -38,12 +38,6 @@ public class ShowActor {
 
 	    @Column(name = "ROLE_NAME", nullable = false)
 	    private String roleName;
-	    
-	    @Column(name = "ACTOR_NAME", length = 30, nullable = false)
-		private String actorName;
-	    
-	    @Column(name = "SHOW_TITLE", length = 1000, nullable = false)
-		private String showTitle;
 
 	    @ManyToOne
 	    @JoinColumn(name = "SHOW_NO", insertable = false, updatable = false)
