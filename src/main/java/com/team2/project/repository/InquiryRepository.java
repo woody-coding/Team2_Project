@@ -22,14 +22,14 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Integer> {
 	// 해당 회원의 모든 문의 내역 조회
 	List<Inquiry> findByMember_MemberNo(int memberNo, Sort sort);
 	
-	// 특정 status(상태)의 문의 조회
-    List<Inquiry> findByMember_MemberNoAndInquiryStatus(int memberNo, InquiryStatus inquiryStatus);
+	// 특정 상태의 문의 조회
+    List<Inquiry> findByMember_MemberNoAndInquiryStatus(int memberNo, InquiryStatus inquiryStatus, Sort sort);
 	
 	// 날짜 범위 데이터 받아서 리스트 뽑아주기
 	@Query("SELECT i FROM Inquiry i " +
 		       "WHERE i.member.memberNo = :memberNo " +
 		       "AND i.inquiryDate BETWEEN :startDate AND :endDate " +
-		       "ORDER BY i.inquiryDate DESC")
+		       "ORDER BY i.inquiryNo DESC")
 		List<Inquiry> findAllByDateRange(
 		    @Param("memberNo") int memberNo,
 		    @Param("startDate") LocalDate startDate,

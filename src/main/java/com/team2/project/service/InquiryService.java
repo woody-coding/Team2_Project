@@ -106,7 +106,7 @@ public class InquiryService {
 	
 	// 전체 문의 내역 조회 + 이미지 포함 (날짜로 검색 x)
 	public List<Inquiry> findInquiry(int memberNo) {
-		return inquiryRepository.findByMember_MemberNo(memberNo, Sort.by(Sort.Direction.DESC, "inquiryDate"));
+		return inquiryRepository.findByMember_MemberNo(memberNo, Sort.by(Sort.Direction.DESC, "inquiryNo"));
 	}
 	
 	// 전체 문의 내역 조회 + 이미지 포함 (날짜로 검색 o)
@@ -142,7 +142,7 @@ public class InquiryService {
 
 	
 	public List<Inquiry> findInquiryByStatus(int memberNo, InquiryStatus status) {
-		return inquiryRepository.findByMember_MemberNoAndInquiryStatus(memberNo, status);
+		return inquiryRepository.findByMember_MemberNoAndInquiryStatus(memberNo, status, Sort.by(Sort.Direction.DESC, "inquiryNo"));
 	}
 	
 	// 관리자 답변 생성

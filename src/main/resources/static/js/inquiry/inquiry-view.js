@@ -26,9 +26,29 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function updateDateRange(start, end) {
-    dateRangeButtons[0].querySelector('.date-text').textContent = formatDate(start);
-    dateRangeButtons[1].querySelector('.date-text').textContent = formatDate(end);
+    const startDateSpan = dateRangeButtons[0].querySelector('.date-text');
+    const endDateSpan = dateRangeButtons[1].querySelector('.date-text');
+    
+    startDateSpan.textContent = formatDate(start);
+    endDateSpan.textContent = formatDate(end);
   }
+
+  function sendDateToServer(startDate, endDate) {
+    const url = new URL('/inquiry/findByDate', window.location.origin);
+    url.searchParams.append('startDate', startDate);
+    url.searchParams.append('endDate', endDate);
+
+    window.location.href = url; // 페이지를 직접 이동시킵니다.
+  }
+
+  document.querySelector('.search-button').addEventListener('click', function(event) {
+    event.preventDefault(); // 폼 제출을 방지합니다.
+    const startDate = document.querySelector('[name="startDate"]').textContent;
+    const endDate = document.querySelector('[name="endDate"]').textContent;
+    sendDateToServer(startDate, endDate);
+  });
+
+
 
   function renderCalendar(date) {
     calendarDays.innerHTML = '';
@@ -168,34 +188,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-
-
-
-
-
 // &#9650; 위화살표      &#9660; 아래화살표
 // 컨텐츠 화살표 토글
 document.addEventListener('DOMContentLoaded', function() {
   const customDateEvent = document.querySelector('.inquiry-board');
 
   customDateEvent.addEventListener('click', function(event) {
-    // 클릭된 요소가 title bar인지 확인
     const customDate = event.target.closest('.inquiry-titlebar');
     if (customDate) {
       const inquiryToggle = customDate.nextElementSibling; // 해당 제목 바의 다음 형제 요소
+      const answerContent = inquiryToggle.nextElementSibling; // 다음 형제 요소
       const openClose = customDate.querySelector('.open-close'); // 클릭한 제목 바 안의 open-close 요소
 
-      if (inquiryToggle.style.display === 'none' || inquiryToggle.style.display === '') {
-          inquiryToggle.style.display = 'block'; // 보이기
-          openClose.innerHTML = '&#9650;'; // 위 화살표로 변경
+      // inquiry-content와 answer-content 토글
+      [inquiryToggle, answerContent].forEach(element => {
+        if (element) {
+          if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block'; // 보이기
+          } else {
+            element.style.display = 'none'; // 숨기기
+          }
+        }
+      });
+
+      // 화살표 변경
+      if (openClose.textContent.trim() === '▼') { // 아래 화살표 체크
+        openClose.innerHTML = '&#9650;'; // 위 화살표로 변경
       } else {
-          inquiryToggle.style.display = 'none'; // 숨기기
-          openClose.innerHTML = '&#9660;'; // 아래 화살표로 변경
+        openClose.innerHTML = '&#9660;'; // 아래 화살표로 변경
       }
     }
   });
 });
+
+
 
 
 // '직접설정' 부분에 드롭다운에 따라 화살표 모양 변경 
