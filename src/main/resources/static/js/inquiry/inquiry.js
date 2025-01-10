@@ -75,9 +75,36 @@ function inquiryCategoryHandler() {
 
 
 
+function validateForm(event) {
+  event.preventDefault(); // 기본 제출 동작 방지
 
+//  const inquiryTitle = document.getElementById('inquiry-title').value.trim();
+  const inquiryContent = document.getElementById('inquiry-content').value.trim();
+  let isValid = true;
+
+  // 제목 유효성 검사
+//  if (inquiryTitle.length < 5) {
+//    alert('제목은 5자 이상 입력해주세요.');
+//    isValid = false;
+//  }
+
+  // 내용 유효성 검사
+  if (inquiryContent.length < 10) {
+    alert('문의 내용은 10자 이상 입력해주세요.');
+    isValid = false;
+  }
+
+  // 모든 유효성 검사를 통과하면 폼 제출
+  if (isValid) {
+    event.target.submit();
+  }
+}
 
 function init() {
+
+  // 폼 제출 이벤트 리스너 추가
+  document.querySelector('form').addEventListener('submit', validateForm);	
+	
   document.querySelector('#inquiry-content').addEventListener('input', inquiryContentHandler);
 
   document.querySelector('.form-select').addEventListener('click', inquiryCategoryHandler);
