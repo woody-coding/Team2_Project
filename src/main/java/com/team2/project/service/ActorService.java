@@ -42,7 +42,7 @@ public class ActorService {
 	public void getActorInfo(int actorNo, int memberNo, Model model) {
 		Actor actor = actorRepo.findByActorNo(actorNo);
 		
-		ShowActorFile actorFile = fileRepo.findByActorNo(actorNo);
+		ShowActorFile actorFile = fileRepo.findByActor(actor);
 		String actorPhoto = null;
 		if(actorFile != null){
 			actorPhoto = actorFile.getFilePath() + actorFile.getFileName();
@@ -66,7 +66,7 @@ public class ActorService {
 			Show show1 = showRepo.findByShowNo(showActor.getShowNo());
 			tmp.setShowTitle(show1.getShowTitle());
 			
-			ShowActorFile fileTmp = fileRepo.findByShowNo(showActor.getShowNo());
+			ShowActorFile fileTmp = fileRepo.findByShow(show1);
 			if(fileTmp != null) {
 				String path = fileTmp.getFilePath() + fileTmp.getFileName();
 				tmp.setFilePath(path);

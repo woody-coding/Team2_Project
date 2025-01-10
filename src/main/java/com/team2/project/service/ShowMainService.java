@@ -42,7 +42,7 @@ public class ShowMainService {
 			ShowFileDto dto = new ShowFileDto();
 			dto.setShowNo(tmp.getShowNo());
 			
-			ShowActorFile showFile = fileRepo.findByShowNo(tmp.getShowNo());
+			ShowActorFile showFile = fileRepo.findByShow(tmp);
 			if(showFile != null) {
 				String path = showFile.getFilePath() + showFile.getFileName();
 				dto.setFilePath(path);
@@ -71,7 +71,7 @@ public class ShowMainService {
 			dto.setShowInfo(tmp.getShowInfo());
 
 			// 파일경로 설정
-			ShowActorFile showFile = fileRepo.findByShowNo(tmp.getShowNo());
+			ShowActorFile showFile = fileRepo.findByShow(tmp);
 			if(showFile != null) {
 				String path = showFile.getFilePath() + showFile.getFileName();
 				dto.setFilePath(path);
