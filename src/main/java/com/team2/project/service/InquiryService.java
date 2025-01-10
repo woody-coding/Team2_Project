@@ -145,9 +145,4 @@ public class InquiryService {
 		return inquiryRepository.findByMember_MemberNoAndInquiryStatus(memberNo, status, Sort.by(Sort.Direction.DESC, "inquiryNo"));
 	}
 	
-	// 관리자 답변 생성
-	@Transactional
-	public void updateInquiryByAdmin(int inquiryNo, String inquiryAnswer) {
-		inquiryRepository.updateByAdmin(inquiryNo, inquiryAnswer);
-	}
 }

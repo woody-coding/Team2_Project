@@ -169,19 +169,5 @@ public class InquiryController {
 		
 		return "redirect:/inquiry";
 	}
-	
-
-	// 8. 관리자 페이지에서 해당 문의에 답변 후 '등록'버튼 클릭했을 때
-	@PostMapping("/admin")
-	public String addInquiryAnswerByAdmin(
-			@PathVariable int inquiryNo,
-			@RequestParam String inquiryAnswer,
-			Model model) {
-		
-		// ** 관리자인지 아닌지 확인 로직 필요
-	
-    	inquiryService.updateInquiryByAdmin(inquiryNo, inquiryAnswer);
-		return "redirect:/admin";
-	}
 			
 }
