@@ -39,3 +39,6 @@ pom.xml
 # Spring Boot application properties
 src/main/resources/application.properties
 
+
+# Eclipse metadata files
+src/.metadata/
