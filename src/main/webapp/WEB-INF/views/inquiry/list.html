@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>1대1 문의접수 조회</title>
+	<link rel="stylesheet" th:href="@{/css/headerCss/header.css}" />
+	<link rel="stylesheet" th:href="@{/css/footerCss/footer.css}" />
     <link rel="stylesheet" href="inquiry-view.css" th:href="@{/css/inquiry/inquiry-view.css}"/>
     <script src="inquiry-view.js" th:src="@{/js/inquiry/inquiry-view.js}"></script>
 </head>
 <body>
-    <div class="inquiry-container">
+	<div class="inquiry-container">
         <div class="head-box">
             <div><h2>1:1문의</h2></div>
             <form class="inquiry-header" th:action="@{/inquiry/findByDate}" method="get">
@@ -87,12 +89,14 @@
                 <div class="content-open content-close" style="display : none">
                     <div class="inquiry-content"><p th:text="${inquiry.inquiryContent}">사이트가 전반적으로 불편한것같아요 ㅠㅠㅠㅠㅠ (추후 이미지 첨부)</p>
 
-                        <!-- 업로드된 이미지 표시 -->
-                        <div th:if="${not #lists.isEmpty(inquiry.inquiryFiles)}">
-                            <ul>
-								<img th:src="@{/uploads/{fileName}(fileName=${file.inquiryStoreFileName})}" alt="" style="width: 120px; height: 120px;">
-                            </ul>
-                        </div>
+						<!-- 업로드된 이미지 표시 -->
+											<div th:if="${not #lists.isEmpty(inquiry.inquiryFiles)}">
+											    <ul>
+											        <li style="list-style-type: none; display: inline-block;" th:each="file : ${inquiry.inquiryFiles}">
+											            <img th:src="@{/finalFile/{filename}(filename=${file.inquiryStoreFileName})}" style="width: 120px; height: 120px;">
+											        </li>
+											    </ul>
+											</div>
                     </div>
                     
                     <div class="button-align">

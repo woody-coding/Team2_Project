@@ -37,7 +37,7 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     // 결제 요청 전, 결제 방식 선택하는 페이지로 이동
-    @GetMapping("/checkout")
+    @PostMapping("/checkout")
     public String showCheckoutPage(
     		@SessionAttribute("login") Optional<Member> optionalMember,
     		@RequestParam(required = false) Date showDate,

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
@@ -16,6 +17,7 @@ import com.team2.project.model.InquiryCategory;
 import com.team2.project.model.InquiryFile;
 import com.team2.project.model.InquiryStatus;
 import com.team2.project.model.Member;
+import com.team2.project.repository.InquiryFileRepository;
 import com.team2.project.repository.InquiryRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,82 +27,124 @@ import lombok.RequiredArgsConstructor;
 public class InquiryService {
 	
 	private final InquiryRepository inquiryRepository;
+	private final InquiryFileRepository inquiryFileRepository;
 
 	@Value("${file.upload-dir}")
 	private String fileDir;
 	
-	// 원본 파일명에서 확장자 뽑아내는 메서드
-	public String extractExt(String originalFilename) {
-		int position = originalFilename.lastIndexOf(".");
-		return originalFilename.substring(position + 1);
-	}
-	
-	// 문의 등록 및 수정 (이미지 포함)
-	@Transactional
-	public Inquiry saveInquiry(Member member, InquiryCategory inquiryCategory, String inquiryTitle, String inquiryContent, List<MultipartFile> files, Integer inquiryNo) {
-	    Inquiry inquiry;
 
-	    // inquiryNo가 null이 아니면 기존 문의를 조회
-	    if (inquiryNo != null) {
-	        inquiry = inquiryRepository.findById(inquiryNo)
-	            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 문의 번호 입니다."));
-	    } else {
-	        inquiry = new Inquiry();
+	   private InquiryFile createAndSaveFile(MultipartFile file, Inquiry inquiry) {
+	        try {
+	            String originalFilename = file.getOriginalFilename();
+	            String storeFileName = createStoreFileName(originalFilename);
+	            String fullPath = fileDir + storeFileName;
+	            file.transferTo(new File(fullPath));
+
+	            InquiryFile inquiryFile = new InquiryFile();
+	            inquiryFile.setInquiry(inquiry);
+	            inquiryFile.setInquiryFileName(originalFilename);
+	            inquiryFile.setInquiryStoreFileName(storeFileName);
+	            inquiryFile.setInquiryFilePath(fullPath);
+	            inquiryFile.setInquiryFileDate(LocalDate.now());
+
+	            return inquiryFileRepository.save(inquiryFile);
+	        } catch (IOException e) {
+	            throw new RuntimeException("파일을 등록하는데 실패했습니다.", e);
+	        }
+	    }
+
+	    private String createStoreFileName(String originalFilename) {
+	        String uuid = UUID.randomUUID().toString();
+	        return uuid + originalFilename;
+	    }
+	    
+	    
+
+		// 문의 등록 (이미지 파일 포함)
+		@Transactional
+		public Inquiry saveInquiry(Member member, InquiryCategory inquiryCategory, String inquiryTitle, String inquiryContent, List<MultipartFile> files) {
+			
+		    Inquiry inquiry = new Inquiry();
 	        inquiry.setMember(member);
 	        inquiry.setInquiryDate(LocalDate.now());
-	    }
+		    inquiry.setInquiryCategory(inquiryCategory);
+		    inquiry.setInquiryTitle(inquiryTitle);
+		    inquiry.setInquiryContent(inquiryContent);
 
-	    // 공통 필드 업데이트
-	    inquiry.setInquiryCategory(inquiryCategory);
-	    inquiry.setInquiryTitle(inquiryTitle);
-	    inquiry.setInquiryContent(inquiryContent);
+		    // Inquiry 엔티티 먼저 저장
+		    Inquiry savedInquiry = inquiryRepository.save(inquiry);
 
-	    // 이미지 파일 처리 및 저장
-	    if (files != null && !files.isEmpty()) {
-	        // 현재 이미지 개수
-	        int currentImageCount = inquiry.getInquiryFiles().size();
-	        int newImageCount = 0;
+		    // 새 파일 추가
+		    if (files != null && !files.isEmpty()) {
+		        int currentImageCount = savedInquiry.getInquiryFiles().size();
+		        int newImageCount = (int) files.stream().filter(file -> !file.isEmpty()).count();
 
-	        // 새로 추가할 이미지 개수 확인
-	        for (MultipartFile file : files) {
-	            if (!file.isEmpty()) {
-	                newImageCount++;
-	            }
-	        }
+		        if (currentImageCount + newImageCount > 3) {
+		            throw new IllegalArgumentException("최대 3개의 이미지 파일만 업로드 가능합니다.");
+		        }
 
-	        // 총 이미지 개수가 3개를 초과하는지 확인
-	        if (currentImageCount + newImageCount > 3) {
-	            throw new IllegalArgumentException("최대 3개의 이미지 파일만 업로드 가능합니다.");
-	        }
+		        for (MultipartFile file : files) {
+		            if (!file.isEmpty()) {
+		            	createAndSaveFile(file, savedInquiry);
+		            }
+		        }
+		    }
 
-	        // 기존 이미지는 삭제하지 않고 새로운 이미지만 추가
-	        for (MultipartFile file : files) {
-	            if (!file.isEmpty()) {
-	                InquiryFile inquiryFile = new InquiryFile();
-	                inquiryFile.setInquiry(inquiry);
-	                inquiryFile.setInquiryFileName(file.getOriginalFilename());
-	                inquiryFile.setInquiryFileDate(LocalDate.now());
+		    // 변경된 Inquiry 엔티티 다시 저장
+		    return inquiryRepository.save(savedInquiry);
+		}
 
-	                // 파일 경로 설정
-	                String ext = extractExt(file.getOriginalFilename());
-	                String fileFullPath = fileDir + inquiryFile.getInquiryFileNo() + "." + ext;
-	                inquiryFile.setInquiryFilePath(fileFullPath);
-	                inquiryFile.setInquiryStoreFileName(inquiryFile.getInquiryFileNo() + "." + ext);
 
-	                // 로컬에 파일 저장 + 디비에 파일 경로 저장
-	                try {
-	                    File destinationFile = new File(fileFullPath);
-	                    file.transferTo(destinationFile); // 실제 파일 저장
-	                    inquiry.getInquiryFiles().add(inquiryFile); // 새로운 이미지 추가
-	                } catch (IOException e) {
-	                    throw new RuntimeException("파일 업로드 중 오류 발생: " + e.getMessage());
-	                }
-	            }
-	        }
-	    }
+		
+		@Transactional
+		public void updateInquiry(
+		        Integer inquiryNo, 
+		        InquiryCategory inquiryCategory,
+		        String inquiryTitle,
+		        String inquiryContent, 
+		        List<MultipartFile> newFiles, 
+		        List<String> existingFileIds) {
+		    
+		    Inquiry inquiry = inquiryRepository.findById(inquiryNo)
+		        .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 문의 번호 입니다."));
 
-	    return inquiryRepository.save(inquiry);
-	}
+		    // 문의 내용 업데이트
+		    inquiry.setInquiryCategory(inquiryCategory);
+		    inquiry.setInquiryTitle(inquiryTitle);
+		    inquiry.setInquiryContent(inquiryContent);
+
+		    // 기존 파일 삭제
+		    List<InquiryFile> existingFiles = inquiry.getInquiryFiles();
+		    
+		    for (InquiryFile file : existingFiles) {
+		        System.out.println("삭제 하려면 여기에 들어와야함! 개수 맞는지 확인하자!!");
+		        
+		        // existingFileIds가 null일 경우 해당 파일 삭제
+		        if (existingFileIds == null) {
+		            inquiryFileRepository.deleteById(file.getInquiryFileNo());
+		            continue; // 다음 파일로 넘어감
+		        }
+
+		        // existingFileIds에 포함되지 않은 파일 삭제
+		        if (!existingFileIds.contains(file.getInquiryFileNo())) {
+		            inquiryFileRepository.deleteById(file.getInquiryFileNo());
+		        }
+		    }
+
+		    // 새 파일 추가
+		    if (newFiles != null && !newFiles.isEmpty()) {
+		        for (MultipartFile file : newFiles) {
+		            if (!file.isEmpty()) {
+		                System.out.println("새롭게 파일 추가 하려면 여기에 들어와야함! 개수 맞는지 확인하자!!");
+		                InquiryFile newFile = createAndSaveFile(file, inquiry);
+		                inquiry.getInquiryFiles().add(newFile); // 새로운 파일 추가
+		                System.out.println("여기까지 왓으면 inquiry 객체에도 해당 file이 저장됨!! 리스트의 한 요소로 !@@@@@@@@@@@@");
+		            }
+		        }
+		    }
+
+		    inquiryRepository.save(inquiry); // 변경된 Inquiry 객체 저장
+		}
 
 
 	
@@ -120,18 +164,19 @@ public class InquiryService {
 	    Inquiry inquiry = inquiryRepository.findById(inquiryNo)
 	            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 문의 번호 입니다."));
 	        
-	        // 현재 로그인한 사용자가 해당 문의의 작성자인지 확인
-	        if (inquiry.getMember().getMemberNo() != memberNo) {
-	            throw new IllegalArgumentException("회원이 일치하지 않습니다.");
-	        }
-	        
-	        // inquiryFiles 리스트에서 InquiryFile 객체를 제거하여 고아 객체로 처리
-	        inquiry.getInquiryFiles().forEach(inquiryFile -> {
-	            inquiryFile.setInquiry(null); // 부모 참조 제거
-	        });
-	        
-	        // Inquiry 삭제
-	        inquiryRepository.delete(inquiry);
+	    // 현재 로그인한 사용자가 해당 문의의 작성자인지 확인
+	    if (inquiry.getMember().getMemberNo() != memberNo) {
+	        throw new IllegalArgumentException("회원이 일치하지 않습니다.");
+	    }
+	    
+	    // 관련된 InquiryFile 삭제
+	    List<InquiryFile> inquiryFiles = inquiry.getInquiryFiles();
+	    for (InquiryFile inquiryFile : inquiryFiles) {
+	        inquiryFileRepository.delete(inquiryFile); // DB에서 삭제
+	    }
+	    
+	    // Inquiry 삭제
+	    inquiryRepository.delete(inquiry);
 	}
 	
 	// 문의 고유번호로 해당 문의 전체 내용 반환
