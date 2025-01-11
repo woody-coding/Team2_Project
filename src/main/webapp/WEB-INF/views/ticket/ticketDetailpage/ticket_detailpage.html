@@ -16,7 +16,7 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	
 </head>
-<body>
+<body class="container">
 
 	<div th:replace="~{header/header :: header}"></div>
 	
@@ -51,6 +51,7 @@
 					<div ><h3>티켓 오픈안내</h3></div>
 					<div><span style="color:red;"><h1>D-day </h1></b></span>
 					<span>티켓오픈 : </span>
+												<!--오픈 시간 고정 , 오픈시간 설정 [하단 js에서 설정가능]-->
 					<span th:text="${show.openDate} + ' ' + '12:00'">티켓오픈 : </span></div>
 					<br>
 					<div>티켓 오픈 시간은 예고없이 변경될 수 있습니다.
@@ -363,7 +364,7 @@
 			
 			document.addEventListener('DOMContentLoaded', () => {
 		    // Thymeleaf에서 전달받은 값
-		    //
+		    								//오픈시간 고정, 오픈시간 설정 js : 아래숫자변경
 		    const targetDateStr = [[${show.openDate} + ' ' + '12:00']];
 		
 		    // 'YYYY-MM-DD HH:mm:ss' 형식으로 변환
