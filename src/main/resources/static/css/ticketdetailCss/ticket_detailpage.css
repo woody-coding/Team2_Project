@@ -1,4 +1,7 @@
-
+.container {
+	width: 1200px;
+	max-width: 1200px;
+}
 
 .bodyTop {
 display: flex;
@@ -32,12 +35,12 @@ display: flex;
 	
 }
 
-/* 가로길이 제한 주고싶을경우에 사용
+가로길이 제한 주고싶을경우에 사용
 .bodyWrapper {
- width: 100%;
- min-width: 1200px;
+ width: 1200px;
+ max-width: 1200px;
 }
-*/
+
 
 
 .ticketDetailList li {
