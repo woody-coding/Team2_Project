@@ -40,9 +40,7 @@
 					<li><b>관람연령 </b><span th:text="${show.showRating}">nn세 이상</span></li>
 					<li><b>가격 </b><span>전석 </span>
 					<span th:text="${#numbers.formatInteger(show.showPrice, 0, 'COMMA')} + '원'">티켓가격</span></li>
-					<li><b>혜택 </b><span>무이자할부</span></li>
-					<li><b>프로모션 </b><span>카카오페이</span><span>5만원이상 결제시 2천원 즉시할인</span></li>
-					
+	
 				</ul>
 				
 			</div>

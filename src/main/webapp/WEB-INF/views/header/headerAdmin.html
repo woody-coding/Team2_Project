@@ -1,0 +1,32 @@
+
+    <header th:fragment="headerAdmin" class="header-container">
+        <!-- 첫 번째 줄: 로고, 검색바, 로그인/회원가입 -->
+        <div class="header-top">
+            <div class="logo">
+                <img src="/images/header/logo_only.png" alt="로고">  <!-- 로고 이미지 -->
+            </div>
+            <div>
+            <nav class="main-menu">
+			<ul class="menu-list">
+				<li><a href="/member">회원 조회</a></li>
+				<li><a href="/actor/register">배우 등록</a></li>
+				<li><a href="/actor/list">배우 조회</a></li>
+				<li><a href="/performance/register">공연 등록</a></li>
+				<li><a href="/performance/list">공연 조회</a></li>
+				<li><a href="/inquiry">문의 관리</a></li>
+			</ul>
+		</nav>
+           </div>
+           <div>
+            <div class="auth-links">
+            	<!--로그아웃 -->
+                <a href="/logout" ><img src="/images/header/Log%20out.png" alt="로그아웃"></a>
+                <!--관리자페이지 -->
+                <a href="/adminpage"><img src="/images/header/User.png" alt="로그아웃"></a>
+            </div>
+            <div class="playpage-links">
+            	<a href="/login">공연페이지 이동</a>
+            </div>
+			</div>
+        </div>
+    </header>
