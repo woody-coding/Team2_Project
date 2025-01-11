@@ -64,14 +64,14 @@ function handleFileSelect(event) {
 function validateForm(event) {
     event.preventDefault();
 
-    const inquiryTitle = document.getElementById('inquiry-title').value.trim();
+//    const inquiryTitle = document.getElementById('inquiry-title').value.trim();
     const inquiryContent = document.getElementById('inquiry-content').value.trim();
     let isValid = true;
 
-    if (inquiryTitle.length < 5) {
-        alert('제목은 5자 이상 입력해주세요.');
-        isValid = false;
-    }
+//    if (inquiryTitle.length < 5) {
+//        alert('제목은 5자 이상 입력해주세요.');
+//        isValid = false;
+//    }
 
     if (inquiryContent.length < 10) {
         alert('문의 내용은 10자 이상 입력해주세요.');

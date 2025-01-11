@@ -95,7 +95,12 @@ public class MemberController {
 			System.out.println("로그인 완료");
 			//System.out.println(dto.getID());
 			session.setAttribute("login", Memberlogin);
-			mav.setViewName("login_join/login");
+			
+			String prevPage = (String) session.getAttribute("prevPage");
+	        session.removeAttribute("prevPage");
+	        String moveToUrl = prevPage != null ? "redirect:/" + prevPage : "login_join/login";
+	        
+	        mav.setViewName(moveToUrl);
 			mav.addObject(Memberlogin);
 			return mav;
 		}
