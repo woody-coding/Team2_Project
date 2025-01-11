@@ -10,8 +10,10 @@
         <div class="sideBar" style="width: 1014px;">
             <div class="userContainer">
                 <div class="userBox">
-                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}"></span>
-                    <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
+                    <a th:href="@{/mypage/main}">
+	                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
+	                    <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
+                    </a>
                 </div>
                 <div class="container">
                     <div class="likeShowBox">

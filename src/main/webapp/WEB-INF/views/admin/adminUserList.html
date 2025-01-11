@@ -52,14 +52,10 @@
     <td class="userName" th:text="${member.memberName}">ㅇㅇㅇ</td>
     <td class="userId" th:text="${member.memberId}">abc123@abc123</td>
     <td class="userAdrr" th:text="${member.memberAddr}">서울특별시 은평구 갈현로 29길 62</td>
-    <td class="userAdrrDetail" th:text="${member.memberAddrDe}">코오롱 하늘채 아파트 101동 605호</td>
+    <td class="userAdrrDetail" th:text="${member.memberAddrde}">코오롱 하늘채 아파트 101동 605호</td>
     <td class="userPhone" th:text="${member.memberPhone}">010-9510-6733</td>
     <td class="userSignup" th:text="${#dates.format(member.memberDate, 'yyyy-MM-dd')}">24.04.04</td>
-    <td class="userStatus">
-        <span th:if="${member.memberStatus == 0}">관리자</span>
-        <span th:if="${member.memberStatus == 1}">회원</span>
-        <span th:if="${member.memberStatus == 2}">탈퇴</span>
-    </td>
+    <td class="userStatus" th:text="${member.memberStatus == '0' ? '관리자' : member.memberStatus == '1' ? '회원' : member.memberStatus == '2' ? '탈퇴' : '상태 없음'}"></td>
 </tr>
 			</table>
 			<div class="pagination">
