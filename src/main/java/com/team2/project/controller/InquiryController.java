@@ -96,11 +96,10 @@ public class InquiryController {
     		@RequestParam InquiryCategory inquiryCategory,
 			@RequestParam String inquiryTitle,
 			@RequestParam String inquiryContent,
-			@RequestParam List<MultipartFile> files,
-			@RequestParam(required = false) Integer inquiryNo) {
+			@RequestParam List<MultipartFile> files) {
     	Member member = optionalMember.orElseThrow(() -> new IllegalStateException("로그인이 필요합니다."));
     	
-    	inquiryService.saveInquiry(member, inquiryCategory, inquiryTitle, inquiryContent, files, inquiryNo);
+    	inquiryService.saveInquiry(member, inquiryCategory, inquiryTitle, inquiryContent, files);
     	
         return "redirect:/inquiry";
 
@@ -141,17 +140,13 @@ public class InquiryController {
             @RequestParam String inquiryContent,
             @RequestParam List<MultipartFile> files,
             @RequestParam Integer inquiryNo,
+            @RequestParam(required = false) List<MultipartFile> newFiles,
+            @RequestParam(required = false) List<String> existingFileIds,
             RedirectAttributes redirectAttributes,
             Model model) {
     	Member member = optionalMember.orElseThrow(() -> new IllegalStateException("로그인이 필요합니다."));
 
-        try {
-            inquiryService.saveInquiry(member, inquiryCategory, inquiryTitle, inquiryContent, files, inquiryNo);
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            redirectAttributes.addAttribute("inquiryNo", inquiryNo);
-            return "redirect:/inquiry/edit/{inquiryNo}"; // 에러 메시지를 가지고 수정 페이지로 돌아감
-        }
+    	inquiryService.updateInquiry(inquiryNo, inquiryCategory, inquiryTitle, inquiryContent, newFiles, existingFileIds);
 
         return "redirect:/inquiry";
     }

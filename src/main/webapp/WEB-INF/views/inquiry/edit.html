@@ -4,10 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>1대1 문의 수정</title>
+	<link rel="stylesheet" th:href="@{/css/headerCss/header.css}" />
+	<link rel="stylesheet" th:href="@{/css/footerCss/footer.css}" />
     <link rel="stylesheet" href="inquiry.css" th:href="@{/css/inquiry/inquiry.css}"/>
     <script src="inquiry.js" th:src="@{/js/inquiry/inquiryEdit.js}"></script>
 </head>
 <body>
+	
     <section class="inquiry-form">
         <h1 class="inquiry-title">1:1 문의 수정</h1>
         <div class="divider"></div>
@@ -55,20 +58,25 @@
                     <span class="file-count">사진첨부 <span id="file-count">0</span><span id="file-count3">/3</span></span>
                     <span class="file-hint" style="padding-right: 20px;">빠른 답변을 위해 사진을 첨부해 주세요.</span>
                 </label>
-                <div class="upload-area-container">
+				<div class="upload-area-container">
                     <label for="file-input" class="upload-area">+</label>
                     <!-- 파일 입력 필드 -->
                     <input type="file" id="file-input" name="files" class="visually-hidden" accept=".jpg,.png" multiple />
                     <!-- 이미지 미리보기 -->
-                    <div id="image-preview">
-                        <!-- inquiryFiles가 존재할 경우 이미지 표시 -->
-                        <div th:if="${not #lists.isEmpty(inquiry.inquiryFiles)}">
-                            <ul>
-								<img th:src="@{/uploads/{fileName}(fileName=${file.inquiryStoreFileName})}" alt="" style="width: 120px; height: 120px;">
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+					<div id="image-preview">
+					    <!-- inquiryFiles가 존재할 경우 이미지 표시 -->
+					    <div th:if="${not #lists.isEmpty(inquiry.inquiryFiles)}">
+					        <ul>
+					            <li style="list-style-type: none; display: inline-block;" th:each="file : ${inquiry.inquiryFiles}">
+					                <img 
+					                    th:src="@{/finalFile/{filename}(filename=${file.inquiryStoreFileName})}" 
+					                    style="width: 120px; height: 120px;"
+					                    th:attr="data-id=${file.inquiryFileNo}">
+					            </li>
+					        </ul>
+					    </div>
+					</div>
+				  </div>
                 <span class="file-type-hint">* JPG, PNG 파일만 최대 3장 업로드 가능합니다.</span>
             </div>
 
@@ -95,5 +103,6 @@
 		</div>
 
     </section>
+	
 </body>
 </html>
