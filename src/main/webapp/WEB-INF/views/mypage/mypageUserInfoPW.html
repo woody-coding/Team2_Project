@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
@@ -341,7 +341,7 @@ button {
         <div class="sideBar" style="width: 1014px;margin-right: 33px;margin-bottom: 446px;margin-left: -0.3px;">
             <div class="userContainer">
                 <div class="userBox">
-                    <span class="userName" style="font-size: 24px; font-weight: 700;">ㅇㅇㅇ</span>
+                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
                     <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
                 </div>
                 <div class="container">
@@ -355,7 +355,7 @@ button {
                     <div class="likeActorBox">
                         <div class="likeActorCount">
                             <span class="likeActor" style="font-size: 18px; font-weight: bold;">찜한 배우</span>
-                            <span class="likeActorCount" style="font-size: 20px; font-weight: bold;">10</span>
+                            <span class="likeActorCount" style="font-size: 20px; font-weight: bold;" th:text="${likedActorCount}">10</span>
                         </div>
                     </div>
                 </div>
@@ -387,8 +387,11 @@ button {
                     
     <div class="formFrame">
         <h2>비밀번호 확인</h2>
-        <input class="formInput" type="password" id="password"required>
-        <button id="confirmButton" style="width: 18%;margin-left: 78.7%;">확인</button>
+        <form th:action="@{/mypage/memberCheck}" method="post" id="passwordCheckForm" th:object="${mypageMemberDTO}">
+        <input class="formInput" type="password" id="password" name="memberPw" required th:field="*{memberPw}">
+        <input type="hidden" name="memberNo" th:value="${member.memberNo}"> <!-- memberNo를 숨기고 전송 -->
+        <button type="submit" id="confirmButton" style="width: 18%;margin-left: 78.7%;">확인</button>
+    </form>
     </div>
 	</div>    
                 </div>
@@ -396,30 +399,39 @@ button {
     </section>
 </body>
     <script>
-        document.getElementById('confirmButton').addEventListener('click', function() {
-            const password = document.getElementById('password').value;
+    document.getElementById('confirmButton').addEventListener('click', function() {
+        const password = document.getElementById('password').value;
+        const memberNo = 1; // 실제로는 세션에서 가져와야 할 값
 
-            // AJAX 요청
-            fetch('/api/confirm-password', { // 서버의 비밀번호 확인 API URL
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ password: password })
+        // AJAX 요청
+        fetch('/mypage/memberCheck', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // URL 인코딩된 형식
+            },
+            body: new URLSearchParams({
+                memberNo: memberNo,
+                memberPw: memberPw // DTO 필드 이름과 일치
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // 비밀번호 일치 시 회원 정보 페이지로 이동
-                    window.location.href = '회원정보수정.html'; // 회원 정보 수정 페이지 URL
-                } else {
-                    alert('비밀번호가 일치하지 않습니다. 다시 시도하세요.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('서버와의 연결에 문제가 발생했습니다.');
-            });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // 비밀번호 일치 시 회원 정보 페이지로 이동
+                window.location.href = data.redirectUrl; // 회원 정보 수정 페이지 URL
+            } else {
+                alert('비밀번호가 일치하지 않습니다. 다시 시도하세요.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('서버와의 연결에 문제가 발생했습니다.');
         });
+    });
     </script>
 </html>

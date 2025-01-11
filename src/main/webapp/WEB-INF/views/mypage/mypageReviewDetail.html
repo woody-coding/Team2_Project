@@ -10,8 +10,10 @@
         <div class="sideBar" style="width: 1014px;">
             <div class="userContainer">
                 <div class="userBox">
-                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
-                    <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
+                	<a th:href="@{/mypage/main}">
+	                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
+	                    <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
+                    </a>
                 </div>
                 <div class="container">
                     <div class="likeShowBox">
@@ -47,52 +49,49 @@
                     </li>
                 </ul>
             </div>
+        </div>
         <div class="contentBox" style="margin-right: 25px;">
             <div class="NameBox">
                 <span class="detailName">리뷰 관리</span>
             </div>
             <div class="content">
                 <div class="recommendContainer" style="width: 936px;">
-                    <div>
-		<div class="formFrame" th:object="${review}">
-				<div>
-					<div class="w-100">
-						<h1>공연관람후기</h1>
-						<p>공연명</p>
-						<input class="formInput" readonly="readonly" th:value="${review.show.showTitle}" style="background-color: #FDF0E1; ">
-					</div>
-					
-					<div class="w-100">
-						<p >관람일시</p>
-						<input class="formInput" readonly="readonly" style="background-color: #FDF0E1; ">
-					</div>
-					<div class="w-100">
-						<p>제목</p>
-						<input class="formInput" th:value="${review.reviewTitle}" readonly="readonly">
-					</div>
-					<div class="w-100">
-						<p>별점</p>
-						<span><input type="radio" name="star" th:checked="${review.reviewScore == 5}" disabled>★★★★★</span>
-						<span><input type="radio" name="star" th:checked="${review.reviewScore == 4}" disabled>★★★★</span>
-						<span><input type="radio" name="star" th:checked="${review.reviewScore == 3}" disabled>★★★</span>
-						<span><input type="radio" name="star" th:checked="${review.reviewScore == 2}" disabled>★★</span>
-						<span><input type="radio" name="star" th:checked="${review.reviewScore == 1}" disabled>★</span>
-					</div>
-					<div class="w-100">
-						<p>내용</p>
-						<textarea class="formInput text" th:field="${review.reviewContent}" style="resize: none;" readonly></textarea>
-					</div>
-				</div>
-				<div style="display: flex;justify-content: space-between;">
-					<button class="list">목록</button>
-					<a th:href="@{/mypage/reviewUpdateForm(reviewNo=${review.reviewNo})}" class="update" style="text-decoration: none;">
-    					<button>수정</button>
-					</a>
-				</div>
-		</div>
-	</div>    
-                </div>
-            </div>
+					<div class="formFrame" th:object="${review}">
+								<div class="w-100">
+									<h1>공연관람후기</h1>
+									<p>공연명</p>
+									<input class="formInput" readonly="readonly" th:value="${review.show.showTitle}" style="background-color: #FDF0E1; ">
+								</div>
+								
+								<div class="w-100">
+									<p >관람일시</p>
+									<input class="formInput" readonly="readonly" style="background-color: #FDF0E1; ">
+								</div>
+								<div class="w-100">
+									<p>제목</p>
+									<input class="formInput" th:value="${review.reviewTitle}" readonly="readonly">
+								</div>
+								<div class="w-100">
+									<p>별점</p>
+									<span><input type="radio" name="star" th:checked="${review.reviewScore == 5}" disabled>★★★★★</span>
+									<span><input type="radio" name="star" th:checked="${review.reviewScore == 4}" disabled>★★★★</span>
+									<span><input type="radio" name="star" th:checked="${review.reviewScore == 3}" disabled>★★★</span>
+									<span><input type="radio" name="star" th:checked="${review.reviewScore == 2}" disabled>★★</span>
+									<span><input type="radio" name="star" th:checked="${review.reviewScore == 1}" disabled>★</span>
+								</div>
+								<div class="w-100">
+									<p>내용</p>
+									<textarea class="formInput text" th:field="${review.reviewContent}" style="resize: none;" readonly></textarea>
+								</div>
+							<div style="display: flex;justify-content: space-between;">
+								<button class="list">목록</button>
+								<a th:href="@{/mypage/reviewUpdateForm(reviewNo=${review.reviewNo})}" class="update" style="text-decoration: none;">
+			    					<button>수정</button>
+								</a>
+							</div>
+						</div>  
+                	</div>
+            	</div>
         </div>
     </section>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
