@@ -10,6 +10,7 @@
     <script src="inquiry-view.js" th:src="@{/js/inquiry/inquiry-view.js}"></script>
 </head>
 <body>
+	<div th:replace="~{header/header :: header}"></div>
 	<div class="inquiry-container">
         <div class="head-box">
             <div><h2>1:1문의</h2></div>
@@ -119,6 +120,7 @@
 
             <hr class='contentLine'>
         </div>
-    </div>        
+    </div>  
+	<div th:replace="~{footer/footer :: footer}"></div>      
 </body>
 </html>
