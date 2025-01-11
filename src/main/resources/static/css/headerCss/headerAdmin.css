@@ -1,0 +1,123 @@
+/* styles.css */
+
+/* 헤더 전체 스타일 */
+.header-container {
+    width: 1200px;
+    max-width: 1200px;
+    background-color: rgb(255, 255, 255);
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+}
+
+/* 첫 번째 줄 (로고, 검색바, 로그인/회원가입) */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+	margin-bottom: 20px;
+	margin-top: 15px;
+	border-bottom: 1px solid #ddd; /* 메뉴 하단 경계선 */
+	
+}
+
+
+
+/* 로그인/회원가입/티켓페이지 링크 스타일 */
+.auth-links{
+	text-align: center;
+	margin-right: 25px;
+	
+}
+.auth-links a {
+    margin-left: 20px;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+}
+
+.auth-links a:hover {
+    color: #007bff;
+}
+
+
+.menu-list a:after {
+  display:block;
+  content: '';
+  border-bottom: solid 3px #FF9400;  
+  transform: scaleX(0);  
+  transition: transform 250ms ease-in-out;
+  padding: 2px;
+}
+
+.menu-list a:hover:after { transform: scaleX(1); }
+
+/*공연페이지 이동 링크 스타일*/
+
+.playpage-links{
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.playpage-links a {
+    
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+
+}
+
+.playpage-links a:hover {
+    color: #007bff;
+}
+
+
+/*헤더 탭*/
+.main-menu {
+    display: flex;
+    justify-content: space-between; /* 좌, 우로 요소 배치 */
+    align-items: center; /* 세로 정렬 */
+	
+    margin-right: 120px;
+    background-color: white;
+	margin-top: 15px;
+
+    
+}
+
+/* 메뉴 리스트 스타일 */
+.menu-list {
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+}
+
+.menu-list li {
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #ddd;
+	padding: 10px;
+
+}
+
+.menu-list li:last-child {
+    border-right: none; /* 마지막 항목의 오른쪽 경계선 제거 */
+}
+
+.menu-list li a {
+    text-decoration: none;
+    font-size: 16px;
+    color: black;
+
+	
+
+}
+
+.menu-list li a:hover {
+    color: #FF9400; /* hover 시 강조 색상 */
+}
+
+
