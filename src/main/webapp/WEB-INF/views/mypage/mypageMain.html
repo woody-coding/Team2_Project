@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>마이페이지 메인</title>
+    <link rel="stylesheet" th:href="@{/css/headerCss/header.css}"> 
+    <link rel="stylesheet" th:href="@{/css/footerCss/footer.css}"> 
     <link rel="stylesheet" th:href="@{/css/mypage/mypageMain.css}">
 </head>
 <body>
+<div th:replace="~{header/header :: header}"></div>
     <section>
         <div class="sideBar" style="width: 1014px;">
             <div class="userContainer">
@@ -57,12 +60,12 @@
             <div class="content">
                 <div class="recommendContainer" style="width: 936px;">
                     <div class="recommend-30">
-                        <div class="background-31">
-                          <div class="poster-32"></div>
+                        <div class="background-31" style="background-image: url('오징어게임포스터.png');">
+                          <div class="poster-32" style="background-image: url('오징어게임포스터.png');"></div>
                           <div class="_p-33"></div>
                         </div>
-                        <div class="title-value-34">
-                          <div class="frame-35">
+                        <div class="title-value-34" style="background-image: url('오징어게임포스터.png');">
+                          <div class="frame-35" style="background-image: url('오징어게임포스터.png');">
                             <span class="fluttering-flowers-36">흩날리는 꽃들 속에서 니 ...</span>
                             <span class="price-37">20,000원</span>
                           </div>
@@ -83,7 +86,7 @@
                         <div class="_p-38"></div>
                     </div>
                     <div class="recommend-30">
-                        <div class="background-31">
+                        <div class="background-31 back">
                           <div class="poster-32"></div>
                           <div class="_p-33"></div>
                         </div>

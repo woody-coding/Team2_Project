@@ -45,7 +45,7 @@ public class AdminShowService {
 
 	    List<Seat> seats = new ArrayList<>();
 	    for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-	        for (int seatNo = 1; seatNo <= 20; seatNo++) { // 좌석 번호 1~20
+	        for (int seatNo = 1; seatNo <= 45; seatNo++) {
 	            // 복합 키 객체 생성
 	            SeatId seatId = new SeatId(seatNo, show.getShowNo(), java.sql.Date.valueOf(date));
 	            
@@ -55,10 +55,15 @@ public class AdminShowService {
 	                seat.setSeatNo(seatNo); // 각 필드 개별 설정
 	                seat.setShowNo(show.getShowNo());
 	                seat.setShowDate(java.sql.Date.valueOf(date));
-	                seat.setSeatSpace("A" + seatNo);
+	                
+	             // 자리 공간 설정: 1~9는 A, 10~18은 B, 19~27은 C, 28~36은 D, 37~45는 E
+	                char section = (char) ('A' + (seatNo - 1) / 9); // 9자리마다 알파벳 변경
+	                String seatNumber = String.format("%02d", (seatNo - 1) % 9 + 1); // 두 자리 형식으로 변환
+	                seat.setSeatSpace(section + seatNumber); // 01부터 시작
+	                
 	                seat.setIsBook("N"); // 기본값: 예약되지 않음
-	                seat.setTotSeat(20);
-	                seat.setLeftSeat(20);
+	                seat.setTotSeat(45);
+	                seat.setLeftSeat(45);
 	                seat.setShowTime(show.getShowStartTime());
 	                seats.add(seat);
 	            } else {
