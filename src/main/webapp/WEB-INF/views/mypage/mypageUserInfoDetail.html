@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>마이페이지 회원 정보</title>
+    <link rel="stylesheet" th:href="@{/css/headerCss/header.css}"> 
+    <link rel="stylesheet" th:href="@{/css/footerCss/footer.css}"> 
     <link rel="stylesheet" th:href="@{/css/mypage/mypageUserInfoDetail.css}">
 </head>
 <body>
+<div th:replace="~{header/header :: header}"></div>
     <section>
         <div class="sideBar" style="width: 1014px;margin-right: 33px;margin-bottom: 385px;margin-left: -0.3px;">
             <div class="userContainer">
@@ -14,7 +17,7 @@
 	                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
 	                    <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
                     </a>
-                </div>
+                </div> 
                 <div class="container">
                     <div class="likeShowBox">
                         <div class="likeShowCount">
@@ -57,38 +60,38 @@
             <div class="content">
                 <div class="recommendContainer" style="width: 936px;">
                     <div>
-		<div class="formFrame" th:object="${member}">
-			<form>
-				<div>
-					<div class="w-100">
-						<h1>회원 정보</h1>
-						<p>이름</p>
-						<input class="formInput" th:value="${member.memberName}" readonly="readonly">
+			<div class="formFrame" th:object="${member}">
+				<form>
+					<div>
+						<div class="w-100">
+							<h1>회원 정보</h1>
+							<p>이름</p>
+							<input class="formInput" th:value="${member.memberName}" readonly="readonly">
+						</div>
+						<div class="w-100">
+							<p >가입일</p>
+							<input class="formInput" th:value="${member.memberDate}" readonly="readonly">
+						</div>
+						<div class="w-100">
+							<p >아이디</p>
+							<input class="formInput" th:value="${member.memberId}"  readonly="readonly">
+						</div>
+						<div class="w-100">
+							<p>전화번호</p>
+							<input class="formInput" th:value="${member.memberPhone}" readonly="readonly">
+						</div>
+						<div class="w-100">
+							<p>주소</p>
+							<input class="formInput" th:value="${member.memberAddr}" readonly="readonly" style="margin-bottom: 20px;">
+							<input class="formInput" th:value="${member.memberAddrde}" readonly="readonly">
+						</div>
 					</div>
-					<div class="w-100">
-						<p >가입일</p>
-						<input class="formInput" th:value="${member.memberDate}" readonly="readonly">
+					<div style="display: flex;justify-content: flex-end;margin-top: -1.5%;">
+						<button class="update">수정</button>
 					</div>
-					<div class="w-100">
-						<p >아이디</p>
-						<input class="formInput" th:value="${member.memberId}"  readonly="readonly">
-					</div>
-					<div class="w-100">
-						<p>전화번호</p>
-						<input class="formInput" th:value="${member.memberPhone}" readonly="readonly">
-					</div>
-					<div class="w-100">
-						<p>주소</p>
-						<input class="formInput" th:value="${member.memberAddr}" readonly="readonly" style="margin-bottom: 20px;">
-						<input class="formInput" th:value="${member.memberAddrde}" readonly="readonly">
-					</div>
-				</div>
-				<div style="display: flex;justify-content: flex-end;margin-top: -1.5%;">
-					<button class="update">수정</button>
-				</div>
-			</form>	
+				</form>
+			</div>
 		</div>
-	</div>    
                 </div>
             </div>
         </div>
