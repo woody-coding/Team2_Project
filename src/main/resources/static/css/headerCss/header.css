@@ -2,7 +2,8 @@
 
 /* 헤더 전체 스타일 */
 .header-container {
-    width: 100%;
+    width: 1200px;
+    max-width: 1200px;
     background-color: rgb(255, 255, 255);
     padding: 3px;
     font-family: Arial, sans-serif;
@@ -57,6 +58,7 @@
 
 /* 로그인/회원가입 링크 스타일 */
 .auth-links{
+	display:flex;
 	text-align: center;
 	margin-right: 20px;
 	

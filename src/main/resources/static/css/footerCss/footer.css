@@ -1,5 +1,7 @@
 /* 푸터 스타일 */
 .footer-content {
+	width: 1200px;
+    max-width: 1200px;
     background-color: #FF9400;
     color: white;
     text-align: center;
