@@ -3,6 +3,7 @@ package com.team2.project.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.team2.project.DTO.MypageMemberDTO;
 import com.team2.project.model.LikeYO;
@@ -35,34 +37,37 @@ public class MypageController {
     private MypageService mypageService;
 
 	@GetMapping("/main")
-	public String mainPage(Model model, HttpSession session) {
-	    // Integer memberNo = (Integer) session.getAttribute("memberNo");
-	    
-	    // 일단 memberNo를 1로 설정
-	    Integer memberNo = 1;
+	public String mainPage(@SessionAttribute("login") Optional<Member> optionalMember, Model model, HttpSession session) {
+	    // 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        Integer memberNo = optionalMember.get().getMemberNo();
+	        
+	        // 좋아요 정보 조회
+	        List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
+	        model.addAttribute("likedItems", likedItems);
 
-	    // 좋아요 정보 조회
-	    List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
-        model.addAttribute("likedItems", likedItems);
+	        // 좋아요 총 갯수 조회
+	        int likedActorCount = mypageService.getLikedActorCount(memberNo);
+	        model.addAttribute("likedActorCount", likedActorCount);
 
-	    // 좋아요 총 갯수 조회
-	    int likedActorCount = mypageService.getLikedActorCount(memberNo);
-	    
-	    model.addAttribute("likedActorCount", likedActorCount);
-
-	    // 멤버 정보 조회
-	    Member member = mypageService.getMember(memberNo);
-	    model.addAttribute("member", member);
+	        // 멤버 정보 조회
+	        Member member = mypageService.getMember(memberNo);
+	        model.addAttribute("member", member);
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
 
 	    return "mypage/mypageMain";
 	}
+
 	
 	@GetMapping("/likeActor")
-	public String LikeActor(Model model, HttpSession session) {
-// Integer memberNo = (Integer) session.getAttribute("memberNo");
+	public String LikeActor(@SessionAttribute("login") Optional<Member> optionalMember, Model model, HttpSession session) {
 	    
-	    // 일단 memberNo를 1로 설정
-	    Integer memberNo = 1;
+		// 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        Integer memberNo = optionalMember.get().getMemberNo();
 	    
 	 // 좋아요 정보 조회
 	    List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
@@ -76,42 +81,50 @@ public class MypageController {
         // 멤버 정보 조회
 	    Member member = mypageService.getMember(memberNo);
 	    model.addAttribute("member", member);
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
         
         return "mypage/mypageLikeActor";
 	}
 	
 	@GetMapping("/reviewList")
-	public String mypageReviewList(Model model, HttpSession session){
-		// Integer memberNo = (Integer) session.getAttribute("memberNo");
-		
-		 Integer memberNo = 1;
-		 
-		// 좋아요 정보 조회
-		    List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
+	public String mypageReviewList(@SessionAttribute("login") Optional<Member> optionalMember, Model model, HttpSession session) {
+	    // 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        Integer memberNo = optionalMember.get().getMemberNo();
 	        
+	        // 좋아요 정보 조회
+	        List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
 	        
-	     // 좋아요 총 갯수 조회
-		    int likedActorCount = mypageService.getLikedActorCount(memberNo);
+	        // 좋아요 총 갯수 조회
+	        int likedActorCount = mypageService.getLikedActorCount(memberNo);
 	        
 	        // 멤버 정보 조회
-		    Member member = mypageService.getMember(memberNo);
-		    
-		  //리뷰 목록 조회
-		    List<Review> allReviews = mypageService.findAllReviewsWithShow(Sort.by(Sort.Direction.DESC,"reviewNo"));
-		    
-		    model.addAttribute("likedItems", likedItems);
-		    model.addAttribute("likedActorCount", likedActorCount);
-		    model.addAttribute("member", member);
-		    model.addAttribute("allReviews", allReviews);
+	        Member member = mypageService.getMember(memberNo);
+	        
+	        // 리뷰 목록 조회
+	        List<Review> allReviews = mypageService.findAllReviewsWithShow(Sort.by(Sort.Direction.DESC, "reviewNo"));
+	        
+	        model.addAttribute("likedItems", likedItems);
+	        model.addAttribute("likedActorCount", likedActorCount);
+	        model.addAttribute("member", member);
+	        model.addAttribute("allReviews", allReviews);
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
 
-		return "mypage/mypageReviewList";
+	    return "mypage/mypageReviewList";
 	}
+
 	
 	@GetMapping("/reviewDetail")
-	public String mypageReviewDetail(@RequestParam int reviewNo, Model model, HttpSession session) {
-		// Integer memberNo = (Integer) session.getAttribute("memberNo");
-		
-				 Integer memberNo = 1;
+	public String mypageReviewDetail(@SessionAttribute("login") Optional<Member> optionalMember, @RequestParam int reviewNo, Model model, HttpSession session) {
+		// 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        Integer memberNo = optionalMember.get().getMemberNo();
 				 
 				// 좋아요 정보 조회
 				    List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
@@ -130,15 +143,18 @@ public class MypageController {
 				    model.addAttribute("likedActorCount", likedActorCount);
 				    model.addAttribute("member", member);
 				    model.addAttribute("review", review);
-				    
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
 				    return "mypage/mypageReviewDetail";
 	}
 	
 	@GetMapping("/reviewUpdateForm")
-	public String mypageReviewUpdateForm(@RequestParam int reviewNo, Model model, HttpSession session) {
-		// Integer memberNo = (Integer) session.getAttribute("memberNo");
-		
-		 Integer memberNo = 1;
+	public String mypageReviewUpdateForm(@SessionAttribute("login") Optional<Member> optionalMember, @RequestParam int reviewNo, Model model, HttpSession session) {
+		// 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        Integer memberNo = optionalMember.get().getMemberNo();
 		 
 		// 좋아요 정보 조회
 		    List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
@@ -156,19 +172,22 @@ public class MypageController {
 		    model.addAttribute("likedActorCount", likedActorCount);
 		    model.addAttribute("member", member);
 		    model.addAttribute("review", review);
-		
+	} else {
+        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+        return "redirect:/login";
+    }
 		return "mypage/mypageReviewUpdate";
 	}
 	
 	@PostMapping("/reviewUpdate")
-	public String mypageReviewUpdate(@RequestParam int reviewNo,
+	public String mypageReviewUpdate(@SessionAttribute("login") Optional<Member> optionalMember, @RequestParam int reviewNo,
 	        @RequestParam String reviewTitle,
 	        @RequestParam String reviewContent,
 	        @RequestParam(required = false) Integer reviewScore, Model model, HttpSession session) {
 		
-		// Integer memberNo = (Integer) session.getAttribute("memberNo");
-		
-		 Integer memberNo = 1;
+		// 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        Integer memberNo = optionalMember.get().getMemberNo();
 		 
 		 Review review = mypageService.getReviewByReviewNo(reviewNo);
 		    if (review == null) {
@@ -200,7 +219,10 @@ public class MypageController {
 		    model.addAttribute("likedItems", likedItems);
 		    model.addAttribute("likedActorCount", likedActorCount);
 		    model.addAttribute("member", member);
-
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
 		return "redirect:/mypage/reviewDetail?reviewNo=" + reviewNo;
 	}
 	
@@ -264,10 +286,10 @@ public class MypageController {
 	
 	//회원 정보
 	@GetMapping("/memberInfo")
-	public String mypageMemberInfo(Model model, HttpSession session) {
-		// Integer memberNo = (Integer) session.getAttribute("memberNo");
-		
-		   Integer memberNo = 1;
+	public String mypageMemberInfo(@SessionAttribute("login") Optional<Member> optionalMember, Model model, HttpSession session) {
+		// 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        Integer memberNo = optionalMember.get().getMemberNo();
 				 
 		   // 좋아요 정보 조회
 		   List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
@@ -283,7 +305,10 @@ public class MypageController {
 		   model.addAttribute("likedItems", likedItems);
 		   model.addAttribute("likedActorCount", likedActorCount);
 		   model.addAttribute("member", member);
-		
+	} else {
+        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+        return "redirect:/login";
+    }
 		   return "mypage/mypageUserInfoDetail";
 	}
 }

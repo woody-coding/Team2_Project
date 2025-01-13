@@ -9,67 +9,71 @@
 </head>
 <body>
 <div th:replace="~{header/header :: header}"></div>
-    <section>
-        <div class="sideBar" style="width: 240px;">
-            <div class="userContainer">
-                <div class="userBox">
-                    <a th:href="@{/mypage/main}">
-	                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
-	                    <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
-                    </a>
-                </div>
-                <div class="container">
-                    <div class="likeShowBox">
-                        <div class="likeShowCount">
-                            <span class="likeShow" style="font-size: 18px; font-weight: bold;">찜한 공연</span>
-                            <span class="likeShowCount" style="font-size: 20px; font-weight: bold;">10</span>
-                        </div>
-                    </div>               
-                    <div class="divider"></div>
-                    <div class="likeActorBox">
-                        <div class="likeActorCount">
-                            <a th:href="@{/mypage/likeActor}">
-                            	<span class="likeActor" style="font-size: 18px; font-weight: bold;">찜한 배우</span>
-                            	<span class="likeActorCount" style="font-size: 20px; font-weight: bold;" th:text="${likedActorCount}">10</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+<section>
+    <div class="sideBar" style="width: 240px;">
+        <div class="userContainer">
+            <div class="userBox">
+                <a th:href="@{/mypage/main}">
+                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
+                    <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
+                </a>
             </div>
-            <div class="naviContainer">
-                <ul class="naviList">
-                    <li class="naviList1">쇼핑 내역
-                        <ul class="subList">예매 내역</ul>
-                    </li>
-                    <li class="naviList1"><a th:href="@{/mypage/main}">라이브러리</a>
-                        <ul class="subList"><a>찜한 공연</a></ul>
-                        <ul class="subList"><a th:href="@{/mypage/likeActor}">찜한 배우</a></ul>
-                        <ul class="subList"><a th:href="@{/mypage/reviewList}">리뷰 관리</a></ul>
-                        <ul class="subList"><a>문의 내역</a></ul>
-                    </li>
-                    <li class="naviList1"><a th:href="@{/mypage/memberInfo}">회원 정보</a>
-                        <ul class="subList"><a th:href="@{/mypage/memberInfo}">회원 정보 관리</a></ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="contentBox">
-            <div class="NameBox">
-                <span class="detailName">찜한 배우</span>
-            </div>
-            <div class="content" style="width: 960.23px; height: 368px;">
-                <div class="actBox" th:each="item : ${likedItems}" style="width:130px; height: 159px;">
-                    <div class="actImg">
-                        <img alt="" th:src="@{/uploads/{fileNo}(fileNo=${item.actor.showActorFile.fileNo})}" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
+            <div class="container">
+                <div class="likeShowBox">
+                    <div class="likeShowCount">
+                        <span class="likeShow" style="font-size: 18px; font-weight: bold;">찜한 공연</span>
+                        <span class="likeShowCount" style="font-size: 20px; font-weight: bold;">10</span>
                     </div>
-                    <div class="heart">
-                        <img alt="redHeart" src="/images/mypage/redHeart.png" style="width: 40px; height: 40px;"> <!-- 하트 이미지 URL 확인 -->
+                </div>               
+                <div class="divider"></div>
+                <div class="likeActorBox">
+                    <div class="likeActorCount">
+                        <a th:href="@{/mypage/likeActor}">
+                            <span class="likeActor" style="font-size: 18px; font-weight: bold;">찜한 배우</span>
+                            <span class="likeActorCount" style="font-size: 20px; font-weight: bold;" th:text="${likedActorCount}">10</span>
+                        </a>
                     </div>
-                    <div class="actName" th:text="${item.actor.actorName}"></div>
                 </div>
             </div>
         </div>
-    </section>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <div class="naviContainer">
+            <ul class="naviList">
+                <li class="naviList1">쇼핑 내역
+                    <ul class="subList">예매 내역</ul>
+                </li>
+                <li class="naviList1"><a th:href="@{/mypage/main}">라이브러리</a>
+                    <ul class="subList"><a>찜한 공연</a></ul>
+                    <ul class="subList"><a th:href="@{/mypage/likeActor}">찜한 배우</a></ul>
+                    <ul class="subList"><a th:href="@{/mypage/reviewList}">리뷰 관리</a></ul>
+                    <ul class="subList"><a>문의 내역</a></ul>
+                </li>
+                <li class="naviList1"><a th:href="@{/mypage/memberInfo}">회원 정보</a>
+                    <ul class="subList"><a th:href="@{/mypage/memberInfo}">회원 정보 관리</a></ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="contentBox">
+        <div class="NameBox">
+            <span class="detailName">찜한 배우</span>
+        </div>
+        <div class="content" style="width: 960.23px; height: 368px;">
+            <!-- 찜한 배우가 없을 때 메시지 출력 -->
+            <div th:if="${#lists.isEmpty(likedItems)}" style="text-align: center; font-size: 20px; font-weight: bold; margin-top: 20px;">
+                찜한 배우가 없습니다.
+            </div>
+            <div class="actBox" th:each="item : ${likedItems}" style="width:130px; height: 159px;">
+                <div class="actImg">
+                    <img alt="" th:src="@{/uploads/{fileNo}(fileNo=${item.actor.showActorFile.fileNo})}" class="actor"> <!-- 여기에 배우 이미지 URL 추가 -->
+                </div>
+                <div class="heart">
+                    <img alt="redHeart" src="/images/mypage/redHeart.png" style="width: 40px; height: 40px;"> <!-- 하트 이미지 URL 확인 -->
+                </div>
+                <div class="actName" th:text="${item.actor.actorName}"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </body>
 </html>
