@@ -5,85 +5,89 @@
     <title>마이페이지 리뷰</title>
     <link rel="stylesheet" th:href="@{/css/headerCss/header.css}"> 
     <link rel="stylesheet" th:href="@{/css/footerCss/footer.css}"> 
-	<link rel="stylesheet" th:href="@{/css/mypage/mypageReviewList.css}"> 
+    <link rel="stylesheet" th:href="@{/css/mypage/mypageReviewList.css}"> 
 </head>
 <body>
 <div th:replace="~{header/header :: header}"></div>
-    <section>
-        <div class="sideBar" style="width: 1014px;">
-            <div class="userContainer">
-                <div class="userBox">
-                    <a th:href="@{/mypage/main}">
-	                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
-	                    <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
-                    </a>
-                </div>
-                <div class="container">
-                    <div class="likeShowBox">
-                        <div class="likeShowCount">
-                            <span class="likeShow" style="font-size: 18px; font-weight: bold;">찜한 공연</span>
-                            <span class="likeShowCount" style="font-size: 20px; font-weight: bold;">10</span>
-                        </div>
-                    </div>               
-                    <div class="divider"></div>
-                    <div class="likeActorBox">
-                        <div class="likeActorCount">
-                            <a th:href="@{/mypage/likeActor}">
-                            	<span class="likeActor" style="font-size: 18px; font-weight: bold;">찜한 배우</span>
-                            	<span class="likeActorCount" style="font-size: 20px; font-weight: bold;" th:text="${likedActorCount}">10</span>
-                            </a>
-                        </div>
+<section>
+    <div class="sideBar" style="width: 1014px;">
+        <div class="userContainer">
+            <div class="userBox">
+                <a th:href="@{/mypage/main}">
+                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
+                    <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
+                </a>
+            </div>
+            <div class="container">
+                <div class="likeShowBox">
+                    <div class="likeShowCount">
+                        <span class="likeShow" style="font-size: 18px; font-weight: bold;">찜한 공연</span>
+                        <span class="likeShowCount" style="font-size: 20px; font-weight: bold;">10</span>
+                    </div>
+                </div>               
+                <div class="divider"></div>
+                <div class="likeActorBox">
+                    <div class="likeActorCount">
+                        <a th:href="@{/mypage/likeActor}">
+                            <span class="likeActor" style="font-size: 18px; font-weight: bold;">찜한 배우</span>
+                            <span class="likeActorCount" style="font-size: 20px; font-weight: bold;" th:text="${likedActorCount}">10</span>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="naviContainer">
-                <ul class="naviList">
-                    <li class="naviList1">쇼핑 내역
-                        <ul class="subList">예매 내역</ul>
-                    </li>
-                    <li class="naviList1"><a th:href="@{/mypage/main}">라이브러리</a>
-                        <ul class="subList"><a>찜한 공연</a></ul>
-                        <ul class="subList"><a th:href="@{/mypage/likeActor}">찜한 배우</a></ul>
-                        <ul class="subList"><a th:href="@{/mypage/reviewList}">리뷰 관리</a></ul>
-                        <ul class="subList"><a>문의 내역</a></ul>
-                    </li>
-                    <li class="naviList1"><a th:href="@{/mypage/memberInfo}">회원 정보</a>
-                        <ul class="subList"><a th:href="@{/mypage/memberInfo}">회원 정보 관리</a></ul>
-                    </li>
-                </ul>
-            </div>
         </div>
-        <div class="contentBox" style="margin-right: 25px;">
-            <div class="NameBox">
-                <span class="detailName">리뷰 관리</span>
-            </div>
-    <div class="content" style="margin-top: 22px;">
-    <table style="width: 936px; border-collapse: collapse; text-align: left;">
-        <thead>
-            <tr style="background-color: #FDF0E1;">
-                <th style="border: 1px solid black; padding: 10px;">제목</th>
-                <th style="border: 1px solid black; padding: 10px;">공연명</th>
-                <th style="border: 1px solid black; padding: 10px; width: 115px;">별점</th>
-                <th style="border: 1px solid black; padding: 10px; width: 115px;">관람일</th>
-                <th style="border: 1px solid black; padding: 10px; width: 115px;">작성 날짜</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="review : ${allReviews}">
-                <td style="border: 1px solid black; padding: 10px;"  th:text="${review.reviewTitle}">재미?</td>
-                <td style="border: 1px solid black; padding: 10px;">
-                	<a th:href="@{/mypage/reviewDetail(reviewNo=${review.reviewNo})}" th:text="${review.show.showTitle}">공연 제목 인데</a>
-                </td>
-                <td style="border: 1px solid black; padding: 10px;" th:text="${review.reviewScore}">4</td>
-                <td style="border: 1px solid black; padding: 10px;">2023-01-01</td>
-                <td style="border: 1px solid black; padding: 10px;" th:text="${review.reviewDate}">2023-01-03</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-</div>
-    </section>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <div class="naviContainer">
+            <ul class="naviList">
+                <li class="naviList1">쇼핑 내역
+                    <ul class="subList">예매 내역</ul>
+                </li>
+                <li class="naviList1"><a th:href="@{/mypage/main}">라이브러리</a>
+                    <ul class="subList"><a>찜한 공연</a></ul>
+                    <ul class="subList"><a th:href="@{/mypage/likeActor}">찜한 배우</a></ul>
+                    <ul class="subList"><a th:href="@{/mypage/reviewList}">리뷰 관리</a></ul>
+                    <ul class="subList"><a>문의 내역</a></ul>
+                </li>
+                <li class="naviList1"><a th:href="@{/mypage/memberInfo}">회원 정보</a>
+                    <ul class="subList"><a th:href="@{/mypage/memberInfo}">회원 정보 관리</a></ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="contentBox" style="margin-right: 25px;">
+        <div class="NameBox">
+            <span class="detailName">리뷰 관리</span>
+        </div>
+        <div class="content" style="margin-top: 22px;">
+            <table style="width: 936px; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="background-color: #FDF0E1;">
+                        <th style="border: 1px solid black; padding: 10px;">제목</th>
+                        <th style="border: 1px solid black; padding: 10px;">공연명</th>
+                        <th style="border: 1px solid black; padding: 10px; width: 115px;">별점</th>
+                        <th style="border: 1px solid black; padding: 10px; width: 115px;">관람일</th>
+                        <th style="border: 1px solid black; padding: 10px; width: 115px;">작성 날짜</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(allReviews)}">
+                        <td colspan="5" style="border: 1px solid black; padding: 10px; text-align: center; font-weight: bold;">
+                            작성한 리뷰가 없습니다.
+                        </td>
+                    </tr>
+                    <tr th:each="review : ${allReviews}">
+                        <td style="border: 1px solid black; padding: 10px;" th:text="${review.reviewTitle}">재미?</td>
+                        <td style="border: 1px solid black; padding: 10px;">
+                            <a th:href="@{/mypage/reviewDetail(reviewNo=${review.reviewNo})}" th:text="${review.show.showTitle}">공연 제목 인데</a>
+                        </td>
+                        <td style="border: 1px solid black; padding: 10px;" th:text="${review.reviewScore}">4</td>
+                        <td style="border: 1px solid black; padding: 10px;" th:text="${review.watchDate}">2023-01-01</td>
+                        <td style="border: 1px solid black; padding: 10px;" th:text="${review.reviewDate}">2023-01-03</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </body>
 </html>
