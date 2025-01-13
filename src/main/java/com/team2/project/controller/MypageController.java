@@ -104,8 +104,7 @@ public class MypageController {
 	        // 멤버 정보 조회
 	        Member member = mypageService.getMember(memberNo);
 	        
-	        // 리뷰 목록 조회
-	        List<Review> allReviews = mypageService.findAllReviewsWithShow(Sort.by(Sort.Direction.DESC, "reviewNo"));
+	        List<Review> allReviews = mypageService.findReviewsByMemberNo(memberNo, Sort.by(Sort.Direction.DESC, "reviewNo"));
 	        
 	        model.addAttribute("likedItems", likedItems);
 	        model.addAttribute("likedActorCount", likedActorCount);

@@ -47,10 +47,11 @@ public class MypageService {
 	            .orElseThrow(() -> new NoSuchElementException("Member not found")); // 멤버가 없을 경우 예외 발생
 	}
 	
-	//리뷰 리스트 내림차순으로 가져오기 (show 객체를 함께 로드)
-	public List<Review> findAllReviewsWithShow(Sort sort) {
-	    return mypageReviewRepository.findAllReviewsWithShow(sort);
+	// 리뷰 목록 조회 (memberNo 기준)
+	public List<Review> findReviewsByMemberNo(int memberNo, Sort sort) {
+	    return mypageReviewRepository.findReviewsByMemberNo(memberNo, sort);
 	}
+
 	
 	//리뷰 상세보기
 	public Review getReviewByReviewNo(int reviewNo) {
