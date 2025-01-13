@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -87,23 +88,33 @@ public class AdminController {
 	 * 회원 리스트 조회 (수동 페이징 처리)
 	 */
 	@GetMapping("/memberList")
-	public String listMembers(Model model, @RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "20") int size) {
-		List<Member> allMembers = adminService.getAllMembers();
-		int totalMembers = allMembers.size();
-		int totalPages = (int) Math.ceil((double) totalMembers / size);
+	public String listMembers(@SessionAttribute("login") Optional<Member> optionalMember, Model model, 
+	                          @RequestParam(defaultValue = "0") int page,
+	                          @RequestParam(defaultValue = "20") int size) {
+	    // 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        // 모든 회원 정보 조회
+	        List<Member> allMembers = adminService.getAllMembers();
+	        int totalMembers = allMembers.size();
+	        int totalPages = (int) Math.ceil((double) totalMembers / size);
 
-		int start = page * size;
-		int end = Math.min(start + size, totalMembers);
+	        int start = page * size;
+	        int end = Math.min(start + size, totalMembers);
 
-		List<Member> members = allMembers.subList(start, end);
+	        List<Member> members = allMembers.subList(start, end);
 
-		model.addAttribute("members", members);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("totalPages", totalPages);
-		model.addAttribute("totalMembers", totalMembers);
-		return "admin/adminUserList";
+	        model.addAttribute("members", members);
+	        model.addAttribute("currentPage", page);
+	        model.addAttribute("totalPages", totalPages);
+	        model.addAttribute("totalMembers", totalMembers);
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
+
+	    return "admin/adminUserList";
 	}
+
 	
 	@Autowired
 	private AdminShowService adminShowService;
@@ -115,46 +126,61 @@ public class AdminController {
 	 * 공연 리스트 조회 (수동 페이징 처리)
 	 */
 	@GetMapping("/showList")
-	public String showList(Model model, @RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "20") int size) {
-		List<Show> allShows = adminService.getAllShows();
-		int totalShows = allShows != null ? allShows.size() : 0;
-		int totalPages = (int) Math.ceil((double) totalShows / size);
+	public String showList(@SessionAttribute("login") Optional<Member> optionalMember, Model model, 
+	                       @RequestParam(defaultValue = "0") int page,
+	                       @RequestParam(defaultValue = "20") int size) {
+	    // 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        List<Show> allShows = adminService.getAllShows();
+	        int totalShows = allShows != null ? allShows.size() : 0;
+	        int totalPages = (int) Math.ceil((double) totalShows / size);
 
-		int start = page * size;
-		int end = Math.min(start + size, totalShows);
+	        int start = page * size;
+	        int end = Math.min(start + size, totalShows);
 
-		List<Show> shows = allShows.subList(start, end);
+	        List<Show> shows = allShows.subList(start, end);
 
-		model.addAttribute("shows", shows);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("totalPages", totalPages);
-		model.addAttribute("totalShows", totalShows);
-		
-		return "admin/adminShowList";
+	        model.addAttribute("shows", shows);
+	        model.addAttribute("currentPage", page);
+	        model.addAttribute("totalPages", totalPages);
+	        model.addAttribute("totalShows", totalShows);
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
+
+	    return "admin/adminShowList";
 	}
+
 
 	/**
 	 * 공연 상세 조회
 	 */
 	@GetMapping("/showDetail")
-	public String showDetail(@RequestParam int showNo, Model model) {
-		try {
-			Show show = adminShowService.getShowByShowNo(showNo);
-			if (show != null) {
-				List<ShowActor> showActors = showActorService.getActorsByShowNo(showNo);
-				model.addAttribute("show", show);
-				model.addAttribute("showActors", showActors);
-				return "admin/adminShowDetail";
-			} else {
-				System.out.println("Show not found for showNo: " + showNo);
-				return "error/404";
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "error/500";
-		}
+	public String showDetail(@SessionAttribute("login") Optional<Member> optionalMember, @RequestParam int showNo, Model model) {
+	    // 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        try {
+	            Show show = adminShowService.getShowByShowNo(showNo);
+	            if (show != null) {
+	                List<ShowActor> showActors = showActorService.getActorsByShowNo(showNo);
+	                model.addAttribute("show", show);
+	                model.addAttribute("showActors", showActors);
+	                return "admin/adminShowDetail";
+	            } else {
+	                System.out.println("Show not found for showNo: " + showNo);
+	                return "error/404";
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return "error/500";
+	        }
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
 	}
+
 
 	/**
 	 * 공연 수정 페이지 이동
@@ -174,10 +200,17 @@ public class AdminController {
 	 * 공연 수정 처리
 	 */
 	@PostMapping("/updateShow")
-	public String updateShow(@ModelAttribute Show show) {
-		adminService.updateShow(show);
-		return "redirect:/admin/showList";
+	public String updateShow(@SessionAttribute("login") Optional<Member> optionalMember, @ModelAttribute Show show) {
+	    // 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        adminService.updateShow(show);
+	        return "redirect:/admin/showList";
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
 	}
+
 	
 	
 
@@ -192,63 +225,71 @@ public class AdminController {
 	}
 
 	@PostMapping("/showInsert")
-	public String showInsert(@RequestParam("file") MultipartFile file, 
-							 @ModelAttribute Show show, 
-							 @RequestParam(value = "actorNo", required = false) List<Integer> actorNo, 
-							 @RequestParam(value = "roleName", required = false) List<String> roleName) {
-		try {
-			// 기존 공연 정보 저장 로직
-			if (show.getStartDate() != null) {
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(show.getStartDate());
-				calendar.add(Calendar.DAY_OF_YEAR, -20);
-				Date openDate = calendar.getTime();
-				show.setOpenDate(openDate);
-			}
+	public String showInsert(@SessionAttribute("login") Optional<Member> optionalMember, 
+	                         @RequestParam("file") MultipartFile file, 
+	                         @ModelAttribute Show show, 
+	                         @RequestParam(value = "actorNo", required = false) List<Integer> actorNo, 
+	                         @RequestParam(value = "roleName", required = false) List<String> roleName) {
+	    // 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        try {
+	            // 기존 공연 정보 저장 로직
+	            if (show.getStartDate() != null) {
+	                Calendar calendar = Calendar.getInstance();
+	                calendar.setTime(show.getStartDate());
+	                calendar.add(Calendar.DAY_OF_YEAR, -20);
+	                Date openDate = calendar.getTime();
+	                show.setOpenDate(openDate);
+	            }
 
-			String fileName = saveUploadedFile(file);
-			String fileNo = fileName;
+	            String fileName = saveUploadedFile(file);
+	            String fileNo = fileName;
 
-			ShowActorFile showActorFile = new ShowActorFile();
-			showActorFile.setFileNo(fileNo);
-			showActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString());
-			showActorFile.setFileName(file.getOriginalFilename());
-			showActorFile.setFileDate(new Date());
+	            ShowActorFile showActorFile = new ShowActorFile();
+	            showActorFile.setFileNo(fileNo);
+	            showActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString());
+	            showActorFile.setFileName(file.getOriginalFilename());
+	            showActorFile.setFileDate(new Date());
 
-			adminShowService.saveShow(show);
-			showActorFile.setShow(show);
-			adminShowService.saveShowActorFile(showActorFile);
+	            adminShowService.saveShow(show);
+	            showActorFile.setShow(show);
+	            adminShowService.saveShowActorFile(showActorFile);
 
-			show.setShowActorFile(showActorFile);
-			show.setFileNo(showActorFile.getFileNo());
-			adminShowService.saveShow(show);
-			adminShowService.createSeatsForShow(show);
+	            show.setShowActorFile(showActorFile);
+	            show.setFileNo(showActorFile.getFileNo());
+	            adminShowService.saveShow(show);
+	            adminShowService.createSeatsForShow(show);
 
-			// 새로운 ShowActor 정보 저장 로직 추가
-			if (actorNo != null && roleName != null && actorNo.size() == roleName.size()) {
-				for (int i = 0; i < actorNo.size(); i++) {
-					if (actorNo.get(i) != null) { // null 값 체크
-						ShowActor showActor = new ShowActor();
-						showActor.setShowNo(show.getShowNo());
-						showActor.setActorNo(actorNo.get(i));
-						showActor.setRoleName(roleName.get(i));
+	            // 새로운 ShowActor 정보 저장 로직 추가
+	            if (actorNo != null && roleName != null && actorNo.size() == roleName.size()) {
+	                for (int i = 0; i < actorNo.size(); i++) {
+	                    if (actorNo.get(i) != null) { // null 값 체크
+	                        ShowActor showActor = new ShowActor();
+	                        showActor.setShowNo(show.getShowNo());
+	                        showActor.setActorNo(actorNo.get(i));
+	                        showActor.setRoleName(roleName.get(i));
 
-						showActorService.saveShowActor(showActor);
-					}
-				}
-			} else {
-				System.out.println("No actors selected or mismatch in actorNo and roleName sizes");
-			}
+	                        showActorService.saveShowActor(showActor);
+	                    }
+	                }
+	            } else {
+	                System.out.println("No actors selected or mismatch in actorNo and roleName sizes");
+	            }
 
-			return "redirect:/admin/showList";
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "redirect:/admin/showInsertForm?error=uploadFailed";
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "redirect:/admin/showInsertForm?error=saveFailed";
-		}
+	            return "redirect:/admin/showList";
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return "redirect:/admin/showInsertForm?error=uploadFailed";
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return "redirect:/admin/showInsertForm?error=saveFailed";
+	        }
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
 	}
+
 
 	@RequestMapping("/searchActor")
 	@ResponseBody
@@ -273,34 +314,49 @@ public class AdminController {
 	@Autowired
     private AdminActorService adminActorService;
 	
-	//작가 리스트
+	// 작가 리스트
 	@GetMapping("actorList")
-	public String actorList(Model model, @RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "20") int size) {
-		
-		List<Actor> allActors = adminActorService.findAllActor(Sort.by(Sort.Direction.DESC,"actorNo"));
-		int totalActors = allActors.size();
-		int totalPages = (int) Math.ceil((double) totalActors / size);
+	public String actorList(@SessionAttribute("login") Optional<Member> optionalMember, Model model, 
+	                        @RequestParam(defaultValue = "0") int page,
+	                        @RequestParam(defaultValue = "20") int size) {
+	    // 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        List<Actor> allActors = adminActorService.findAllActor(Sort.by(Sort.Direction.DESC, "actorNo"));
+	        int totalActors = allActors.size();
+	        int totalPages = (int) Math.ceil((double) totalActors / size);
 
-		int start = page * size;
-		int end = Math.min(start + size, totalActors);
+	        int start = page * size;
+	        int end = Math.min(start + size, totalActors);
 
-		List<Actor> actors = allActors.subList(start, end);
-		
-		model.addAttribute("actors", actors);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("totalPages", totalPages);
-		model.addAttribute("totalActors", totalActors);
-		return "admin/adminActorList";
+	        List<Actor> actors = allActors.subList(start, end);
+	        
+	        model.addAttribute("actors", actors);
+	        model.addAttribute("currentPage", page);
+	        model.addAttribute("totalPages", totalPages);
+	        model.addAttribute("totalActors", totalActors);
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
+	    
+	    return "admin/adminActorList";
 	}
+
 	
-	//작가 상세보기
+	// 작가 상세보기
 	@GetMapping("/actorDetail")
-	public String actorDetail(@RequestParam int actorNo, Model model) {
-		Actor actor = adminActorService.getActorByActorNo(actorNo);
-		model.addAttribute("actor", actor);
-		return "admin/adminActorDetail";
+	public String actorDetail(@SessionAttribute("login") Optional<Member> optionalMember, @RequestParam int actorNo, Model model) {
+	    // 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        Actor actor = adminActorService.getActorByActorNo(actorNo);
+	        model.addAttribute("actor", actor);
+	        return "admin/adminActorDetail";
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
 	}
+
 	
 	//작가 수정
 	@GetMapping("/updateForm")
@@ -311,55 +367,64 @@ public class AdminController {
 	}
 	
 	@PostMapping("/actorUpdate")
-	public String actorUpdate(@RequestParam(value="file", required = false) MultipartFile file, @ModelAttribute Actor actor) {
-	    try {
-	        // 기존 Actor 정보 가져오기
-	        Actor existingActor = adminActorService.getActorByActorNo(actor.getActorNo());
-	        if (existingActor == null) {
-	            return "redirect:/admin/actorList?error=actorNotFound";
-	        }
-	        
-	        adminActorService.deleteExistingFile(existingActor);
+	public String actorUpdate(@SessionAttribute("login") Optional<Member> optionalMember, 
+	                          @RequestParam(value = "file", required = false) MultipartFile file, 
+	                          @ModelAttribute Actor actor) {
+	    // 멤버 정보가 존재하는지 확인
+	    if (optionalMember.isPresent()) {
+	        try {
+	            // 기존 Actor 정보 가져오기
+	            Actor existingActor = adminActorService.getActorByActorNo(actor.getActorNo());
+	            if (existingActor == null) {
+	                return "redirect:/admin/actorList?error=actorNotFound";
+	            }
 
-	        // 파일이 새로 업로드된 경우 파일 처리
-	        if (file != null && !file.isEmpty()) {
-	            String fileName = saveUploadedFile(file);
-	            String fileNo = fileName; // UUID + "_" + originalFileName 사용
+	            adminActorService.deleteExistingFile(existingActor);
 
-	            // 새로운 파일 정보 저장
-	            ShowActorFile newShowActorFile = new ShowActorFile();
-	            newShowActorFile.setFileNo(fileNo);
-	            newShowActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString());
-	            newShowActorFile.setFileName(file.getOriginalFilename());
-	            newShowActorFile.setFileDate(new Date());
+	            // 파일이 새로 업로드된 경우 파일 처리
+	            if (file != null && !file.isEmpty()) {
+	                String fileName = saveUploadedFile(file);
+	                String fileNo = fileName; // UUID + "_" + originalFileName 사용
 
-	            // Actor와 파일 관계 설정
-	            newShowActorFile.setActor(actor);
-	            adminActorService.saveShowActorFile(newShowActorFile); // 새로운 파일 정보 저장
+	                // 새로운 파일 정보 저장
+	                ShowActorFile newShowActorFile = new ShowActorFile();
+	                newShowActorFile.setFileNo(fileNo);
+	                newShowActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString());
+	                newShowActorFile.setFileName(file.getOriginalFilename());
+	                newShowActorFile.setFileDate(new Date());
+
+	                // Actor와 파일 관계 설정
+	                newShowActorFile.setActor(actor);
+	                adminActorService.saveShowActorFile(newShowActorFile); // 새로운 파일 정보 저장
+	                
+	                // Actor 객체에 새로운 파일 정보 설정
+	                actor.setShowActorFile(newShowActorFile);
+	                actor.setFileNo(newShowActorFile.getFileNo());
+	            } else {
+	                // 파일이 업로드되지 않은 경우 기존 파일 정보 유지
+	                actor.setShowActorFile(existingActor.getShowActorFile());
+	                actor.setFileNo(existingActor.getFileNo());
+	            }
+
+	            // 배우 정보 저장
+	            adminActorService.saveActor(actor);
 	            
-	            // Actor 객체에 새로운 파일 정보 설정
-	            actor.setShowActorFile(newShowActorFile);
-	            actor.setFileNo(newShowActorFile.getFileNo());
-	        } else {
-	            // 파일이 업로드되지 않은 경우 기존 파일 정보 유지
-	            actor.setShowActorFile(existingActor.getShowActorFile());
-	            actor.setFileNo(existingActor.getFileNo());
-	        }
-
-	        // 배우 정보 저장
-	        adminActorService.saveActor(actor);
-	        
-	        if (actor.getShowActorFile() != null) {
-	            actor.getShowActorFile().setFileNo(actor.getFileNo()); // ShowActorFile의 fileNo 업데이트
+	            if (actor.getShowActorFile() != null) {
+	                actor.getShowActorFile().setFileNo(actor.getFileNo()); // ShowActorFile의 fileNo 업데이트
+	            }
+	            
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return "redirect:/admin/uploadForm?error=uploadFailed";
 	        }
 	        
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        return "redirect:/admin/uploadForm?error=uploadFailed";
+	        return "redirect:/admin/actorDetail?actorNo=" + actor.getActorNo();
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
 	    }
-	    
-	    return "redirect:/admin/actorDetail?actorNo=" + actor.getActorNo();
 	}
+
 
 	
 	//날짜 스트링 저장
@@ -377,39 +442,47 @@ public class AdminController {
         return "admin/adminActorInsert"; // JSP 또는 HTML 페이지 이름
     }
     
-    // 작가 등록
+ // 작가 등록
     @PostMapping("/actorInsert")
-    public String actorInsert(@RequestParam("file") MultipartFile file, @ModelAttribute Actor actor) {
-    	
-    	
-    	String fileName;
-		try {
-			fileName = saveUploadedFile(file);
-			String fileNo = fileName; // UUID + "_" + originalFileName 사용
-			
-			ShowActorFile showActorFile = new ShowActorFile();
-			showActorFile.setFileNo(fileNo);
-	        showActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString()); // 경로 수정
-	        showActorFile.setFileName(file.getOriginalFilename());
-	        showActorFile.setFileDate(new Date());
-	        
-	        adminActorService.saveActor(actor);
-	        
-	        showActorFile.setActor(actor);
-	        adminActorService.saveShowActorFile(showActorFile);
-	        
-	        actor.setShowActorFile(showActorFile);
-	        actor.setFileNo(showActorFile.getFileNo());
-	        adminActorService.saveActor(actor);
-	        
-	        
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "redirect:/admin/insertForm?error=uploadFailed";
-		}
-        
-        return "redirect:/admin/actorList";
+    public String actorInsert(@SessionAttribute("login") Optional<Member> optionalMember, 
+                              @RequestParam("file") MultipartFile file, 
+                              @ModelAttribute Actor actor) {
+        // 멤버 정보가 존재하는지 확인
+        if (optionalMember.isPresent()) {
+            String fileName;
+            try {
+                fileName = saveUploadedFile(file);
+                String fileNo = fileName; // UUID + "_" + originalFileName 사용
+                
+                ShowActorFile showActorFile = new ShowActorFile();
+                showActorFile.setFileNo(fileNo);
+                showActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString()); // 경로 수정
+                showActorFile.setFileName(file.getOriginalFilename());
+                showActorFile.setFileDate(new Date());
+                
+                // 배우 정보 저장
+                adminActorService.saveActor(actor);
+                
+                // 파일 정보와 배우 관계 설정
+                showActorFile.setActor(actor);
+                adminActorService.saveShowActorFile(showActorFile);
+                
+                actor.setShowActorFile(showActorFile);
+                actor.setFileNo(showActorFile.getFileNo());
+                adminActorService.saveActor(actor);
+                
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "redirect:/admin/insertForm?error=uploadFailed";
+            }
+            
+            return "redirect:/admin/actorList";
+        } else {
+            // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+            return "redirect:/login";
+        }
     }
+
 
 
 }
