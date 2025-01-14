@@ -164,5 +164,12 @@ public class InquiryController {
 		
 		return "redirect:/inquiry";
 	}
+	
+	
+	// 8. 수정 페이지에서 '취소' 버튼 클릭 시 -> 리스트 페이지로 리디렉션
+	@GetMapping("/cancel")
+	public String cancelModify() {
+		return "redirect:/inquiry/list";
+	}
 			
 }

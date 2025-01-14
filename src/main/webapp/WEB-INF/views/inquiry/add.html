@@ -61,7 +61,7 @@
             <div class="divider"></div>
 
             <div class="form-actions">
-                <button type="button" class="btn btn-cancel">취소</button>
+                <button type="button" th:onclick="|location.href='@{/inquiry/cancel}'|" class="btn btn-cancel">취소</button>
                 <button type="submit" class="btn btn-submit">문의접수</button>
             </div>
         </form>
