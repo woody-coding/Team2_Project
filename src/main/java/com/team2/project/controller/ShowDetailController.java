@@ -31,7 +31,6 @@ public class ShowDetailController {
     @Autowired
     private ReviewService reviewService;
     
-
     // 공연 상세 페이지
     @GetMapping("/ticketDetailPage/{showNo}")
     public String ticketDetailPage(
@@ -40,19 +39,20 @@ public class ShowDetailController {
         Optional<ShowDetailDTO> optionalShowDTO = showService.getShowDetail(showNo);
 
         optionalShowDTO.ifPresent(showDTO -> model.addAttribute("show", showDTO));
-        
-     // 해당 공연에 출연하는 배우들 정보 가져오기
+
+        // 해당 공연에 출연하는 배우들 정보 가져오기
         List<ShowActor> actors = showService.getActorsByShowNo(showNo);
-        model.addAttribute("actors", actors);   
-        
-     // 해당 공연(showNo)에 대한 리뷰 목록 가져오기
+        model.addAttribute("actors", actors);
+
+        // 해당 공연(showNo)에 대한 리뷰 목록 가져오기 (내림차순 정렬)
         List<Review> reviews = reviewService.getReviewsByShowNo(showNo);
         model.addAttribute("reviews", reviews);
-        
+
         model.addAttribute("showNo", showNo); // showNo 전달 (예매하기 페이지로..)
-        
+
         return "ticket/ticketDetailpage/ticket_detailpage";
         //http://localhost:8787/show/ticketDetailPage/1
+        
     }
     
 

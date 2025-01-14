@@ -13,18 +13,18 @@ public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    // 특정 ShowNo에 대한 리뷰를 내림차순으로 가져오기
     public List<Review> getReviewsByShowNo(int showNo) {
-        return reviewRepository.findByShowNo(showNo);
+        return reviewRepository.findAllByShowNoOrderByReviewNoDesc(showNo);
     }
 
+    // 리뷰 저장
     public void saveReview(Review review) {
         reviewRepository.save(review);
     }
 
+    // 평균 평점 계산
     public double getAverageScoreByShowNo(int showNo) {
-        return reviewRepository.findAverageScoreByShowNo(showNo);
+        return reviewRepository.getAverageScoreByShowNo(showNo);
     }
-    
-    
-    
 }
