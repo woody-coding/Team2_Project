@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const roundButtons = document.querySelectorAll('.RoundBtn');
 
     const today = new Date();
+    today.setHours(0, 0, 0, 0); // 시간 초기화 (날짜만 비교)
     let currentMonth = today.getMonth();
     let currentYear = today.getFullYear();
     let selectedDate = null;
@@ -16,8 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const showNo = bookTicketLink.getAttribute('data-show-no'); // 또는 bookTicketLink.dataset.showNo
 
     // 특정 기간 설정 (예시)
-    const periodStart = document.body.getAttribute('data-period-start');
-    const periodEnd = document.body.getAttribute('data-period-end');
+    const periodStart = new Date(document.body.getAttribute('data-period-start'));
+    const periodEnd = new Date(document.body.getAttribute('data-period-end'));
 
     // Helper function: Generate days for the calendar
     function generateCalendar(year, month) {
@@ -37,20 +38,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const dayCell = document.createElement('div');
             dayCell.textContent = day;
 
-            const currentDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const currentDate = new Date(year, month, day);
+            currentDate.setHours(0, 0, 0, 0); // 시간 초기화
 
             if (currentDate >= periodStart && currentDate <= periodEnd) {
+				// 선택가능일자만 활성화 처리
                 dayCell.classList.add('special-period');
             }
 
-            if (currentDate < periodStart || currentDate > periodEnd) {
+            if (currentDate <= today || currentDate < periodStart || currentDate > periodEnd) {
+                // 오늘 포함 이전 날짜 비활성화
                 dayCell.classList.add('disabled-date');
                 dayCell.style.pointerEvents = 'none';
             } else {
+                // 선택 가능한 날짜
                 dayCell.addEventListener('click', () => {
                     document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
                     dayCell.classList.add('selected');
-                    selectedDate = currentDate;
+                    selectedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
                     bookTicketLink.classList.remove('disabled');
                 });
