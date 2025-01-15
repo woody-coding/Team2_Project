@@ -94,7 +94,7 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		Optional<Member> Memberlogin = memberService.getMemberLoginCheck(dto);
 		if(Memberlogin.isEmpty()) {
-			mav.setViewName("redirect:/");
+			mav.setViewName("redirect:/login");
 			return mav;
 		}
 		else {
