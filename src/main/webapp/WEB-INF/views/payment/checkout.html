@@ -70,12 +70,14 @@
 	<span id="amount" th:text="${amount}"></span>
 </div>
 
-<script th:if="${not #strings.isEmpty(message)}">
-    document.addEventListener('DOMContentLoaded', function() {
-        alert('[[${message}]]');
-        window.location.href = '/payment/seat';
-    });
+<script th:if="${not #strings.isEmpty(message)}" th:inline="javascript">
+    alert('[[${message}]]'); // 메시지 알림
+    window.location.href = '/show/bookSeat/' + [[${showNo}]] + '/' + [[${#dates.format(showDate, 'yyyy-MM-dd')}]];
 </script>
+
+
+
+
 
 <script>
 	

@@ -72,6 +72,8 @@ public class PaymentController {
     	if (!paymentService.areSeatAvailable(showNo, seatNo1, seatNo2, showDate)) {
     	    // 좌석이 이미 결제되었거나 사용 불가능한 경우
     	    model.addAttribute("message", "이미 결제된 좌석입니다.");
+    	    model.addAttribute("showNo", showNo);
+    	    model.addAttribute("showDate", showDate);
     	    return "payment/checkout";  // 같은 페이지로 다시 렌더링
     	}
 
