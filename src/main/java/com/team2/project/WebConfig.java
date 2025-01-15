@@ -15,8 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
 	    registry.addInterceptor(new LoginCheckInterceptor())
 	            .addPathPatterns("/**")
 	            .excludePathPatterns("", "/", "/login", "/join", "/css/**", "/js/**", "/images/**", "/imgs/**", "/kakaologin", "/findID",
-	                                "/findPW", "/phonechk", "/insert", "/searchId", "/searchIdPW", "/idchk", "/ticketMenu", "/ticketMenu/{showCate}",
-	                                "/ticketDetailPage/{showNo}", "/show/Main", "/actor/{actorNo}");
+	                                "/findPW", "/phonechk", "/insert", "/searchId", "/searchIdPW", "/idchk", "/show/ticketMenu", "/show/ticketMenu/{showCate}",
+	                                "/show/ticketDetailPage/{showNo}", "/show/Main", "/actor/{actorNo}");
 	}
 
     // * 이미지 파일 업로드 경로를	>>	C:/finalFile/ 폴더로 경로로 설정할 때
