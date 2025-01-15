@@ -109,8 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 선택된 값으로 링크 동적 설정
-        const memberNo = 123; // 실제 값으로 대체
-        bookTicketLink.href = `/show/bookSeat/${showNo}/${memberNo}/${selectedDate}`;
+        bookTicketLink.href = `/show/bookSeat/${showNo}/${selectedDate}`;
     });
 
     generateCalendar(currentYear, currentMonth);
