@@ -46,7 +46,13 @@ public class MemberController {
 		HashMap<String, Object> userInfo = kakaoApi.getUserInfo(accessToken);
 		System.out.println("login info : " + userInfo.toString());
 		mav.addObject("userId");
-		mav.setViewName("index");
+		mav.setViewName("redirect:/");
+		return mav;
+	}
+	@GetMapping(value="/login")
+	public ModelAndView memberlogin() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("login_join/loginMain");
 		return mav;
 	}
 	@RequestMapping(value="join")
@@ -98,7 +104,7 @@ public class MemberController {
 			
 			String prevPage = (String) session.getAttribute("prevPage");
 	        session.removeAttribute("prevPage");
-	        String moveToUrl = prevPage != null ? "redirect:/" + prevPage : "login_join/login";
+	        String moveToUrl = prevPage != null ? "redirect:/" + prevPage : "redirect:/";
 	        
 	        mav.setViewName(moveToUrl);
 			mav.addObject(Memberlogin);
