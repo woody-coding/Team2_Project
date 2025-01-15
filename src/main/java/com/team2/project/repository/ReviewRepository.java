@@ -14,6 +14,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 	    List<Review> findAllByShowNoOrderByReviewNoDesc(@Param("showNo") int showNo);
 
     // 특정 공연 번호의 평균 평점 계산
-    @Query("SELECT AVG(r.reviewScore) FROM Review r WHERE r.showNo = :showNo")
-    double getAverageScoreByShowNo(@Param("showNo") int showNo);
+	 @Query("SELECT COALESCE(AVG(r.reviewScore), 0) FROM Review r WHERE r.showNo = :showNo")
+	 double getAverageScoreByShowNo(@Param("showNo") int showNo);
 }
