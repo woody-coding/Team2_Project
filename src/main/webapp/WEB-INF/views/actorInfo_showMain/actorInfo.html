@@ -10,45 +10,73 @@
 <script type="text/javascript" th:src="@{/js/jquery-3.7.1.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/actorInfoJs/actorInfo.js}"></script>
 <body>
+	<header th:fragment="header" class="header-container">
+		<!-- 첫 번째 줄: 로고, 검색바, 로그인/회원가입 -->
+		<div class="header-top">
+			<div class="logo">
+				<img src="/images/header/logo_only.png" alt="로고"> <!-- 로고 이미지 -->
+			</div>
+	
+			<div>
+				<div class="search-bar">
+					<input type="text" placeholder="검색어를 입력하세요...">
+					<button>검색</button>
+				</div>
+			</div>
+	
+			<div>
+				<div class="auth-links">
+					<!--로그인 링크 넣어주기-->
+					<a href="/login"><img src="/images/header/Log%20in.png" alt="로그인"></a>
+					<!--마이페이지 링크 넣어주기-->
+					<a href="/mypage"><img src="/images/header/User.png" alt="마이페이지"></a>
+				</div>
+			</div>
+		</div>
+		<!--  -->
+	</header>
+	   
 	<input type="hidden" id="memberNo" th:value="${memberNo}" /> <!-- memberNo가 넘어오면 연결 로그인된 상태 -->
-	<input type="hidden" id="actorNo" th:value= "${actor.actorNo}" />
-    <div id="main">
-        <div id="actor_info">
-            <div class="actor_detail">
-                <div class="actor_img">
+	<input type="hidden" id="actorNo" th:value="${actor.actorNo}" />
+	<div id="main">
+		<div id="actor_info">
+			<div class="actor_detail">
+				<div class="actor_img">
 					<img th:src="${actorPhoto}" alt="actor image">
 				</div>
-                <div class="actor_cont">
+				<div class="actor_cont">
 					<div class="name" th:text="${actor.actorName}"></div>
-                    <ul class="text">
-                        <li>출생 | <span class="birth" th:text="${#dates.format(actor.actorBirth, 'yyyy년 MM월 dd일')}"></span></li>
+					<ul class="text">
+						<li>출생 | <span class="birth" th:text="${#dates.format(actor.actorBirth, 'yyyy년 MM월 dd일')}"></span>
+						</li>
 						<!--<th>써서 db에서 연동되도록 해야함-->
-                        <li>국적 | <span class="nationality" th:text="${actor.actorNation}"></span></li>
-                        <li>학력 | <span class="education" th:text="${actor.actorEdu}"></span></li>
-                        <li>데뷔 | <span class="debut" th:text="${#dates.format(actor.actorDebut, 'yyyy년 MM월 dd일')}"></span></li>
-                    </ul>   
-                </div>
-            </div>
-            <div class="actor_like" th:attr="data-status=${status}">
-                <div id="heart"></div>
-                <div class="frame" onclick="toggleImg()">
-                    <span class="like">좋아요</span>
-                </div>
-            </div>
-        </div>
-
-        <div id="actor_career">
-            <div class="cont_title">수상</div>
+						<li>국적 | <span class="nationality" th:text="${actor.actorNation}"></span></li>
+						<li>학력 | <span class="education" th:text="${actor.actorEdu}"></span></li>
+						<li>데뷔 | <span class="debut" th:text="${#dates.format(actor.actorDebut, 'yyyy년 MM월 dd일')}"></span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="actor_like" th:attr="data-status=${status}">
+				<div id="heart"></div>
+				<div class="frame" onclick="toggleImg()">
+					<span class="like">좋아요</span>
+				</div>
+			</div>
+		</div>
+	
+		<div id="actor_career">
+			<div class="cont_title">수상</div>
 			<div class="award-list">
 				<ul>
 					<li th:each="award:${awards}" th:text="${award}"></li>
 				</ul>
 			</div>
-        </div>
-
-        <div id="actor_others">
+		</div>
+	
+		<div id="actor_others">
 			<div class="cont_title">대표작</div>
-			<div class="others_container"> 
+			<div class="others_container">
 				<div class="others_info" th:each="dto:${dtos}">
 					<!--민영님 컨트롤러에 따라 수정-->
 					<a th:href="@{/show/ticketDetailPage/{showNo}/{memberNo}(showNo=${dto.showNo}, memberNo=${memberNo})}">
@@ -59,8 +87,21 @@
 					<div class="other_role"><span th:text="${dto.roleName}"></span>&nbsp;역</div>
 				</div>
 			</div>
-
-        </div>
-    </div>
+	
+		</div>
+	</div>
+	
+	<footer th:fragment="footer" class="footer-container">
+	<div class="footerhr"></div>
+		<div class="footer-content">
+			<p>&copy; 2025 Multi24 Website. All Rights Reserved.</p>
+			<p>Contact: info@multi24.com</p>
+			<p><a href="https://github.com/docong1002/Team2_Project" class="GitLink">
+			<img src="/images/footer/github-mark-white.png" class="GitLogo">
+			<img src="/images/footer/GitHub_Logo_White.png" class="GitLogoLetter">
+			</a></p>
+		</div>
+		<!--  -->
+	</footer>
 </body>
 </html>
