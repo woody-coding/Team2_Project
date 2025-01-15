@@ -14,7 +14,7 @@ let totalAmountElement;
 window.onload = function (){
 	memberNo = $('#memberNo').val();
 	showNo = $('#showNo').val();
-	seatPrice = document.querySelector('#totalAmount').dataset.price;
+	seatPrice = Number(document.querySelector('#totalAmount').dataset.price.replace(/,/g, ''));
 	showDate = $('#showDate').val(); //선택한 날짜
 	
 	selectedSeats = []; // 선택된 좌석 배열
@@ -71,7 +71,7 @@ function updateSeatInfo() {
 
 	// HTML 내용 업데이트
 	selectedCountElement.textContent = selectedCount; // 선택한 좌석 수 갱신
-	totalAmountElement.textContent = totalAmount; // 총 금액 갱신
+	totalAmountElement.textContent = totalAmount.toLocaleString(); // 총 금액 갱신
 }
 
 function goPay(){	
