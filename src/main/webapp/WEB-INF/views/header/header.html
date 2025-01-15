@@ -18,22 +18,31 @@
 
            <div>
                 <div class="auth-links">
-                    <!--로그인 링크 넣어주기-->
-                    <a href="/login" onclick="logout(event)"><img src="/images/header/Log%20in.png" alt="로그인"></a>
-                    <!--마이페이지 링크 넣어주기-->
+					<!-- 로그인/로그아웃 버튼 -->
+					<th:block th:if="${session.login}">
+					    <div onclick="logout()">
+					        <img src="/images/header/Log%20out.png" alt="로그아웃">
+					    </div>
+					</th:block>
+					<th:block th:unless="${session.login}">
+					    <a href="/login"><img src="/images/header/Log%20in.png" alt="로그인"></a>
+					</th:block>
+					<!--마이페이지 링크 넣어주기-->
                     <a href="/mypage/main"><img src="/images/header/User.png" alt="마이페이지"></a>
                 </div>
             </div>
         </div>
-		<!--  -->
+		
+		
+		<script>
+		function logout() {
+		    var form = document.createElement('form');
+		    form.method = 'post';
+		    form.action = '/logout';
+		    document.body.appendChild(form);
+		    form.submit();
+		}
+		</script>
+		
     </header>
-	<script>
-	function logout(e) {
-		e.preventDefault();
-	    var form = document.createElement('form');
-	    form.method = 'post';
-	    form.action = '/logout';
-	    document.body.appendChild(form);
-	    form.submit();
-	}
-	</script>
+
