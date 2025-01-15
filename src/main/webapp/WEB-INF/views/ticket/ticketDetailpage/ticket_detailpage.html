@@ -105,7 +105,8 @@
 							</a>
 						</div>
 						<!-- 배우 이미지 파일: 추가처리필요-->
-						<img class="castPic" src="/images/karina.png">
+						<img class="castPic" th:src="'/uploads/' + ${actor.actor.showActorFile.fileName}" alt="배우 이미지">
+						
 						<h4 th:text="${actor.roleName}">역할</h4>
 						<p th:text="${actor.actorName}">배우이름</p>
 					</div>
