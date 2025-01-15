@@ -50,7 +50,9 @@ public class PaymentController {
     	int seatNo1 = Integer.parseInt(selectedSeats.get(0));
     	int seatNo2;
         ShowTitleAndPriceDTO showDTO = paymentService.getShowTitleAndPrice(showNo);
-        int amount = Integer.parseInt(showDTO.getShowPrice());
+        
+        // showPrice에서 콤마 제거 후 정수로 변환
+        int amount = Integer.parseInt(showDTO.getShowPrice().replace(",", ""));
     	
     	switch(selectedSeats.size()) {
     	case 1:
