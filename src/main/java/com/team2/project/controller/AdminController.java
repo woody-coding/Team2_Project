@@ -273,7 +273,7 @@ public class AdminController {
 	                    }
 	                }
 	            } else {
-	                System.out.println("No actors selected or mismatch in actorNo and roleName sizes");
+	                System.out.println("선택된 배우가 없음");
 	            }
 
 	            return "redirect:/admin/showList";
