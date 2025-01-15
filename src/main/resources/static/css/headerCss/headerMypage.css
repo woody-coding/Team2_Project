@@ -1,15 +1,13 @@
+@charset "EUC-KR";
 /* styles.css */
 
 /* �뿤�뜑 �쟾泥� �뒪���씪 */
-
-
-
 .header-container {
-	margin: 0px auto;
+	margin: 0 auto;
     width: 1200px;
     max-width: 1200px;
     background-color: rgb(255, 255, 255);
-    padding: 10px 0;
+    padding: 3px;
     font-family: Arial, sans-serif;
 }
 
@@ -22,15 +20,49 @@
 	margin-bottom: 20px;
 	margin-top: 15px;
 	border-bottom: 1px solid #ddd; /* 硫붾돱 �븯�떒 寃쎄퀎�꽑 */
-	
 }
 
 
+/* 寃��깋諛� �뒪���씪 */
+.search-bar {
+	width: 700px;
+	height: 100px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	margin-right: 50px
+}
 
-/* 濡쒓렇�씤/�쉶�썝媛��엯/�떚耳볧럹�씠吏� 留곹겕 �뒪���씪 */
+.search-bar input {
+    width: 60%;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-bar button {
+    padding: 6px 12px;
+    font-size: 16px;
+    border: none;
+    background-color: #FF9400;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+    
+}
+
+.search-bar button:hover {
+    background-color: red;
+}
+
+/* 濡쒓렇�씤/�쉶�썝媛��엯 留곹겕 �뒪���씪 */
 .auth-links{
+	display:flex;
 	text-align: center;
-	margin-right: 25px;
+	margin-right: 20px;
 	
 }
 .auth-links a {
@@ -44,24 +76,11 @@
     color: #007bff;
 }
 
-
-.menu-list a:after {
-  display:block;
-  content: '';
-  border-bottom: solid 3px #FF9400;  
-  transform: scaleX(0);  
-  transition: transform 250ms ease-in-out;
-  padding: 2px;
-}
-
-.menu-list a:hover:after { transform: scaleX(1); }
-
 /*怨듭뿰�럹�씠吏� �씠�룞 留곹겕 �뒪���씪*/
 
 .playpage-links{
 	text-align: center;
 	margin-top: 20px;
-	margin-bottom: 10px;
 }
 .playpage-links a {
     
@@ -81,8 +100,7 @@
     display: flex;
     justify-content: space-between; /* 醫�, �슦濡� �슂�냼 諛곗튂 */
     align-items: center; /* �꽭濡� �젙�젹 */
-	
-    margin-right: 120px;
+    padding: 10px 20px;
     background-color: white;
 	margin-top: 15px;
 

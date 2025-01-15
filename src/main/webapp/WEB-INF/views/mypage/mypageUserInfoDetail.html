@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>마이페이지 회원 정보</title>
-    <link rel="stylesheet" th:href="@{/css/headerCss/header.css}"> 
-    <link rel="stylesheet" th:href="@{/css/footerCss/footer.css}"> 
+    <link rel="stylesheet" th:href="@{/css/headerCss/headerMypage.css}"> 
+    <link rel="stylesheet" th:href="@{/css/footerCss/footerAdmin.css}"> 
     <link rel="stylesheet" th:href="@{/css/mypage/mypageUserInfoDetail.css}">
 </head>
 <body>
@@ -87,7 +87,6 @@
 						</div>
 					</div>
 					<div style="display: flex;justify-content: flex-end;margin-top: -1.5%;">
-						<button class="update">수정</button>
 					</div>
 				</form>
 			</div>
@@ -96,6 +95,7 @@
             </div>
         </div>
     </section>
+    <div th:replace="~{footer/footer :: footer}"></div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </body>
 </html>
