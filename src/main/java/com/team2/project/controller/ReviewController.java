@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/review")
-@SessionAttributes("loginUser") // 세션에 로그인 사용자 저장
+@SessionAttributes("login")
 public class ReviewController {
 
     @Autowired
