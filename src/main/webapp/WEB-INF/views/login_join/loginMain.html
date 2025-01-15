@@ -1,5 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script th:inline="javascript">
+	function loginchk(){
+		let result = [[${result}]]
+		if(result='fail'){
+			alert('로그인 실패')
+		}else{
+			alert('로그인 성공')
+		}
+	}
+</script>
 <style>
     table {
         width: auto;
@@ -84,7 +94,7 @@
         <td><input type="password" name="Password" placeholder=Password></td>
     </tr>
    <tr>
-        <td><input type="submit" value="Login" class="btn" onclick=""></td>
+        <td><input type="submit" value="Login" class="btn" onclick="loginchk()"></td>
    </tr>
 </table>
 </form>

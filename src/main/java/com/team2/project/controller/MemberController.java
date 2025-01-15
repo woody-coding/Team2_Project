@@ -94,7 +94,7 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		Optional<Member> Memberlogin = memberService.getMemberLoginCheck(dto);
 		if(Memberlogin.isEmpty()) {
-			mav.addObject("error","login fail");
+			mav.addObject("result","fail");
 			mav.setViewName("redirect:/login");			
 			return mav;
 		}
@@ -102,11 +102,10 @@ public class MemberController {
 			System.out.println("로그인 완료");
 			//System.out.println(dto.getID());
 			session.setAttribute("login", Memberlogin);
-			
 			String prevPage = (String) session.getAttribute("prevPage");
 	        session.removeAttribute("prevPage");
 	        String moveToUrl = prevPage != null ? "redirect:/" + prevPage : "redirect:/";
-	        
+	        mav.addObject("result","sucess");
 	        mav.setViewName(moveToUrl);
 			mav.addObject(Memberlogin);
 			return mav;
