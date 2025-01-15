@@ -29,7 +29,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             }
             
             session.setAttribute("prevPage", requestURI);
-            response.sendRedirect("/"); // 로그인 페이지로 리다이렉트
+            response.sendRedirect("/login"); // 로그인 페이지로 리다이렉트
             return false;
         }
         return true;
