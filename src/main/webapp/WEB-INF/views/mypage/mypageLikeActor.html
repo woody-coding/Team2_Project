@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>찜한 배우</title>
-    <link rel="stylesheet" th:href="@{/css/headerCss/header.css}"> 
-    <link rel="stylesheet" th:href="@{/css/footerCss/footer.css}"> 
+    <link rel="stylesheet" th:href="@{/css/headerCss/headerMypage.css}"> 
+    <link rel="stylesheet" th:href="@{/css/footerCss/footerAdmin.css}"> 
     <link rel="stylesheet" th:href="@{/css/mypage/mypageLikeActor.css}"> 
 </head>
 <body>
 <div th:replace="~{header/header :: header}"></div>
-<section>
+<section style="    padding-bottom: 300px;">
     <div class="sideBar" style="width: 240px;">
         <div class="userContainer">
             <div class="userBox">
@@ -74,6 +74,7 @@
         </div>
     </div>
 </section>
+<div th:replace="~{footer/footer :: footer}"></div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </body>
 </html>

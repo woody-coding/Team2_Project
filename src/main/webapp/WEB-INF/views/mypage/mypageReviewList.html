@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>마이페이지 리뷰</title>
-    <link rel="stylesheet" th:href="@{/css/headerCss/header.css}"> 
-    <link rel="stylesheet" th:href="@{/css/footerCss/footer.css}"> 
+    <link rel="stylesheet" th:href="@{/css/headerCss/headerMypage.css}"> 
+    <link rel="stylesheet" th:href="@{/css/footerCss/footerAdmin.css}"> 
     <link rel="stylesheet" th:href="@{/css/mypage/mypageReviewList.css}"> 
 </head>
 <body>
@@ -80,7 +80,7 @@
                             <a th:href="@{/mypage/reviewDetail(reviewNo=${review.reviewNo})}" th:text="${review.show.showTitle}">공연 제목 인데</a>
                         </td>
                         <td style="border: 1px solid black; padding: 10px;" th:text="${review.reviewScore}">4</td>
-                        <td style="border: 1px solid black; padding: 10px;" th:text="${review.watchDate}">2023-01-01</td>
+                        <td style="border: 1px solid black; padding: 10px;" >2023-01-01</td>
                         <td style="border: 1px solid black; padding: 10px;" th:text="${review.reviewDate}">2023-01-03</td>
                     </tr>
                 </tbody>
@@ -88,6 +88,7 @@
         </div>
     </div>
 </section>
+<div th:replace="~{footer/footer :: footer}"></div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </body>
 </html>

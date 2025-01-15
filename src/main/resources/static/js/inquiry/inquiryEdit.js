@@ -1,6 +1,5 @@
 let selectedFiles = []; // 선택된 파일을 저장할 배열
 let existingFileIds = []; // 기존 파일 IDs를 저장할 배열
-let existingFilesData = []; // 기존 파일 데이터 저장
 let newFiles = []; // 새로 추가된 파일을 저장할 배열
 
 function init() {
@@ -18,7 +17,6 @@ function loadExistingImages() {
         const fileName = img.getAttribute('data-filename') || img.src.split('/').pop();
         
         existingFileIds.push(fileId);
-        existingFilesData.push({ id: fileId, name: fileName });
 
         selectedFiles.push({
             id: fileId,

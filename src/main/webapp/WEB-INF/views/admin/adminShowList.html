@@ -2,37 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style type="text/css">
-	section {
-            width: 1200px;
-            box-sizing: border-box;
-            margin: 0 auto;
-            display: flex; /* 플렉스박스 사용 */
-            align-items: center; /* 수직 중앙 정렬 */
-        }
-        table{ 
-        	border-collapse : collapse; /*이중선 제거*/
-        	 width: 1200px; 
-        	 
-        }  
-        th,td{
-          height: 30px;
-      	  text-align: left;
-          border: 1px solid #000;
-      
-          vertical-align: top;	/* 위 */
-          vertical-align: bottom;   /* 아래 */
-          vertical-align: middle;   /* 가운데 */
-    	}
-    	th{
-    		background-color: #dddddd;
-    	}
+<title>공연 목록</title>
 
-</style>
+    <link rel="stylesheet" th:href="@{/css/headerCss/headerAdmin.css}"> 
+    <link rel="stylesheet" th:href="@{/css/footerCss/footerAdmin.css}"> 
+    <link rel="stylesheet" th:href="@{/css/admin/adminShowList.css}">
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
 </head>
 
 <body>
+	<div th:replace="~{header/headerAdmin :: headerAdmin}"></div>
 	<section>
 		<div class="dateSearch"></div>
 		<div class="tableBox" style="width: 1200px; font-size: 14px;">
@@ -74,5 +54,8 @@
             </div>
 		</div>
 	</section>
+	<div>
+		<div th:replace="~{footer/footer :: footer}"></div>
+	</div>
 </body>
 </html>

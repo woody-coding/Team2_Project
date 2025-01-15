@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공연 등록</title>
+
+<link rel="stylesheet" th:href="@{/css/headerCss/headerAdmin.css}"> 
+<link rel="stylesheet" th:href="@{/css/footerCss/footerAdmin.css}"> 
 <link rel="stylesheet" th:href="@{/css/admin/adminShowInsert.css}">
 
 </head>
 <body>
+	<div th:replace="~{header/headerAdmin :: headerAdmin}"></div>
     <form action="/admin/showInsert" method="post" enctype="multipart/form-data">
         <section class="text-area">
             <div class="posterBox">
                 <div class="poster" id="poster" style="background-size: cover; background-position: center; background-repeat: no-repeat;">
-                    사진을 선택해주세요
+                    
                 </div>
                 <input type="file" name="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .png"/>
             </div>
@@ -153,6 +157,7 @@
         <section class="actor-area" id="actorSearchResults"></section>
     </div>
 </div>
+<div th:replace="~{footer/footer :: footer}"></div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let selectedActors = []; // 선택된 배우 정보를 저장할 배열
