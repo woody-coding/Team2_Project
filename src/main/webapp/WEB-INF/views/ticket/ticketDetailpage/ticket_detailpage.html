@@ -35,7 +35,7 @@
 					<li><b>공연시간 </b><span th:text="${show.showPlayTime + '분'}">몇분</span></li>
 					<li><b>관람연령 </b><span th:text="${show.showRating}">nn세 이상</span></li>
 					<li><b>가격 </b><span>전석 </span>
-					<span th:text="${#numbers.formatInteger(show.showPrice, 0, 'COMMA')} + '원'">티켓가격</span></li>
+					<span th:text="${show.showPrice} + '원'">티켓가격</span></li>
 	
 				</ul>
 				
