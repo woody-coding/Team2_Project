@@ -56,10 +56,10 @@ public class AdminShowService {
 	                seat.setShowNo(show.getShowNo());
 	                seat.setShowDate(java.sql.Date.valueOf(date));
 	                
-	             // 자리 공간 설정: 1~9는 A, 10~18은 B, 19~27은 C, 28~36은 D, 37~45는 E
+	                // 자리 공간 설정: 1~9는 A, 10~18은 B, 19~27은 C, 28~36은 D, 37~45는 E
 	                char section = (char) ('A' + (seatNo - 1) / 9); // 9자리마다 알파벳 변경
-	                String seatNumber = String.format("%02d", (seatNo - 1) % 9 + 1); // 두 자리 형식으로 변환
-	                seat.setSeatSpace(section + seatNumber); // 01부터 시작
+	                String seatNumber = String.valueOf((seatNo - 1) % 9 + 1);
+	                seat.setSeatSpace(section + seatNumber); // 예: A1, A2, ..., E9
 	                
 	                seat.setIsBook("N"); // 기본값: 예약되지 않음
 	                seat.setTotSeat(45);
@@ -77,6 +77,7 @@ public class AdminShowService {
 	    } else {
 	        System.out.println("저장할 좌석이 없습니다.");
 	    }
+
 	}
 
 
