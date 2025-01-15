@@ -2,9 +2,12 @@
     <header th:fragment="header" class="header-container">
         <!-- 첫 번째 줄: 로고, 검색바, 로그인/회원가입 -->
         <div class="header-top">
-            <div class="logo">
-                <img src="/images/header/logo_only.png" alt="로고">  <!-- 로고 이미지 -->
-            </div>
+			<div class="logo">
+			    <a href="/show/Main">
+			        <img src="/images/header/logo_only.png" alt="로고">
+			    </a>
+			</div>
+
 
             <div>
                 <div class="search-bar">
@@ -16,11 +19,21 @@
            <div>
                 <div class="auth-links">
                     <!--로그인 링크 넣어주기-->
-                    <a href="/login"><img src="/images/header/Log%20in.png" alt="로그인"></a>
+                    <a href="/login" onclick="logout(event)"><img src="/images/header/Log%20in.png" alt="로그인"></a>
                     <!--마이페이지 링크 넣어주기-->
-                    <a href="/mypage"><img src="/images/header/User.png" alt="마이페이지"></a>
+                    <a href="/mypage/main"><img src="/images/header/User.png" alt="마이페이지"></a>
                 </div>
             </div>
         </div>
 		<!--  -->
     </header>
+	<script>
+	function logout(e) {
+		e.preventDefault();
+	    var form = document.createElement('form');
+	    form.method = 'post';
+	    form.action = '/logout';
+	    document.body.appendChild(form);
+	    form.submit();
+	}
+	</script>
