@@ -10,7 +10,6 @@
     
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
 </head>
-
 <body>
 	<div th:replace="~{header/headerAdmin :: headerAdmin}"></div>
 	<section>
@@ -44,7 +43,7 @@
                 </span>
                 <!-- 페이지 번호 수동 생성 -->
                 <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                    <a th:href="@{/admin/members(page=${i}, size=${size})}" th:text="${i + 1}"></a>
+                    <a th:href="@{/admin/memberList(page=${i}, size=${size})}" th:text="${i + 1}"></a>
                 </span>
                 <span th:if="${currentPage < totalPages - 1}">
                     <a th:href="@{/admin/members(page=${currentPage + 1}, size=${size})}">다음</a>

@@ -23,3 +23,19 @@
     	th{
     		background-color: #dddddd;
     	}
+    	    .pagination {
+    font-size: 18px;
+    display: flex;            /* Flexbox 사용 */
+    justify-content: center;  /* 가로 방향 가운데 정렬 */
+    align-items: center;      /* 세로 방향 가운데 정렬 (선택적) */
+    margin: 20px 0;          /* 위아래 여백 추가 (선택적) */
+}
+
+.pagination a {
+    margin: 0 5px;           /* 링크 간의 여백 추가 */
+    text-decoration: none;    /* 밑줄 제거 */
+}
+
+.pagination a:hover {
+    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 (선택적) */
+}

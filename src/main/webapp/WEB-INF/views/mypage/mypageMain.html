@@ -142,7 +142,9 @@
                     </div>
                 </div>
                 <div class="NameBox">
-                    <span class="detailName">찜한 배우</span>
+                	<a th:href="@{/mypage/likeActor}">
+                    	<span class="detailName">찜한 배우</span>
+                    </a>
                 </div>
                 <div class="content">
                     <div class="actBox" th:each="item : ${likedItems}">
