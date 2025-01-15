@@ -11,6 +11,34 @@
 <script type="text/javascript" th:src="@{/js/showJs/seatSelection.js}"></script>
 
 <body class="seatSelectBody">
+	<header th:fragment="header" class="header-container">
+		<!-- 첫 번째 줄: 로고, 검색바, 로그인/회원가입 -->
+		<div class="header-top">
+			<div class="logo">
+				<img src="/images/header/logo_only.png" alt="로고">
+				<!-- 로고 이미지 -->
+			</div>
+
+			<div>
+				<div class="search-bar">
+					<input type="text" placeholder="검색어를 입력하세요...">
+					<button>검색</button>
+				</div>
+			</div>
+
+			<div>
+				<div class="auth-links">
+					<!--로그인 링크 넣어주기-->
+					<a href="/login"><img src="/images/header/Log%20in.png"
+						alt="로그인"></a>
+					<!--마이페이지 링크 넣어주기-->
+					<a href="/mypage"><img src="/images/header/User.png"
+						alt="마이페이지"></a>
+				</div>
+			</div>
+		</div>
+		<!--  -->
+	</header>
 	<!-- js사용할 데이터 -->
 	<form id="paymentForm" action="/payment/checkout" method="POST">
 		<input type="hidden" name="memberNo" id="memberNo" th:value="${memberNo}" /> 
@@ -60,5 +88,20 @@
 			<button type="button" class="nextButton" onclick="goPay();">다음단계</button>
 		</div>
 	</form>
+	
+	<footer th:fragment="footer" class="footer-container">
+		<div class="footerhr"></div>
+		<div class="footer-content">
+			<p>&copy; 2025 Multi24 Website. All Rights Reserved.</p>
+			<p>Contact: info@multi24.com</p>
+			<p>
+				<a href="https://github.com/docong1002/Team2_Project"
+					class="GitLink"> <img
+					src="/images/footer/github-mark-white.png" class="GitLogo"> <img
+					src="/images/footer/GitHub_Logo_White.png" class="GitLogoLetter">
+				</a>
+			</p>
+		</div>
+	</footer>
 </body>
 </html>

@@ -45,7 +45,7 @@ public class ActorService {
 		ShowActorFile actorFile = fileRepo.findByActor(actor);
 		String actorPhoto = null;
 		if(actorFile != null){
-			actorPhoto = actorFile.getFilePath() + actorFile.getFileName();
+			actorPhoto = actorFile.getFileNo();
 		}
 		
 		// 다른작품 가져오기
@@ -68,8 +68,7 @@ public class ActorService {
 			
 			ShowActorFile fileTmp = fileRepo.findByShow(show1);
 			if(fileTmp != null) {
-				String path = fileTmp.getFilePath() + fileTmp.getFileName();
-				tmp.setFilePath(path);
+				tmp.setFilePath(fileTmp.getFileNo());
 			}else {
 				tmp.setFilePath(null);
 			}
