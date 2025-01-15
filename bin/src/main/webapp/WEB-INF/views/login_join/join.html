@@ -136,6 +136,31 @@ window.onload = function(){
     localStorage.clear(); //로컬 저장소 클리어
 }
 </script>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+function idchk(){
+	const id = $("#memberId").val();
+	var chk = localStorage.getItem('idchk');
+	console.log(id);
+	if(id == '' || id.length == 0){
+		alert("아이디를 입력 해주세요.")
+    	return false
+	}
+	$.ajax({
+		type : 'POST',
+		url  : "idchk",
+		data : {id : id },
+		success: function (data){
+			if(data==1){
+				alert('이미 사용 중인 아이디입니다.');
+			}else{
+				alert('사용 가능한 아이디 입니다.');
+				localStorage.setItem('idchk',true);
+			}
+		}
+	});
+}
+</script>
 <body>
 	<div></div>
 	<div><img src="/imgs/logo_orange.png" style="width:370px; height:140px;"></div>
