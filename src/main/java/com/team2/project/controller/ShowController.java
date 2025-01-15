@@ -55,6 +55,9 @@ public class ShowController {
 			memberNo = member.getMemberNo();
 		}
 		
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println(memberNo);
+		
 		showService.bookSeat(showNo, memberNo, date, model);
 
 		return "ticket/seatSelection/seatSelection";
