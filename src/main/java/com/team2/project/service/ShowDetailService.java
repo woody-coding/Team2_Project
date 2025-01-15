@@ -3,7 +3,9 @@ package com.team2.project.service;
 import com.team2.project.DTO.ShowDetailDTO;
 import com.team2.project.model.Show;
 import com.team2.project.model.ShowActor;
+import com.team2.project.model.ShowActorFile;
 import com.team2.project.repository.ShowDetailRepository;
+import com.team2.project.repository.ShowActorFileRepository;
 import com.team2.project.repository.ShowActorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,14 @@ public class ShowDetailService {
     
     @Autowired
     private ShowActorRepository showActorRepository;
+    
+    @Autowired
+    private ShowActorFileRepository showActorFileRepository;
+    
+    //배우 이미지파일 업로드처리
+    public ShowActorFile getActorFileByFileNo(String fileNo) {
+        return showActorFileRepository.findById(fileNo).orElse(null);
+    }
     
     //상세페이지 
     public Optional<ShowDetailDTO> getShowDetail(int showNo) {

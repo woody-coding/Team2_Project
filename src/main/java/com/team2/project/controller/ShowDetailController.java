@@ -3,6 +3,7 @@ package com.team2.project.controller;
 import com.team2.project.DTO.ShowDetailDTO;
 import com.team2.project.model.Review;
 import com.team2.project.model.ShowActor;
+import com.team2.project.model.ShowActorFile;
 import com.team2.project.service.ShowDetailService;
 import com.team2.project.service.ReviewService;
 
@@ -31,6 +32,8 @@ public class ShowDetailController {
     @Autowired
     private ReviewService reviewService;
     
+    
+    
     // 공연 상세 페이지
     @GetMapping("/ticketDetailPage/{showNo}")
     public String ticketDetailPage(
@@ -42,6 +45,16 @@ public class ShowDetailController {
 
         // 해당 공연에 출연하는 배우들 정보 가져오기
         List<ShowActor> actors = showService.getActorsByShowNo(showNo);
+        
+
+        // 각 배우에 대해 파일 정보를 추가
+        actors.forEach(actor -> {
+            String fileNo = actor.getActor().getFileNo(); // Actor의 fileNo 가져오기
+            ShowActorFile actorFile = showService.getActorFileByFileNo(fileNo);
+            actor.getActor().setShowActorFile(actorFile); // Actor에 파일 정보 설정
+        });
+        
+        
         model.addAttribute("actors", actors);
 
         // 해당 공연(showNo)에 대한 리뷰 목록 가져오기 (내림차순 정렬)
@@ -90,8 +103,6 @@ public class ShowDetailController {
         return "ticket/ticketMenu/ticket_menu";
         //http://localhost:8787/show/ticketMenu
     }
-    
-    
     
     
     
