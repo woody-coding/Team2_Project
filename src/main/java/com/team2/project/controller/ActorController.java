@@ -2,6 +2,7 @@ package com.team2.project.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,12 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.team2.project.model.LikeYO;
 import com.team2.project.model.Member;
 import com.team2.project.service.ActorService;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/actor")
@@ -27,15 +27,12 @@ public class ActorController {
 	private ActorService actorService;	
 	
 	@GetMapping("/{actorNo}")
-	public String goActorInfo(@PathVariable int actorNo, HttpSession session, Model model) {
-		
-		Member member = (Member) session.getAttribute("login");
-		
-		int memberNo;
-		
-		if (member == null) {
-	        memberNo = 0;
-	    } else {
+	public String goActorInfo(@PathVariable int actorNo, @SessionAttribute(name = "login", required = false) Optional<Member> optionalMember, Model model) {
+			
+		int memberNo = 0;
+
+		if (optionalMember.isPresent()) {
+			Member member = optionalMember.get();
 			memberNo = member.getMemberNo();
 		}
 		

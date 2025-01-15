@@ -32,7 +32,7 @@ public class ShowMainService {
 	
 	Date today = new Date();
 	
-	public void goShowMain(int memberNo, Model model) {
+	public void goShowMain(Model model) {
 		//이번주 인기작 구하기 (남은 좌석수)
 		
 		List<Show> showList = showRepo.findTop7ByOrderByLikesDesc();
@@ -88,7 +88,6 @@ public class ShowMainService {
 			upcomingList.add(dto);
 		}
 
-		model.addAttribute("memberNo", memberNo);
 		model.addAttribute("list", list);
 		model.addAttribute("upcoming", upcomingList);
 	}
