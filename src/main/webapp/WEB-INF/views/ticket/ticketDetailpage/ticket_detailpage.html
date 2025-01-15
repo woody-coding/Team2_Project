@@ -27,11 +27,7 @@
 				<h2 class="ticketDeatilTitle" th:text="${show.showCate + ' ' + show.showTitle}">장르 + 공연 제목</h2>
 				<!-- 이미지 경로 src/main/resources/images/showPoster  파일은 ' 숫자.png ' 형식으로 통일하여 저장-->
 				<img class="ticketPoster" th:src="@{/images/showPoster/{showNo}.png(showNo=${show.showNo})}" alt ="공연 이미지">
-				<div class="right_area">
-					<a href="javascript:;" class="icon heart LikePlay">
-						<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
-					</a>
-				</div>
+
 				</div>
 				<ul class="ticketDetailList">
 					<li><b>장소 </b><span>대학로 아트포레스트 1관</span></li>
@@ -99,11 +95,6 @@
 				<div class="playInfoCast">
 					<h3>캐스팅</h3>
 					<div class="castmates" th:each="actor : ${actors}">
-					    <div class="right_area">
-							<a href="javascript:;" class="icon heart">
-								<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
-							</a>
-						</div>
 						<!-- 배우 이미지 파일: 추가처리필요-->
 						<img class="castPic" th:src="'/uploads/' + ${actor.actor.showActorFile.fileName}" alt="배우 이미지">
 						
@@ -312,30 +303,6 @@
 		});
 		</script>
 		
-		<!--배우 ,공연 좋아요 즐겨찾기 찜하기 하트 js-->
-		<script>
-		$(function() {
-		// 모든 .icon.heart에 개별 클릭 이벤트 추가
-		$('.icon.heart').on('click', function() {
-			// 현재 클릭된 요소(this)에만 active 클래스 토글
-			$(this).toggleClass('active');
-
-			if ($(this).hasClass('active')) {
-				// 하트가 활성화되었을 때 이미지 변경
-				$(this).find('img').attr({
-					'src': 'https://cdn-icons-png.flaticon.com/512/803/803087.png',
-					'alt': '찜하기 완료'
-				});
-			} else {
-				// 하트가 비활성화되었을 때 원래 이미지로 변경
-				$(this).find('img').attr({
-					'src': 'https://cdn-icons-png.flaticon.com/512/812/812327.png',
-					'alt': '찜하기'
-					});
-				}
-			});
-		});
-		</script>
 		
 		
 <!------------ html에서만 변환 후, 외부 js파일로 변수 전달되어 아래의 js는 이동 금지---------------------------->

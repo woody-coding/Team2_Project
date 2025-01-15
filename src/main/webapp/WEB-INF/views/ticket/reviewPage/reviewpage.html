@@ -38,8 +38,7 @@
 				<!-- 동적으로 showNo 값 주입 -->
 				 <input type="hidden" name="showNo" th:value="${showNo}">
 				 <!-- 기존 코드 수정 : 로그인 세션 테스트용 주입 - 추후 수정필요 -->
-				<input type="hidden" name="memberNo" th:value="${session.login.get().memberNo}">
-
+				 <input type="hidden" name="memberNo" th:value="${session.login.get().memberNo}">
 			        
 						<p>공연명</p>
 						<input class="formInput" th:value="${showTitle}" readonly>
