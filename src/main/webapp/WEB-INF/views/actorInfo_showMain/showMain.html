@@ -40,7 +40,6 @@
     </header>
     
     <main>
-    	<input type="hidden" id="memberNo" th:value="${memberNo}" /> <!-- memberNo가 넘어오면 연결 로그인된 상태 -->
         <div id="adFrame">
             <div id="adImg">
                 <div id="arrowArea">
@@ -54,7 +53,6 @@
                 </div>
             </div>
             <div id="btnArea">
-            <!-- member가 세션이면 안받고 아니면 member=num 으로 받기 -->
                 <div class="cate_btn"><a th:href="@{/show/ticketMenu/뮤지컬}">뮤지컬</a></div>
                 <div class="cate_btn"><a th:href="@{/show/ticketMenu/콘서트}">콘서트</a></div>
                 <div class="cate_btn"><a th:href="@{/show/ticketMenu/스포츠}">스포츠</a></div>
@@ -72,12 +70,12 @@
                     <ul class="hot_ul">
                     	<li th:each="dto, iterStat:${list}">
                     		<div class="big_cont" th:if="${iterStat.index == 0}">
-                    			<a th:href="@{/show/ticketDetailPage/{showNo}/{memberNo}(showNo=${dto.showNo}, memberNo=${memberNo})}">
+                    			<a th:href="@{/show/ticketDetailPage/{showNo}/(showNo=${dto.showNo})}">
                                 	<img th:src="${dto.filePath}" alt="Most Hot Show Img">
                                 </a>
                     		</div>
                     		<div class="hot_list" th:if="${iterStat.index > 0}">
-                    			<a th:href="@{/show/ticketDetailPage/{showNo}/{memberNo}(showNo=${dto.showNo}, memberNo=${memberNo})}">
+                    			<a th:href="@{/show/ticketDetailPage/{showNo}/(showNo=${dto.showNo})}">
                     				<img th:src="${dto.filePath}" alt="Hot Show Img">
                     			</a>
                     		</div>
@@ -93,7 +91,7 @@
                 <div class="post_area">
                     <div class="poster" th:each="dto, iterStat:${upcoming}" th:class="${iterStat.index > 3 ? 'hidden' : 'poster'}">
                         <div class="img_frame">
-                       		<a th:href="@{/show/ticketDetailPage/{showNo}/{memberNo}(showNo=${dto.showNo}, memberNo=${memberNo})}">
+                       		<a th:href="@{/show/ticketDetailPage/{showNo}/(showNo=${dto.showNo})}">
                             	<img th:src="${dto.filePath}" alt="Upcoming Show Img">
                             </a>
                             <div class="Ddays">D-<span th:text="${dto.dayDiff}"></span></div>

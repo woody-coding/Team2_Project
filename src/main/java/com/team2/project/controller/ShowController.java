@@ -1,6 +1,7 @@
 package com.team2.project.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,12 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.team2.project.model.Member;
 import com.team2.project.model.Seat;
 import com.team2.project.service.ShowMainService;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/show")
@@ -25,35 +25,19 @@ public class ShowController {
 	private ShowMainService showService;
 	
 	@GetMapping("/Main")
-	public String goShowMain(HttpSession session, Model model) {
-
-		Member member = (Member) session.getAttribute("login");
+	public String goShowMain(Model model) {
 		
-		int memberNo;
-		
-		if (member == null) {
-	        memberNo = 0;
-	    } else {
-			memberNo = member.getMemberNo();
-		}
-		
-		showService.goShowMain(memberNo, model);
+		showService.goShowMain(model);
 		
 		return "actorInfo_showMain/showMain";
 	}
 
 	@GetMapping("/bookSeat/{showNo}/{date}")
-	public String BookSeat(@PathVariable int showNo, @PathVariable String date, HttpSession session, Model model) {
+	public String BookSeat(@PathVariable int showNo, @PathVariable String date, @SessionAttribute("login") Optional<Member> optionalMember, Model model) {
 
-		Member member = (Member) session.getAttribute("login");
+		Member member = optionalMember.orElseThrow(() -> new IllegalStateException("로그인이 필요합니다."));
 		
-		int memberNo;
-		
-		if (member == null) {
-	        memberNo = 0;
-	    } else {
-			memberNo = member.getMemberNo();
-		}
+		int memberNo = member.getMemberNo();
 		
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println(memberNo);
