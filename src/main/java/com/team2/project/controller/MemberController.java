@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
 
+import org.hibernate.tool.schema.internal.AbstractSchemaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -94,7 +95,8 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		Optional<Member> Memberlogin = memberService.getMemberLoginCheck(dto);
 		if(Memberlogin.isEmpty()) {
-			mav.setViewName("redirect:/login");
+			mav.addObject("error","login fail");
+			mav.setViewName("redirect:/login");			
 			return mav;
 		}
 		else {
@@ -152,9 +154,11 @@ public class MemberController {
 	}
 	
 	@PostMapping("/logout")
-    public String logout(HttpSession session) {
+    public ModelAndView logout(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
         session.invalidate();
-        return "redirect:/";
+        
+        mav.setViewName("redirect:/");
+        return mav;
     }
-
 }	
