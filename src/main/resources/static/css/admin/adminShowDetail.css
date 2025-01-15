@@ -1,0 +1,225 @@
+@charset "EUC-KR";
+	.actor-area{
+            width: 1200px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            display: flex;
+            align-items: center; /* 수직 중앙 정렬 */
+            margin-top: 30px;
+        }
+    section {
+            width: 1200px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* 수직 중앙 정렬 */
+            margin-top: 30px;
+        }
+        .actor-area{
+            width: 1200px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            display: flex;
+            align-items: center; /* 수직 중앙 정렬 */
+            margin-top: 30px;
+        }
+        .poster{
+            width: 180px; 
+            height: 250px; 
+            border: 1px solid black;
+            cursor: pointer;
+            display: flex;
+            justify-content: center; /* 수평 가운데 정렬 */
+            align-items: center; /* 수직 가운데 정렬 */
+            margin-top: -52px;
+        }
+        .place-field {
+    background-color: #f0f0f0; /* 읽기 전용 필드의 배경색 */
+    border: 1px solid #ccc; /* 테두리 스타일 */
+    color: #333; /* 텍스트 색상 */
+    /* 필요에 따라 추가 스타일 */
+}
+.count-container {
+    position: relative; /* 부모 요소를 기준으로 절대 위치 지정 */
+}
+
+.input-field {
+    width: 115px; /* 예시 너비 */
+    cursor: pointer;
+    margin-bottom: 10px; /* 각 입력 필드 사이의 간격 */
+    /* 기타 스타일 */
+}
+
+#timeInput1, #timeInput2 {
+    position: absolute;
+    left: 0; /* 입력 필드와 같은 수평 위치 */
+    display: none; /* 기본적으로 숨김 */
+    z-index: 100; /* 다른 요소 위에 표시 */
+}
+
+#timeInput1 {
+    top: 53px; /* countInput1 아래에 위치 */
+    margin-left: 102px;
+
+}
+
+#timeInput2 {
+    top: 53px;/* countInput2 아래에 위치 */
+    margin-left: 266px;
+} 
+.age-seat-container {
+    margin-top: 10px; /* 위쪽 여백 */
+}
+
+.age-select {
+    margin-left: -1px; /* 왼쪽 여백 */
+    padding: 5px; /* 내부 여백 */
+    /* 필요에 따라 추가 스타일 */
+}
+.calendar {
+            display: inline-block;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            width: 300px;
+			margin-top: 20px;
+			margin-bottom: 20px;
+        }
+        .calendar-header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+        }
+        .calendar-days div {
+            padding: 5px;
+            margin: 2px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: 3px;
+        }
+        .calendar-days div:hover {
+            background-color: #f0f0f0;
+        }
+        .selected, .selected-range {
+            background-color: #ff9400;
+            color: white;
+        }
+
+/*datepicker*/
+		.calendar {
+			background-color: #ffffff;
+			border-radius: 8px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+			width: 320px;
+			padding: 20px;
+		}
+
+		.calendar-header {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 10px;
+			font-size: 18px;
+			font-weight: bold;
+			color: #333;
+		}
+
+		.calendar-header button {
+			background-color: #ff9400;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			padding: 5px 10px;
+			cursor: pointer;
+			font-size: 14px;
+			transition: background-color 0.3s ease;
+		}
+
+		.calendar-header button:hover {
+			background-color: #ff9400;
+		}
+
+		.calendar-days {
+			display: grid;
+			grid-template-columns: repeat(7, 1fr);
+			gap: 5px;
+		}
+        
+.day.disabled {
+    color: gray;
+    pointer-events: none; /* 클릭 불가 */
+}
+.input{
+    height: 30px;
+    margin-top: 18px;
+    font-size: 16px;
+    margin-left: 19px;
+}
+
+.fixed-button {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-392%);
+    padding: 10px 20px;
+    background-color: #ff9400;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 225px;
+    font-size: 14px;
+}
+
+.fixed-button:hover {
+    background-color: #ff9400;
+}
+
+.title{
+    font-size: 18px;
+    font-weight: 600;
+}
+.actBox {
+            display: flex;
+            flex-direction: column; /* 수직 정렬 */
+            align-items: center; /* 가운데 정렬 */
+            width: 130px;
+            position: relative; /* 하트 위치 조정을 위한 설정 */
+            margin-right: 30px; /* actBox 간의 간격 추가 */
+            margin-top: 25px;
+            border: 1px solid #dddddd; /* 테두리 추가 */
+        }
+        .actImg {
+            height: 130px; /* 높이 설정 */
+            width: 130px; /* 너비 설정 */
+            overflow: hidden; /* 자식 요소가 부모의 경계를 넘어가도록 설정 */
+            border: none; /* 테두리 제거 */
+        }
+        .actor {
+            height: 130px; /* 높이 설정 */
+            width: 130px; /* 너비 설정 */
+            object-fit: cover; /* 이미지 비율 유지 */
+        }
+
+.actor-input-container {
+    display: flex; /* 플렉스 컨테이너로 설정 */
+    gap: 11px; /* 각 actBox 사이의 간격 */
+}
+
+.actBox {
+    display: flex;
+    flex-direction: column; /* 내부 요소를 수직으로 정렬 */
+    align-items: center; /* 내부 요소를 수평 중앙 정렬 */
+    border: 1px solid #dddddd; /* 테두리 추가 */
+    /* 필요에 따라 추가 스타일 */
+}
+
+.actBox:hover {
+    background-color: #f0f0f0; /* hover 시 배경색 변경 */
+    cursor: pointer; /* hover 시 커서 변경 */
+}

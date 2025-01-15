@@ -1,31 +1,33 @@
 
     <header th:fragment="headerAdmin" class="header-container">
-        <!-- 첫 번째 줄: 로고, 검색바, 로그인/회원가입 -->
+        <!-- 泥� 踰덉㎏ 以�: 濡쒓퀬, 寃��깋諛�, 濡쒓렇�씤/�쉶�썝媛��엯 -->
         <div class="header-top">
             <div class="logo">
-                <img src="/images/header/logo_only.png" alt="로고">  <!-- 로고 이미지 -->
+            	<a href="/admin/memberList">
+                	<img src="/images/header/logo_only.png" alt="로고">
+                </a>  <!-- 濡쒓퀬 �씠誘몄� -->
             </div>
             <div>
             <nav class="main-menu">
 			<ul class="menu-list">
-				<li><a href="/member">회원 조회</a></li>
-				<li><a href="/actor/register">배우 등록</a></li>
-				<li><a href="/actor/list">배우 조회</a></li>
-				<li><a href="/performance/register">공연 등록</a></li>
-				<li><a href="/performance/list">공연 조회</a></li>
-				<li><a href="/inquiry">문의 관리</a></li>
+				<li><a href="/admin/memberList">회원 목록</a></li>
+				<li><a href="/admin/insertForm">배우 등록</a></li>
+				<li><a href="/admin/actorList">배우 목록</a></li>
+				<li><a href="/admin/showInsertForm">공연 등록</a></li>
+				<li><a href="/admin/showList">공연 목록</a></li>
+				<li><a href="">문의 관리</a></li>
 			</ul>
 		</nav>
            </div>
            <div>
             <div class="auth-links">
-            	<!--로그아웃 -->
-                <a href="/logout" ><img src="/images/header/Log%20out.png" alt="로그아웃"></a>
-                <!--관리자페이지 -->
-                <a href="/adminpage"><img src="/images/header/User.png" alt="로그아웃"></a>
+            	<!--濡쒓렇�븘�썐 -->
+                <a href="/logout" ><img src="/images/header/Log%20out.png" alt="濡쒓렇�븘�썐"></a>
+                <!--愿�由ъ옄�럹�씠吏� -->
+                <a href="/mypage/memberInfo"><img src="/images/header/User.png" alt="濡쒓렇�븘�썐"></a>
             </div>
             <div class="playpage-links">
-            	<a href="/login">공연페이지 이동</a>
+            	<a href="/show/Main">공연페이지 이동</a>
             </div>
 			</div>
         </div>

@@ -2,37 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style type="text/css">
-	section {
-            width: 1200px;
-            box-sizing: border-box;
-            margin: 0 auto;
-            display: flex; /* 플렉스박스 사용 */
-            align-items: center; /* 수직 중앙 정렬 */
-        }
-        table{ 
-        	border-collapse : collapse; /*이중선 제거*/
-        	 width: 1200px; 
-        	 
-        }  
-        th,td{
-          height: 30px;
-      	  text-align: left;
-          border: 1px solid #000;
-      
-          vertical-align: top;	/* 위 */
-          vertical-align: bottom;   /* 아래 */
-          vertical-align: middle;   /* 가운데 */
-    	}
-    	th{
-    		background-color: #dddddd;
-    	}
+<title>배우 목록</title>
 
-</style>
+    <link rel="stylesheet" th:href="@{/css/headerCss/headerAdmin.css}"> 
+    <link rel="stylesheet" th:href="@{/css/footerCss/footerAdmin.css}"> 
+    <link rel="stylesheet" th:href="@{/css/admin/adminActorList.css}">
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
 </head>
 
 <body>
+	<div th:replace="~{header/headerAdmin :: headerAdmin}"></div>
 	<section>
 		<div class="dateSearch"></div>
 		<div class="tableBox" style="width: 1200px; font-size: 14px;">
@@ -43,7 +23,7 @@
 					<th scope="col" class="actorBirth">생일</th>
 					<th scope="col" class="actorDebut">데뷔일</th>
 					<th scope="col" class="actorEdu">학력</th>
-					<th scope="col" class="actorInfo">소개</th>			
+					<th scope="col" class="actorNation">국적</th>			
 				</tr>
 				<tr th:each="actor : ${actors}">
 					<td class="actorNum" th:text="${actor.actorNo}">1</td>
@@ -53,7 +33,7 @@
 					<td class="actorBirth" th:text="${actor.actorBirth}">95.12.12</td>
 					<td class="actorDebut" th:text="${actor.actorDebut}">95.12.12</td>
 					<td class="actorEdu" th:text="${actor.actorEdu}">대학만?</td>
-					<td class="actorInfo" th:text="${actor.actorInfo}">배우 입니다.</td>
+					<td class="actorInfo" th:text="${actor.actorNation}">대한민국</td>
 				</tr>
 			</table>
 			<div class="pagination">
@@ -70,5 +50,6 @@
             </div>
 		</div>
 	</section>
+	<div th:replace="~{footer/footer :: footer}"></div>
 </body>
 </html>
