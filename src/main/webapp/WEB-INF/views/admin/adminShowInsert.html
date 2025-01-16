@@ -303,10 +303,24 @@
             });
         });
 
-        // 모달 열기
+     // 모달 열기
         function openActorModal(index) {
             const modal = document.getElementById('actorModal');
             modal.style.display = 'flex';
+
+            // 모달 외부 클릭 시 닫기
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeActorModal();
+                }
+            });
+
+            // ESC 키로 모달 닫기
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeActorModal();
+                }
+            });
 
             // 배우 검색 버튼 클릭 시
             document.getElementById('actorSearchButton').addEventListener('click', function(event) {
@@ -330,7 +344,7 @@
                             const actorDiv = document.createElement('div');
                             actorDiv.classList.add('actor-item');
                             actorDiv.innerHTML = `
-                                <img src="/uploads/${actor.fileNo || 'default.jpg'}" alt="${actor.actorName || '이미지 없음'}" style="width: 100px; height: auto;" />
+                                <img src="finalFile/${actor.fileNo || 'default.jpg'}" alt="${actor.actorName || '이미지 없음'}" style="width: 100px; height: auto;" />
                                 <h4>${actor.actorName || '이름 없음'}</h4>
                             `;
 
@@ -365,7 +379,7 @@
             const actBox = document.getElementById(`actBox_${index}`);
             const actImg = actBox.querySelector('.actImg img');
             const actName = actBox.querySelector('.actName');
-            actImg.src = `/uploads/${actor.fileNo || 'default.jpg'}`;
+            actImg.src = `finalFile/${actor.fileNo || 'default.jpg'}`;
             actName.textContent = actor.actorName || '이름 없음';
         }
 
@@ -386,6 +400,7 @@
                 this.appendChild(roleNameInput);
             });
         });
+
 
         // startDate 변경 시 openDate 계산
         document.getElementById('startDateField').addEventListener('change', function() {

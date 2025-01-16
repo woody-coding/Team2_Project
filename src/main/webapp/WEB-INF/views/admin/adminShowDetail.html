@@ -37,9 +37,9 @@
                         <option value="뮤지컬" th:selected="${show.showCate == '뮤지컬'}">뮤지컬</option>
                         <option value="콘서트" th:selected="${show.showCate == '콘서트'}">연극</option>
                         <option value="스포츠" th:selected="${show.showCate == '스포츠'}">콘서트</option>
-                        <option value="전시/행사" th:selected="${show.showCate == '전시-행사'}">전시-행사</option>
+                        <option value="전시-행사" th:selected="${show.showCate == '전시-행사'}">전시-행사</option>
                         <option value="클래식" th:selected="${show.showCate == '클래식'}">클래식</option>
-                        <option value="아동/가족" th:selected="${show.showCate == '아동-가족'}">아동-가족</option>
+                        <option value="아동-가족" th:selected="${show.showCate == '아동-가족'}">아동-가족</option>
                         <option value="연극" th:selected="${show.showCate == '연극'}">연극</option>
                     </select>
                 </div>
@@ -92,7 +92,7 @@
             <div class="actor-input-container">
                 <div th:each="showActor : ${showActors}" class="actBox">
     				<div class="actImg">
-        				<img alt="" th:src="@{/uploads/{fileNo}(fileNo=${showActor.actor.fileNo})}" class="actor">
+        				<img alt="" th:src="@{'/admin/finalFile/' + ${showActor.actor.showActorFile.fileNo}}" class="actor">
     				</div>
     				<div class="actName" th:text="${showActor.actor.actorName}" style="margin-top: 10px;"></div>
 				</div>
