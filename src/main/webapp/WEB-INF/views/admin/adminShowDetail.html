@@ -15,9 +15,10 @@
 	<div th:replace="~{header/headerAdmin :: headerAdmin}"></div>
 	<section class="text-area" th:object="${show}">
 		<div class="posterBox">
-            <div class="poster" id="poster" th:style="'background-image: url(/finalFile/' + ${show.showActorFile.fileNo} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
-                
-            </div>
+            <div class="poster" id="poster" style="background-size: cover; background-position: center; background-repeat: no-repeat;">
+    			<img th:src="@{${show.showActorFile.filePath.substring(3)}}" alt="Poster" style="width: 182px; height: 252px; object-fit: cover"/>
+			</div>
+
             <input type="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .png"/>
         </div>
         <div class="showInfoBox" style="margin-left: 50px;margin-right: 50px;">

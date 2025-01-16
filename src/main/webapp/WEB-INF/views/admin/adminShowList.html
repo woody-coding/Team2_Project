@@ -42,14 +42,14 @@
 			</table>
 			<div class="pagination">
                 <span th:if="${currentPage > 0}">
-                    <a th:href="@{/admin/members(page=${currentPage - 1}, size=${size})}">이전</a>
+                    <a th:href="@{/admin/showList(page=${currentPage - 1}, size=${size})}">이전</a>
                 </span>
                 <!-- 페이지 번호 수동 생성 -->
                 <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                    <a th:href="@{/admin/members(page=${i}, size=${size})}" th:text="${i + 1}"></a>
+                    <a th:href="@{/admin/showList(page=${i}, size=${size})}" th:text="${i + 1}"></a>
                 </span>
                 <span th:if="${currentPage < totalPages - 1}">
-                    <a th:href="@{/admin/members(page=${currentPage + 1}, size=${size})}">다음</a>
+                    <a th:href="@{/admin/showList(page=${currentPage + 1}, size=${size})}">다음</a>
                 </span>
             </div>
 		</div>
