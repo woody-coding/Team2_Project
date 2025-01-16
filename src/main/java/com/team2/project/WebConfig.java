@@ -20,9 +20,9 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
     // * 이미지 파일 업로드 경로를	>>	C:/finalFile/ 폴더로 경로로 설정할 때
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/finalFile/**")
-//                .addResourceLocations("file:C:/finalFile/");
-//    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/finalFile/**")
+                .addResourceLocations("file:C:/finalFile/");
+    }
 }
