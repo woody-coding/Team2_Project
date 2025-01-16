@@ -95,9 +95,13 @@
 				<div class="playInfoCast">
 					<h3>캐스팅</h3>
 					<div class="castmates" th:each="actor : ${actors}">
-						<!-- 배우 이미지 파일: 추가처리필요-->
-						<img class="castPic" th:src="'/uploads/' + ${actor.actor.showActorFile.fileName}" alt="배우 이미지">
 						
+						<!-- 배우 상세 페이지 링크 연동-->
+						<a th:href="@{'/actor/' + ${actor.actor.actorNo}}">
+						<!-- 배우 이미지 파일-->
+						<img class="castPic" th:src="'/finalFile/' + ${actor.actor.showActorFile.fileName}" alt="배우 이미지">
+						</a>
+
 						<h4 th:text="${actor.roleName}">역할</h4>
 						<p th:text="${actor.actor.actorName}">배우이름</p>
 					</div>
@@ -312,8 +316,8 @@
 		<script th:inline="javascript">
 		    // Thymeleaf에서 전달받은 공연 시작일과 종료일 변수 - datepicker로 전송
 		    
-		    const periodStart = [[${show.startDate}]]
-		    const periodEnd = [[${show.endDate}]]
+		    const periodStart =  /*[[${show.startDate}]]*/ ''
+		    const periodEnd = /*[[${show.endDate}]]*/ '';
 		
 		    //console.log(periodStart); // 콘솔에서 값 확인
 		    //console.log(periodEnd);
@@ -330,7 +334,7 @@
 			document.addEventListener('DOMContentLoaded', () => {
 		    // Thymeleaf에서 전달받은 값
 		    								//오픈시간 고정, 오픈시간 설정 js : 아래숫자변경
-		    const targetDateStr = [[${show.openDate} + ' ' + '12:00']];
+		    const targetDateStr = /*[[${show.openDate}]]*/ + ' 12:00';
 		
 		    // 'YYYY-MM-DD HH:mm:ss' 형식으로 변환
 		    const targetDate = new Date(targetDateStr);
