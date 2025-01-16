@@ -11,8 +11,8 @@
 
             <div>
                 <div class="search-bar">
-                    <input type="text" placeholder="검색어를 입력하세요...">
-                    <button>검색</button>
+                    <input id="searchInput" type="text" placeholder="검색어를 입력하세요...">
+                    <button id="searchButton">검색</button>
                 </div>
            </div>
 
@@ -35,6 +35,29 @@
 		
 		
 		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+			    const searchInput = document.getElementById('searchInput');
+			    const searchButton = document.getElementById('searchButton');
+		
+			    function performSearch() {
+			        const keyword = searchInput.value.trim();
+			        if (keyword) {
+			            window.location.href = `/show/search?keyword=${encodeURIComponent(keyword)}`;
+			        }
+			    }
+		
+			    // 검색 버튼 클릭
+			    searchButton.addEventListener('click', performSearch);
+		
+			    // 엔터 키 입력
+			    searchInput.addEventListener('keypress', function(e) {
+			        if (e.key === 'Enter') {
+			            performSearch();
+			        }
+			    });
+			});
+
+			
 		function logout() {
 		    var form = document.createElement('form');
 		    form.method = 'post';

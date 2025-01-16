@@ -57,6 +57,12 @@ public class ShowDetailService {
                 .map(this::convertToDTO);
     }
     
+    public List<Show> searchShowList(String keyword, Pageable pageable) {
+        if(keyword == null) keyword = "";
+        
+        return showRepository.findByShowTitleContainingOrShowInfoContaining(keyword, keyword, pageable);
+    }
+
 
     private ShowDetailDTO convertToDTO(Show show) {
         ShowDetailDTO dto = new ShowDetailDTO();
