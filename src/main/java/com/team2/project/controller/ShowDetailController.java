@@ -2,6 +2,7 @@ package com.team2.project.controller;
 
 import com.team2.project.DTO.ShowDetailDTO;
 import com.team2.project.model.Review;
+import com.team2.project.model.Show;
 import com.team2.project.model.ShowActor;
 import com.team2.project.model.ShowActorFile;
 import com.team2.project.service.ShowDetailService;
@@ -9,6 +10,7 @@ import com.team2.project.service.ReviewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,6 +107,55 @@ public class ShowDetailController {
         //http://localhost:8787/show/ticketMenu
     }
     
+    @GetMapping("/search")
+    public String searchShows(
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "8") int size,
+            Model model) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("showNo").ascending());
+        List<Show> searchList = showService.searchShowList(keyword, pageable);
+
+        List<ShowDetailDTO> showDetailDTOs = new ArrayList<>();
+        for (Show show : searchList) {
+            ShowDetailDTO dto = convertToShowDetailDTO(show);
+            double averageScore = reviewService.getAverageScoreByShowNo(show.getShowNo());
+            dto.setAverageScore(averageScore);
+            showDetailDTOs.add(dto);
+        }
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), showDetailDTOs.size());
+        Page<ShowDetailDTO> showPage = new PageImpl<>(showDetailDTOs.subList(start, end), pageable, showDetailDTOs.size());
+
+        model.addAttribute("shows", showPage.getContent());
+        model.addAttribute("currentPage", showPage.getNumber());
+        model.addAttribute("totalPages", showPage.getTotalPages());
+        model.addAttribute("hasNext", showPage.hasNext());
+        model.addAttribute("hasPrevious", showPage.hasPrevious());
+        model.addAttribute("showCate", "전체");
+        model.addAttribute("keyword", keyword);
+
+        return "ticket/ticketMenu/ticket_menu";
+    }
+
+    private ShowDetailDTO convertToShowDetailDTO(Show show) {
+        ShowDetailDTO dto = new ShowDetailDTO();
+        dto.setShowNo(show.getShowNo());
+        dto.setEndDate(show.getEndDate());
+        dto.setOpenDate(show.getOpenDate());
+        dto.setShowCate(show.getShowCate());
+        dto.setShowInfo(show.getShowInfo());
+        dto.setShowPlayTime(show.getShowPlayTime());
+        dto.setShowPrice(show.getShowPrice());
+        dto.setShowRating(show.getShowRating());
+        dto.setShowTitle(show.getShowTitle());
+        dto.setStartDate(show.getStartDate());
+        return dto;
+    }
+
+
     
     
 }
