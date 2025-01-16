@@ -2,6 +2,7 @@ package com.team2.project.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.team2.project.model.id.SeatId;
 
 import jakarta.persistence.Column;
@@ -57,10 +58,12 @@ public class Seat {
     @Column(name = "SHOW_TIME", nullable = false)
     private String showTime;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "SHOW_NO", referencedColumnName = "SHOW_NO", insertable = false, updatable = false)
     private Show show;
     
+    @JsonBackReference
     @ManyToOne // 하나의 결제에 여러 개의 좌석이 연결될 수 있음
     @JoinColumn(name = "PAYMENT_ID", nullable = true) // 외래 키 설정 (결제 ID), null 허용
     private Payment payment;
