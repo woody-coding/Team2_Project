@@ -44,7 +44,7 @@ public class ShowMainService {
 			
 			ShowActorFile showFile = fileRepo.findByShow(tmp);
 			if(showFile != null) {
-				dto.setFilePath(showFile.getFileNo());
+				dto.setFilePath(showFile.getFilePath());
 			}else {
 				dto.setFilePath(null);
 			}
@@ -72,7 +72,7 @@ public class ShowMainService {
 			// 파일경로 설정
 			ShowActorFile showFile = fileRepo.findByShow(tmp);
 			if(showFile != null) {
-				dto.setFilePath(showFile.getFileNo());
+				dto.setFilePath(showFile.getFilePath());
 			} else {
 				dto.setFilePath(null);
 			}
