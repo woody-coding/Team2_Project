@@ -5,6 +5,7 @@ import com.team2.project.model.Member;
 import com.team2.project.model.Review;
 import com.team2.project.service.ShowDetailService;
 import com.team2.project.service.ReviewService;
+import com.team2.project.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,9 @@ public class ReviewController {
 
     @Autowired
     private ShowDetailService showService;
+    
+    @Autowired
+    private PaymentService paymentService;
 
     // 리뷰 작성 페이지 접근
     //로그인 시 접근가능하도록 처리 (SessionAttribute("login")추가 Optional<Member> optionalMember 처리
@@ -38,6 +42,17 @@ public class ReviewController {
 
         if (optionalShow.isPresent()) {
             ShowDetailDTO show = optionalShow.get();
+            
+            // 결제 정보 확인
+            Optional<Payment> paymentOpt = paymentService.findByMemberNoAndOrderNameAndPaySuccessYN(
+                    loginUser.getMemberNo(), show.getShowTitle(), true);
+
+            if (paymentOpt.isEmpty()) {
+                model.addAttribute("showNo", showNo);
+                
+                return "ticket/reviewPage/reviewError"; // 에러 페이지로 이동
+            }
+
             model.addAttribute("showNo", show.getShowNo());
             model.addAttribute("showTitle", show.getShowTitle());
         } else {

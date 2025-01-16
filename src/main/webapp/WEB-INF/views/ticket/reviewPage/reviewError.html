@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="/css/headerCss/header.css" />
+	<!--푸터 css-->
+	<link rel="stylesheet" href="/css/footerCss/footer.css" />
+	<link rel="stylesheet" href="/css/reviewCss/reviewerror.css" />
+    <title>관람후기 작성 불가</title>
+</head>
+<body>
+    
+    <div th:replace="~{header/header :: header}"></div>
+    
+    <div class="errorbody">
+	    <h1>관람후기 작성이 어려워요!😢</h1>
+	    <p>고객님이 결제한 공연이 아닙니다.</p>
+	    <p>결제한 공연에 대해서만 리뷰를 작성할 수 있습니다.</p>
+	    <a th:href="@{/show/ticketDetailPage/{showNo}(showNo=${showNo})}">이전 페이지로 돌아가기</a>
+	</div>
+	
+	<div th:replace="~{footer/footer :: footer}"></div>
+	   
+</body>
+</html>
