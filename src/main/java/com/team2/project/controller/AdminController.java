@@ -54,7 +54,7 @@ public class AdminController {
 	 */
 	private String saveUploadedFile(MultipartFile file) throws IOException {
 	    // 애플리케이션 루트 디렉토리 기준으로 경로 설정
-	    Path uploadPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static", "uploads");
+	    Path uploadPath = Paths.get("C:/finalFile/");
 
 	    // 디렉토리가 존재하지 않으면 생성
 	    if (!Files.exists(uploadPath)) {
@@ -247,7 +247,7 @@ public class AdminController {
 
 	            ShowActorFile showActorFile = new ShowActorFile();
 	            showActorFile.setFileNo(fileNo);
-	            showActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString());
+	            showActorFile.setFilePath(Paths.get("C:/finalFile/", fileName).toString());
 	            showActorFile.setFileName(file.getOriginalFilename());
 	            showActorFile.setFileDate(new Date());
 
@@ -389,7 +389,7 @@ public class AdminController {
 	                // 새로운 파일 정보 저장
 	                ShowActorFile newShowActorFile = new ShowActorFile();
 	                newShowActorFile.setFileNo(fileNo);
-	                newShowActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString());
+	                newShowActorFile.setFilePath(Paths.get("C:/finalFile/", fileName).toString());
 	                newShowActorFile.setFileName(file.getOriginalFilename());
 	                newShowActorFile.setFileDate(new Date());
 
@@ -456,7 +456,7 @@ public class AdminController {
                 
                 ShowActorFile showActorFile = new ShowActorFile();
                 showActorFile.setFileNo(fileNo);
-                showActorFile.setFilePath(Paths.get("src/main/resources/static/uploads", fileName).toString()); // 경로 수정
+                showActorFile.setFilePath(Paths.get("C:/finalFile/", fileName).toString()); // 경로 수정
                 showActorFile.setFileName(file.getOriginalFilename());
                 showActorFile.setFileDate(new Date());
                 
