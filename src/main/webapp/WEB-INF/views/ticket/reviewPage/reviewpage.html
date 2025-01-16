@@ -39,15 +39,12 @@
 				 <input type="hidden" name="showNo" th:value="${showNo}">
 				 <!-- 기존 코드 수정 : 로그인 세션 테스트용 주입 - 추후 수정필요 -->
 				 <input type="hidden" name="memberNo" th:value="${session.login.get().memberNo}">
+
 			        
 						<p>공연명</p>
+						
+						
 						<input class="formInput" th:value="${showTitle}" readonly>
-					</div>
-					
-					<div class="w-100">
-						<!--공연 관람일자 자동으로 넣어주거나 선택할수있도록 or 삭제처리하고 공연을 본 사람만 작성할수있게 처리-->
-						<p>관람일시</p>
-						<input class="formInput" name="viewDate" required>
 					</div>
 					<div class="w-100">
 						<p>제목</p>

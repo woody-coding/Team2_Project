@@ -21,15 +21,18 @@
             <li><a th:href="@{/show/ticketMenu/뮤지컬}">뮤지컬</a></li>
             <li><a th:href="@{/show/ticketMenu/콘서트}">콘서트</a></li>
             <li><a th:href="@{/show/ticketMenu/스포츠}">스포츠</a></li>
-            <li><a th:href="@{/show/ticketMenu/전시}">전시/행사</a></li>
+        	<!-- 수정된 부분 전시를 전시-행사로 -->
+            <li><a th:href="@{/show/ticketMenu/전시-행사}">전시/행사</a></li>
             <li><a th:href="@{/show/ticketMenu/클래식}">클래식</a></li>
-            <li><a th:href="@{/show/ticketMenu/아동}">아동/가족</a></li>
+            <!-- 수정된 부분 아동을 아동-가족으로 -->
+            <li><a th:href="@{/show/ticketMenu/아동-가족}">아동/가족</a></li>
             <li><a th:href="@{/show/ticketMenu/연극}">연극</a></li>
         </ul>
     </div>
 
     <div class="menu-right">
-        <div class="ticketGenre" th:text="${showCate}">전체</div>
+    	<!-- 아동-가족 으로 노출될경우 -을 / 으로 변경하는 th처리-->
+        <div class="ticketGenre" th:utext="${showCate.replace('-', '/')}">전체</div>
         <div class="row" th:each="show : ${shows}">
             <div class="col-sm-4">
                 <a class="showLink" th:href="@{'/show/ticketDetailPage/' + ${show.showNo}}">
