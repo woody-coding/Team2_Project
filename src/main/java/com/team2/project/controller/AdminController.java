@@ -3,13 +3,18 @@ package com.team2.project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
+
 
 import com.team2.project.DTO.AdminShowDTO;
 import com.team2.project.model.Actor;
@@ -26,6 +31,7 @@ import com.team2.project.service.ShowActorService;
 import retrofit2.http.POST;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,24 +59,45 @@ public class AdminController {
 	 * 파일 저장 처리
 	 */
 	private String saveUploadedFile(MultipartFile file) throws IOException {
-	    // 애플리케이션 루트 디렉토리 기준으로 경로 설정
-	    Path uploadPath = Paths.get("C:/finalFile/");
+        // 애플리케이션 루트 디렉토리 기준으로 경로 설정
+        Path uploadPath = Paths.get("C:/finalFile/");
 
-	    // 디렉토리가 존재하지 않으면 생성
-	    if (!Files.exists(uploadPath)) {
-	        Files.createDirectories(uploadPath);
+        // 디렉토리가 존재하지 않으면 생성
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        // 고유한 파일 이름 생성
+        String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        Path filePath = uploadPath.resolve(fileName);
+
+        // 파일 저장
+        file.transferTo(filePath.toFile());
+
+        return fileName;
+    }
+	
+	@GetMapping("/finalFile/{fileNo}")
+	@ResponseBody
+	public ResponseEntity<Resource> getImage(@PathVariable String fileNo) throws IOException {
+	    // C:/finalFile/ 경로에서 파일을 찾고, 해당 파일을 클라이언트에 전달
+	    Path path = Paths.get("C:/finalFile/").resolve(fileNo);
+	    Resource resource = new FileSystemResource(path);
+
+	    if (!resource.exists()) {
+	        throw new FileNotFoundException("File not found: " + fileNo);
 	    }
 
-	    // 고유한 파일 이름 생성
-	    String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-	    Path filePath = uploadPath.resolve(fileName);
+	    // 파일의 MIME 타입을 자동으로 추정
+	    String contentType = Files.probeContentType(path);
+	    if (contentType == null) {
+	        contentType = "application/octet-stream";
+	    }
 
-	    // 파일 저장
-	    file.transferTo(filePath.toFile());
-
-	    return fileName;
+	    return ResponseEntity.ok()
+	            .contentType(MediaType.parseMediaType(contentType))
+	            .body(resource);
 	}
-	
 
 	/**
 	 * InitBinder: 날짜 포맷 설정
@@ -144,6 +171,7 @@ public class AdminController {
 	        model.addAttribute("currentPage", page);
 	        model.addAttribute("totalPages", totalPages);
 	        model.addAttribute("totalShows", totalShows);
+	        model.addAttribute("allShows", allShows);
 	    } else {
 	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
 	        return "redirect:/login";
@@ -195,6 +223,8 @@ public class AdminController {
 			return "error/404";
 		}
 	}
+	
+	
 
 	/**
 	 * 공연 수정 처리

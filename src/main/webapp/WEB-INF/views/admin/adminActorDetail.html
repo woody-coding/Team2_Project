@@ -16,7 +16,8 @@
         <div id="actor_info">
             <div class="actor_detail">
                 <div id="actor_img" class="actor_img" 
-     					th:style="'background-image: url(/finalFile/' + ${actor.showActorFile.fileNo} + '); border: 1px solid; width: 264px; height: 309px; background-size: cover; background-position: center; background-repeat: no-repeat;'">
+     					style="border: 1px solid; width: 264px; height: 309px; background-size: cover; background-position: center; background-repeat: no-repeat;">
+                <img th:src="@{${actor.showActorFile.filePath.substring(3)}}" alt="Poster" style="width: 264px; height: 309px; object-fit: cover"/>
     				<input type="file" id="fileInput" name="file" style="display: none;" accept=".jpg, .jpeg, .png"/>
 				</div>    
                 <div class="actor_cont">
