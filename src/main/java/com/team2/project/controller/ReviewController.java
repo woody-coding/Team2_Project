@@ -1,10 +1,10 @@
 package com.team2.project.controller;
 import com.team2.project.DTO.ShowDetailDTO;
 import com.team2.project.model.Member;
+import com.team2.project.model.Payment;
 import com.team2.project.model.Review;
 import com.team2.project.service.ShowDetailService;
 import com.team2.project.service.ReviewService;
-import com.team2.project.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.team2.project.service.PaymentServiceforReview;
 import org.springframework.stereotype.Controller;
@@ -42,7 +42,7 @@ public class ReviewController {
 
             // 결제 정보 확인
             Optional<Payment> paymentOpt = paymentService.findByMemberNoAndOrderNameAndPaySuccessYN(
-                    loginUser.getMemberNo(), show.getShowTitle(), true);
+                    member.getMemberNo(), show.getShowTitle(), true);
 
             if (paymentOpt.isEmpty()) {
                 model.addAttribute("showNo", showNo);
@@ -66,7 +66,7 @@ public class ReviewController {
             @RequestParam("reviewScore") int reviewScore,
             @SessionAttribute("login") Optional<Member> optionalMember,
             Model model) { // "login"시 처리할수있도록 Optional<Member> optionalMember 처리
-    	
+    	Member member = optionalMember.orElseThrow(() -> new IllegalStateException("로그인이 필요합니다."));
     	
     	// 리뷰 내용 길이 검사
         if (reviewContent.length() < 110) {
