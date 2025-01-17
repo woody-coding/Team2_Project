@@ -55,7 +55,7 @@
 			<div class="others_container">
 				<div class="others_info" th:each="dto:${dtos}">
 					<!--민영님 컨트롤러에 따라 수정-->
-					<a th:href="@{/show/ticketDetailPage/{showNo}/(showNo=${dto.showNo})}">
+					<a th:href="@{/show/ticketDetailPage/{showNo}(showNo=${dto.showNo})}">
 						<img th:src="${dto.filePath}" alt="show image">
 					</a>
 					<!--해당 버튼을 누르면 /show/showNo 로 넘어가게 상세정보페이지로 넘어감-->

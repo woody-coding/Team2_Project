@@ -45,7 +45,7 @@
                     <ul class="hot_ul">
                     	<li th:each="dto, iterStat:${list}">
                     		<div class="big_cont" th:if="${iterStat.index == 0}">
-                    			<a th:href="@{/show/ticketDetailPage/{showNo}/(showNo=${dto.showNo})}">
+                    			<a th:href="@{/show/ticketDetailPage/{showNo}(showNo=${dto.showNo})}">
                                 	<img th:src="${dto.filePath}" alt="Most Hot Show Img">
                                 </a>
                     		</div>
@@ -66,7 +66,7 @@
                 <div class="post_area">
                     <div class="poster" th:each="dto, iterStat:${upcoming}" th:class="${iterStat.index > 3 ? 'hidden' : 'poster'}">
                         <div class="img_frame">
-                       		<a th:href="@{/show/ticketDetailPage/{showNo}/(showNo=${dto.showNo})}">
+                       		<a th:href="@{/show/ticketDetailPage/{showNo}(showNo=${dto.showNo})}">
                             	<img th:src="${dto.filePath}" alt="Upcoming Show Img">
                             </a>
                             <div class="Ddays">D-<span th:text="${dto.dayDiff}"></span></div>
