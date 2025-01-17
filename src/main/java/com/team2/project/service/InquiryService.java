@@ -190,4 +190,22 @@ public class InquiryService {
 		return inquiryRepository.findByMember_MemberNoAndInquiryStatus(memberNo, status, Sort.by(Sort.Direction.DESC, "inquiryNo"));
 	}
 	
+	// inquiryStatus값이 ANSWER_PROCESSING 인 것이 먼저 오도록, 그리고 inquiryNo 값이 작은 번호가 먼저 오도록 정렬
+	public List<Inquiry> findAllInquiry() {
+	    return inquiryRepository.findAll(
+	        Sort.by(Sort.Order.desc("inquiryStatus"), Sort.Order.asc("inquiryNo"))
+	    );
+	}
+
+	
+	// 관리자 삭제 용도
+	public void deleteByInquiryId(int inquiryNo) {
+		inquiryRepository.deleteById(inquiryNo);
+	}
+	
+	// 관리자 답변 용도
+	public void updateInquiryAnswerByAdmin(int inquiryNo, String inquiryAnswer) {
+		inquiryRepository.updateByAdmin(inquiryNo, inquiryAnswer);
+	}
+	
 }

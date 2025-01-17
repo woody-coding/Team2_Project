@@ -2,64 +2,133 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>문의 관리</title>
+<link rel="stylesheet" th:href="@{/css/headerCss/headerAdmin.css}"> 
+<link rel="stylesheet" th:href="@{/css/footerCss/footerAdmin.css}">
+<link rel="stylesheet" th:href="@{/css/admin/adminShowList.css}">
 <style type="text/css">
 	section {
-            width: 1200px;
-            box-sizing: border-box;
-            margin: 0 auto;
-            display: flex; /* 플렉스박스 사용 */
-            align-items: center; /* 수직 중앙 정렬 */
-        }
-        table{ 
-        	border-collapse : collapse; /*이중선 제거*/
-        	 width: 1200px; 
-        	 
-        }  
-        th,td{
-          height: 30px;
-      	  text-align: left;
-          border: 1px solid #000;
-      
-          vertical-align: top;	/* 위 */
-          vertical-align: bottom;   /* 아래 */
-          vertical-align: middle;   /* 가운데 */
-    	}
-    	th{
-    		background-color: #dddddd;
-    	}
+        width: 1200px;
+        box-sizing: border-box;
+        margin: 0 auto;
+        display: flex; /* 플렉스박스 사용 */
+        align-items: center; /* 수직 중앙 정렬 */
+    }
+    table{ 
+    	border-collapse : collapse; /*이중선 제거*/
+    	width: 1200px; 
+    }  
+    th,td{
+        height: 30px;
+        border: 1px solid #000;
+        vertical-align: middle;   /* 가운데 */
+        padding: 5px;
+        white-space: nowrap;  /* 줄바꿈 방지 */
+        overflow: hidden;     /* 내용이 넘치면 숨김 */
+        text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
+	}
+	td {
+		text-align: left;
+	}
+	th{
+		text-align: center;
+		background-color: #dddddd;
+	}
+    .inquiryContent {
+        white-space: normal; /* 내용 칸은 줄바꿈 허용 */
+        max-width: 200px;    /* 최대 너비 설정 */
+    }
 
+	.inquiryAnswer {
+	    white-space: normal; /* 줄바꿈 허용 */
+	    width: 200px; /* 너비 지정 */
+	}
+	.inquiryAnswer form {
+	    display: flex;
+	    flex-direction: column;
+	}
+	.inquiryAnswer textarea {
+	    width: 100%;
+	    box-sizing: border-box;
+	    margin-bottom: 5px;
+	}
+	.inquiryAnswer button {
+	    align-self: flex-end;
+	}
 </style>
 </head>
 
 <body>
+	<div th:replace="~{header/headerAdmin :: headerAdmin}"></div>
 	<section>
 		<div class="dateSearch"></div>
 		<div class="tableBox" style="width: 1200px; font-size: 14px;">
+			<div th:if="${#lists.isEmpty(inquirys)}">
+			    <p style="text-align: center;">문의 내역이 없습니다.</p>
+			</div>
 			<table>
 				<tr>
 					<th scope="col" class="inquiryNum">번호</th>
 					<th scope="col" class="inquiryCate">문의 유형</th>
 					<th scope="col" class="inquiryTitle">제목</th>
+					<th scope="col" class="inquiryContent">내용</th>
 					<th scope="col" class="userName">문의자</th>
 					<th scope="col" class="inquiryDateQ">문의일</th>
-					<th scope="col" class="adminName">관리자</th>
+					<th scope="col" class="inquiryAnswer">답변</th>
 					<th scope="col" class="inquiryDateR">처리일</th>
-					<th scope="col" class="inquiryStatus">상태</th>
+					<th scope="col" class="inquiryStatus">처리상태</th>
+					<th scope="col" class="inquiryDelete">비고</th>
 				</tr>
-				<tr>
-					<td class="inquiryNum">1</td>
-					<td class="inquiryCate">기타</td>
-					<td class="inquiryTitle"><a>문의 해결 해주세요</a></td>
-					<td class="userName">ㅇㅇㅇ</td>
-					<td class="inquiryDateQ">24.12.15</td>
-					<td class="adminName">ㄴㄴㄴ</td>
-					<td class="inquiryDateR">24.12.15</td>
-					<td class="inquiryStatus">처리완료</td>
+				<tr th:each="inquiry : ${inquirys}">
+					<td class="inquiryNum" th:text="${inquiry.inquiryNo}"></td>
+					<td class="inquiryCate" 
+						th:text="${inquiry.inquiryCategory.name() == 'RESERVATION' ? '예매/결제/환불' : 
+			                      inquiry.inquiryCategory.name() == 'TICKET' ? '티켓/공연정보' : 
+			                      inquiry.inquiryCategory.name() == 'MEMBER' ? '회원정보서비스' : 
+			                      inquiry.inquiryCategory.name() == 'SYSTEM' ? '시스템 불편사항' : '기타'}">
+					</td>
+					<td class="inquiryTitle" th:text="${inquiry.inquiryTitle}"></td>
+					<td class="inquiryContent">
+					    <div th:text="${inquiry.inquiryContent}"></div>
+					    <div th:if="${not #lists.isEmpty(inquiry.inquiryFiles)}">
+					        <ul style="padding: 0; margin-top: 10px;">
+					            <li style="list-style-type: none; display: inline-block; margin-right: 10px;" th:each="file : ${inquiry.inquiryFiles}">
+					                <img th:src="@{/finalFile/{filename}(filename=${file.inquiryStoreFileName})}" style="width: 50px; height: 50px; object-fit: cover;">
+					            </li>
+					        </ul>
+					    </div>
+					</td>
+					<td class="userName" th:text="${inquiry.member.memberName}"></td>
+					<td class="inquiryDateQ" th:text="${#temporals.format(inquiry.inquiryDate, 'yyyy-MM-dd')}"></td>
+					<td class="inquiryAnswer">
+					    <form th:action="@{/admin/inquiry/answer}" method="post">
+					        <input type="hidden" name="inquiryNo" th:value="${inquiry.inquiryNo}">
+					        <textarea th:text="${inquiry.inquiryAnswer}" name="inquiryAnswer" rows="3" placeholder="답변을 입력하세요"></textarea>
+					        <button type="submit" th:text="${inquiry.inquiryAnswer != null ? '수정' : '등록'}"></button>
+					    </form>
+					</td>
+					<td class="inquiryDateR" th:text="${inquiry.inquiryAnswerDate != null ? #temporals.format(inquiry.inquiryAnswerDate, 'yyyy-MM-dd') : '-'}"></td>
+					<td class="inquiryStatus" th:text="${inquiry.inquiryStatus.name() == 'ANSWER_PROCESSING' ? '처리중' : '답변완료'}"></td>
+					<td class="inquiryDelete">
+					    <form th:action="@{/admin/inquiry/delete/{inquiryNo}(inquiryNo=${inquiry.inquiryNo})}" method="post">
+					        <button type="submit">삭제</button>
+					    </form>
+					</td>
 				</tr>
-				<!-- 20개 까지만 출력하기 -->
 			</table>
+			<div class="pagination">
+			    <span th:if="${currentPage > 0}">
+			        <a th:href="@{/admin/inquiry/inquiryList(page=${currentPage - 1}, size=${size})}">이전</a>
+			    </span>
+			    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+			        <a th:href="@{/admin/inquiry/inquiryList(page=${i}, size=${size})}" th:text="${i + 1}"></a>
+			    </span>
+			    <span th:if="${currentPage < totalPages - 1}">
+			        <a th:href="@{/admin/inquiry/inquiryList(page=${currentPage + 1}, size=${size})}">다음</a>
+			    </span>
+			</div>
 		</div>
 	</section>
+	<div th:replace="~{footer/footer :: footer}"></div>
 </body>
 </html>
