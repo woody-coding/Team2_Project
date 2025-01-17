@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,7 @@ public class ShowDetailController {
     @Autowired
     private ReviewService reviewService;
     
-    
-    
+
     // 공연 상세 페이지
     @GetMapping("/ticketDetailPage/{showNo}")
     public String ticketDetailPage(

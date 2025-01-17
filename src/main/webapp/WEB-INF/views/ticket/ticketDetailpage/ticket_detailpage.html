@@ -26,7 +26,7 @@
 				<div>
 				<h2 class="ticketDeatilTitle" th:text="${show.showCate + ' ' + show.showTitle}">장르 + 공연 제목</h2>
 				<!-- 포스터 이미지 경로 수정 -->
-				<img class="ticketPoster" th:src="@{${show.showActorFile.filePath.substring(3)}}" alt ="공연 이미지">
+				<img class="ticketPoster" th:src="@{/finalFile/{fileNo}(fileNo=${show.fileNo})}" alt ="공연 이미지">
 
 				</div>
 				<ul class="ticketDetailList">

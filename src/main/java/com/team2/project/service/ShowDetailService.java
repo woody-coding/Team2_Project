@@ -77,6 +77,8 @@ public class ShowDetailService {
         dto.setShowPlayTime(show.getShowPlayTime());
         dto.setShowRating(show.getShowRating());
         dto.setOpenDate(show.getOpenDate());
+        dto.setFileNo(show.getFileNo());
+        dto.setShowActorFile(show.getShowActorFile());
         return dto;
     }
     
