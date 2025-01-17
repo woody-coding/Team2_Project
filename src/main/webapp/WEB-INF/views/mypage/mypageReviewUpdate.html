@@ -88,7 +88,7 @@
 				</div>
 				<div>
 					<button class="register-button update">수정</button>
-					<a class="cancel" href="@{mypageReviewList}" style="text-decoration: none;">
+					<a class="cancel" th:href="@{/mypage/reviewDetail(reviewNo=${review.reviewNo})}" style="text-decoration: none;">
     					<button type="button" class="register-button update">취소</button>
 					</a>
 				</div>

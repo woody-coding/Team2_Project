@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,10 +45,16 @@ public class MypageController {
 	        
 	        // 좋아요 정보 조회
 	        List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
-	        model.addAttribute("likedItems", likedItems);
+	        
+	        // status가 "Y"인 항목만 필터링
+	        List<LikeYO> filteredLikedItems = likedItems.stream()
+	            .filter(item -> "Y".equals(item.getStatus())) // status가 "Y"인 경우만 남김
+	            .collect(Collectors.toList());
+	        
+	        model.addAttribute("likedItems", filteredLikedItems);
 
-	        // 좋아요 총 갯수 조회
-	        int likedActorCount = mypageService.getLikedActorCount(memberNo);
+	        // 좋아요 총 갯수 조회 (필터링된 항목의 수)
+	        int likedActorCount = (int) filteredLikedItems.size(); // 필터링된 항목 수
 	        model.addAttribute("likedActorCount", likedActorCount);
 
 	        // 멤버 정보 조회
@@ -71,12 +78,17 @@ public class MypageController {
 	    
 	 // 좋아요 정보 조회
 	    List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
-        model.addAttribute("likedItems", likedItems);
         
-     // 좋아요 총 갯수 조회
-	    int likedActorCount = mypageService.getLikedActorCount(memberNo);
-	    
-	    model.addAttribute("likedActorCount", likedActorCount);
+     // status가 "Y"인 항목만 필터링
+        List<LikeYO> filteredLikedItems = likedItems.stream()
+            .filter(item -> "Y".equals(item.getStatus())) // status가 "Y"인 경우만 남김
+            .collect(Collectors.toList());
+               
+        model.addAttribute("likedItems", filteredLikedItems);
+        
+     // 좋아요 총 갯수 조회 (필터링된 항목의 수)
+        int likedActorCount = filteredLikedItems.size(); // 필터링된 항목 수로 업데이트
+        model.addAttribute("likedActorCount", likedActorCount);
         
         // 멤버 정보 조회
 	    Member member = mypageService.getMember(memberNo);
@@ -98,8 +110,16 @@ public class MypageController {
 	        // 좋아요 정보 조회
 	        List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
 	        
-	        // 좋아요 총 갯수 조회
-	        int likedActorCount = mypageService.getLikedActorCount(memberNo);
+	     // status가 "Y"인 항목만 필터링
+	        List<LikeYO> filteredLikedItems = likedItems.stream()
+	            .filter(item -> "Y".equals(item.getStatus())) // status가 "Y"인 경우만 남김
+	            .collect(Collectors.toList());
+	               
+	        model.addAttribute("likedItems", filteredLikedItems);
+	        
+	     // 좋아요 총 갯수 조회 (필터링된 항목의 수)
+	        int likedActorCount = filteredLikedItems.size(); // 필터링된 항목 수로 업데이트
+	        model.addAttribute("likedActorCount", likedActorCount);
 	        
 	        // 멤버 정보 조회
 	        Member member = mypageService.getMember(memberNo);
@@ -129,8 +149,16 @@ public class MypageController {
 				    List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
 			        
 			        
-			     // 좋아요 총 갯수 조회
-				    int likedActorCount = mypageService.getLikedActorCount(memberNo);
+				 // status가 "Y"인 항목만 필터링
+			        List<LikeYO> filteredLikedItems = likedItems.stream()
+			            .filter(item -> "Y".equals(item.getStatus())) // status가 "Y"인 경우만 남김
+			            .collect(Collectors.toList());
+			               
+			        model.addAttribute("likedItems", filteredLikedItems);
+			        
+			     // 좋아요 총 갯수 조회 (필터링된 항목의 수)
+			        int likedActorCount = filteredLikedItems.size(); // 필터링된 항목 수로 업데이트
+			        model.addAttribute("likedActorCount", likedActorCount);
 			        
 			        // 멤버 정보 조회
 				    Member member = mypageService.getMember(memberNo);
@@ -159,8 +187,16 @@ public class MypageController {
 		    List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
 	        
 	        
-	     // 좋아요 총 갯수 조회
-		    int likedActorCount = mypageService.getLikedActorCount(memberNo);
+		 // status가 "Y"인 항목만 필터링
+	        List<LikeYO> filteredLikedItems = likedItems.stream()
+	            .filter(item -> "Y".equals(item.getStatus())) // status가 "Y"인 경우만 남김
+	            .collect(Collectors.toList());
+	               
+	        model.addAttribute("likedItems", filteredLikedItems);
+	        
+	     // 좋아요 총 갯수 조회 (필터링된 항목의 수)
+	        int likedActorCount = filteredLikedItems.size(); // 필터링된 항목 수로 업데이트
+	        model.addAttribute("likedActorCount", likedActorCount);
 		    
 		 // 리뷰 정보 조회
 	        Review review = mypageService.getReviewByReviewNo(reviewNo);
@@ -208,9 +244,16 @@ public class MypageController {
 		// 좋아요 정보 조회
 		    List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
 	        
+		 // status가 "Y"인 항목만 필터링
+	        List<LikeYO> filteredLikedItems = likedItems.stream()
+	            .filter(item -> "Y".equals(item.getStatus())) // status가 "Y"인 경우만 남김
+	            .collect(Collectors.toList());
+	               
+	        model.addAttribute("likedItems", filteredLikedItems);
 	        
-	     // 좋아요 총 갯수 조회
-		    int likedActorCount = mypageService.getLikedActorCount(memberNo);
+	     // 좋아요 총 갯수 조회 (필터링된 항목의 수)
+	        int likedActorCount = filteredLikedItems.size(); // 필터링된 항목 수로 업데이트
+	        model.addAttribute("likedActorCount", likedActorCount);
 	        
 	        // 멤버 정보 조회
 		    Member member = mypageService.getMember(memberNo);
@@ -294,8 +337,16 @@ public class MypageController {
 		   List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
 			        
 		   
-		   // 좋아요 총 갯수 조회
-		   int likedActorCount = mypageService.getLikedActorCount(memberNo);
+		// status가 "Y"인 항목만 필터링
+	        List<LikeYO> filteredLikedItems = likedItems.stream()
+	            .filter(item -> "Y".equals(item.getStatus())) // status가 "Y"인 경우만 남김
+	            .collect(Collectors.toList());
+	               
+	        model.addAttribute("likedItems", filteredLikedItems);
+	        
+	     // 좋아요 총 갯수 조회 (필터링된 항목의 수)
+	        int likedActorCount = filteredLikedItems.size(); // 필터링된 항목 수로 업데이트
+	        model.addAttribute("likedActorCount", likedActorCount);
 				    
 			        
 		   // 멤버 정보 조회
@@ -310,4 +361,6 @@ public class MypageController {
     }
 		   return "mypage/mypageUserInfoDetail";
 	}
+	
+
 }
