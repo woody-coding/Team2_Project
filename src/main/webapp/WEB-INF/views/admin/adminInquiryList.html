@@ -28,7 +28,7 @@
         text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
 	}
 	td {
-		text-align: left;
+		text-align: center;
 	}
 	th{
 		text-align: center;
@@ -55,6 +55,26 @@
 	.inquiryAnswer button {
 	    align-self: flex-end;
 	}
+	.answered {
+	    background-color: #f0f8ff; /* 매우 연한 파란색 */
+	}
+
+	.answered td {
+	    color: #333; /* 약간 어두운 회색 */
+	}
+
+	.answered .inquiryContent,
+	.answered .inquiryAnswer,
+	.answered .inquiryDelete {
+	    background-color: transparent; /* 배경색 투명 */
+	}
+
+	.answered button,
+	.answered textarea {
+	    background-color: white; /* 버튼과 텍스트영역은 흰색 배경 유지 */
+	    color: initial; /* 기본 텍스트 색상 유지 */
+	}
+
 </style>
 </head>
 
@@ -79,7 +99,7 @@
 					<th scope="col" class="inquiryStatus">처리상태</th>
 					<th scope="col" class="inquiryDelete">비고</th>
 				</tr>
-				<tr th:each="inquiry : ${inquirys}">
+				<tr th:each="inquiry : ${inquirys}" th:class="${inquiry.inquiryStatus.name() == 'ANSWER_CHOSEN' ? 'answered' : ''}">
 					<td class="inquiryNum" th:text="${inquiry.inquiryNo}"></td>
 					<td class="inquiryCate" 
 						th:text="${inquiry.inquiryCategory.name() == 'RESERVATION' ? '예매/결제/환불' : 
@@ -88,7 +108,7 @@
 			                      inquiry.inquiryCategory.name() == 'SYSTEM' ? '시스템 불편사항' : '기타'}">
 					</td>
 					<td class="inquiryTitle" th:text="${inquiry.inquiryTitle}"></td>
-					<td class="inquiryContent">
+					<td class="inquiryContent" style="text-align: left;">
 					    <div th:text="${inquiry.inquiryContent}"></div>
 					    <div th:if="${not #lists.isEmpty(inquiry.inquiryFiles)}">
 					        <ul style="padding: 0; margin-top: 10px;">
