@@ -80,7 +80,6 @@ public class ActorService {
 
 		// 수상정보 가져오기
 		String actorInfo = actor.getActorInfo();
-		String[] awards = actorInfo.split("/");	
 		
 		// 좋아요 상태 가져오기
 		String status;
@@ -92,7 +91,7 @@ public class ActorService {
 			status = likeTmp != null ? likeTmp.getStatus() : "N";
 		}
 		
-		model.addAttribute("awards", awards);
+		model.addAttribute("awards", actorInfo);
 		model.addAttribute("actor", actor);
 		model.addAttribute("dtos", dtos);
 		model.addAttribute("actorPhoto", actorPhoto);
