@@ -46,9 +46,7 @@
 		<div id="actor_career">
 			<div class="cont_title">수상</div>
 			<div class="award-list">
-				<ul>
-					<li th:each="award:${awards}" th:text="${award}"></li>
-				</ul>
+				<textarea th:text="${awards}" rows="10" cols="50"></textarea>
 			</div>
 		</div>
 	
@@ -57,7 +55,7 @@
 			<div class="others_container">
 				<div class="others_info" th:each="dto:${dtos}">
 					<!--민영님 컨트롤러에 따라 수정-->
-					<a th:href="@{/show/ticketDetailPage/{showNo}/{memberNo}(showNo=${dto.showNo}, memberNo=${memberNo})}">
+					<a th:href="@{/show/ticketDetailPage/{showNo}/(showNo=${dto.showNo})}">
 						<img th:src="${dto.filePath}" alt="show image">
 					</a>
 					<!--해당 버튼을 누르면 /show/showNo 로 넘어가게 상세정보페이지로 넘어감-->
