@@ -37,7 +37,7 @@
             <div class="col-sm-4">
                 <a class="showLink" th:href="@{'/show/ticketDetailPage/' + ${show.showNo}}">
                 	<!-- 포스터 이미지 경로-->
-                    <img class="posterImg" th:src="@{${show.showActorFile.filePath.substring(3)}}" alt="공연 이미지">
+                    <img class="posterImg" th:src="@{/finalFile/{filename}(filename=${show.fileNo})}" alt="공연 이미지">
                     <h3 th:text="${show.showTitle}">공연명</h3>
                 </a>
 					<p>대학로 아트포레스트 1관</p>
