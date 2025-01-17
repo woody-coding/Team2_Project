@@ -83,9 +83,7 @@
 	<section>
 		<div class="dateSearch"></div>
 		<div class="tableBox" style="width: 1200px; font-size: 14px;">
-			<div th:if="${#lists.isEmpty(inquirys)}">
-			    <p style="text-align: center;">문의 내역이 없습니다.</p>
-			</div>
+
 			<table>
 				<tr>
 					<th scope="col" class="inquiryNum">번호</th>
@@ -123,7 +121,7 @@
 					<td class="inquiryAnswer">
 					    <form th:action="@{/admin/inquiry/answer}" method="post">
 					        <input type="hidden" name="inquiryNo" th:value="${inquiry.inquiryNo}">
-					        <textarea th:text="${inquiry.inquiryAnswer}" name="inquiryAnswer" rows="3" placeholder="답변을 입력하세요"></textarea>
+					        <textarea th:text="${inquiry.inquiryAnswer}" name="inquiryAnswer" rows="3" placeholder="답변을 입력하세요" required minlength="1"></textarea>
 					        <button type="submit" th:text="${inquiry.inquiryAnswer != null ? '수정' : '등록'}"></button>
 					    </form>
 					</td>
@@ -136,17 +134,26 @@
 					</td>
 				</tr>
 			</table>
-			<div class="pagination">
+			
+			<!-- 문의 내역이 없을 때-->
+			<div th:if="${#lists.isEmpty(inquirys)}">
+			    <p style="text-align: center;">문의 내역이 없습니다.</p>
+			</div>
+			
+			<div class="pagination" th:if="${totalPages > 0}">
 			    <span th:if="${currentPage > 0}">
 			        <a th:href="@{/admin/inquiry/inquiryList(page=${currentPage - 1}, size=${size})}">이전</a>
 			    </span>
-			    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-			        <a th:href="@{/admin/inquiry/inquiryList(page=${i}, size=${size})}" th:text="${i + 1}"></a>
+			    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+			        <a th:href="@{/admin/inquiry/inquiryList(page=${i - 1}, size=${size})}" 
+			           th:text="${i}"
+			           th:class="${i == currentPage + 1} ? 'active' : ''"></a>
 			    </span>
 			    <span th:if="${currentPage < totalPages - 1}">
 			        <a th:href="@{/admin/inquiry/inquiryList(page=${currentPage + 1}, size=${size})}">다음</a>
 			    </span>
 			</div>
+
 		</div>
 	</section>
 	<div th:replace="~{footer/footer :: footer}"></div>
