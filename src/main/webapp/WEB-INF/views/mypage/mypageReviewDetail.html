@@ -82,7 +82,9 @@
 									<textarea class="formInput text" th:field="${review.reviewContent}" style="resize: none;" readonly></textarea>
 								</div>
 							<div style="display: flex;justify-content: space-between;">
-								<button class="list">목록</button>
+								<a th:href="@{/mypage/reviewList}" class="update" style="text-decoration: none;">
+									<button class="list">목록</button>
+								</a>
 								<a th:href="@{/mypage/reviewUpdateForm(reviewNo=${review.reviewNo})}" class="update" style="text-decoration: none;">
 			    					<button>수정</button>
 								</a>
