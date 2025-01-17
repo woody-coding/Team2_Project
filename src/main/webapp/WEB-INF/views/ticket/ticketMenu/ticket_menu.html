@@ -36,8 +36,8 @@
         <div class="row" th:each="show : ${shows}">
             <div class="col-sm-4">
                 <a class="showLink" th:href="@{'/show/ticketDetailPage/' + ${show.showNo}}">
-                	<!-- 이미지 경로 src/main/resources/images/showPoster  파일은 ' 숫자.png ' 형식으로 통일하여 저장-->
-                    <img class="posterImg" th:src="@{/images/showPoster/{showNo}.png(showNo=${show.showNo})}" alt="공연 이미지">
+                	<!-- 포스터 이미지 경로-->
+                    <img class="posterImg" th:src="@{${show.showActorFile.filePath.substring(3)}}" alt="공연 이미지">
                     <h3 th:text="${show.showTitle}">공연명</h3>
                 </a>
 					<p>대학로 아트포레스트 1관</p>
