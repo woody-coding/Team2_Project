@@ -92,7 +92,7 @@
             <div class="actor-input-container">
                 <div th:each="showActor : ${showActors}" class="actBox">
     				<div class="actImg">
-        				<img alt="" th:src="@{'/admin/finalFile/' + ${showActor.actor.showActorFile.fileNo}}" class="actor">
+        				<img alt="" th:src="@{'/admin/finalFile/' + ${showActor.actor.fileNo}}" class="actor">
     				</div>
     				<div class="actName" th:text="${showActor.actor.actorName}" style="margin-top: 10px;"></div>
 				</div>
@@ -104,8 +104,7 @@
             <span class="title title-actor">공연 정보</span>
             <textarea class="show-text-field" th:field="${show.showInfo}" placeholder="공연정보를 입력해 주세요" style="width: 993px; height: 250px; display: block; margin-top: 10px; resize: none;" readonly></textarea>
             <div class="update-button" style="display: flex; justify-content: space-between; gap: 10px; margin-top: 20px;">
-                <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">목록</button>
-
+				<input type="button" class="register-button" th:onclick="|location.href='showList'|" value="목록" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;"/>
             </div>
         </div>
     </section>
