@@ -15,6 +15,6 @@ public class ProjectApplication {
 	
 	@RequestMapping("/")
 	public String root() {
-		return "actorInfo_showMain/showMain";
+		return "redirect:/show/Main";
 	}
 }
