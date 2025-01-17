@@ -133,8 +133,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let end = new Date(currentDate);
 
     switch (selectedOption) {
-      case 'inquiryView10s':
-        start.setSeconds(currentDate.getSeconds() - 10);
+      case 'inquiryView1day':
+        start.setDate(currentDate.getDate() - 1);
         break;
       case 'inquiryView1m':
         start.setMonth(currentDate.getMonth() - 1);
