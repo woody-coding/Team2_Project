@@ -144,9 +144,4 @@ public class MypageService {
 	    return new ArrayList<>(groupedPayments.values()); // 그룹화된 결제 목록 반환
 	}
 
-
-
-    
-    
-	
 }

@@ -331,37 +331,33 @@ public class MypageController {
 	//회원 정보
 	@GetMapping("/memberInfo")
 	public String mypageMemberInfo(@SessionAttribute("login") Optional<Member> optionalMember, Model model, HttpSession session) {
-		// 멤버 정보가 존재하는지 확인
+	    // 멤버 정보가 존재하는지 확인
 	    if (optionalMember.isPresent()) {
 	        Integer memberNo = optionalMember.get().getMemberNo();
-				 
-		   // 좋아요 정보 조회
-		   List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
-			        
-		   
-		// status가 "Y"인 항목만 필터링
+	        
+	        // 좋아요 정보 조회
+	        List<LikeYO> likedItems = mypageService.getLikedItems(memberNo);
+	        
+	        // status가 "Y"인 항목만 필터링
 	        List<LikeYO> filteredLikedItems = likedItems.stream()
 	            .filter(item -> "Y".equals(item.getStatus())) // status가 "Y"인 경우만 남김
 	            .collect(Collectors.toList());
-	               
+	        
 	        model.addAttribute("likedItems", filteredLikedItems);
 	        
-	     // 좋아요 총 갯수 조회 (필터링된 항목의 수)
+	        // 좋아요 총 갯수 조회 (필터링된 항목의 수)
 	        int likedActorCount = filteredLikedItems.size(); // 필터링된 항목 수로 업데이트
 	        model.addAttribute("likedActorCount", likedActorCount);
-				    
-			        
-		   // 멤버 정보 조회
-		   Member member = mypageService.getMember(memberNo);
-		   
-		   model.addAttribute("likedItems", likedItems);
-		   model.addAttribute("likedActorCount", likedActorCount);
-		   model.addAttribute("member", member);
-	} else {
-        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
-        return "redirect:/login";
-    }
-		   return "mypage/mypageUserInfoDetail";
+	        
+	        // 멤버 정보 조회
+	        Member member = mypageService.getMember(memberNo);
+	        
+	        model.addAttribute("member", member);
+	    } else {
+	        // 멤버 정보가 없을 경우의 처리 (예: 로그인 페이지로 리다이렉션)
+	        return "redirect:/login";
+	    }
+	    return "mypage/mypageUserInfoDetail";
 	}
 	
 	//결제 목록
