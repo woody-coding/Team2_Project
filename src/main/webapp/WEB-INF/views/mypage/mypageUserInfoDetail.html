@@ -14,8 +14,8 @@
             <div class="userContainer">
                 <div class="userBox">
                     <a th:href="@{/mypage/main}">
-	                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
-	                    <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
+                        <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
+                        <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
                     </a>
                 </div> 
                 <div class="container">
@@ -27,10 +27,10 @@
                     </div>               
                     <div class="divider"></div>
                     <div class="likeActorBox">
-                        <div class="likeActorCount" >
-                        	<a th:href="@{/mypage/likeActor}">
-                            	<span class="likeActor" style="font-size: 18px; font-weight: bold;">찜한 배우</span>
-                            	<span class="likeActorCount" style="font-size: 20px; font-weight: bold;" th:text="${likedActorCount}">10</span>
+                        <div class="likeActorCount">
+                            <a th:href="@{/mypage/likeActor}">
+                                <span class="likeActor" style="font-size: 18px; font-weight: bold;">찜한 배우</span>
+                                <span class="likeActorCount" style="font-size: 20px; font-weight: bold;" th:text="${likedActorCount}">10</span>
                             </a>
                         </div>
                     </div>
@@ -60,37 +60,35 @@
             <div class="content">
                 <div class="recommendContainer" style="width: 936px;">
                     <div>
-			<div class="formFrame" th:object="${member}">
-				<form>
-					<div>
-						<div class="w-100">
-							<h1>회원 정보</h1>
-							<p>이름</p>
-							<input class="formInput" th:value="${member.memberName}" readonly="readonly">
-						</div>
-						<div class="w-100">
-							<p >가입일</p>
-							<input class="formInput" th:value="${member.memberDate}" readonly="readonly">
-						</div>
-						<div class="w-100">
-							<p >아이디</p>
-							<input class="formInput" th:value="${member.memberId}"  readonly="readonly">
-						</div>
-						<div class="w-100">
-							<p>전화번호</p>
-							<input class="formInput" th:value="${member.memberPhone}" readonly="readonly">
-						</div>
-						<div class="w-100">
-							<p>주소</p>
-							<input class="formInput" th:value="${member.memberAddr}" readonly="readonly" style="margin-bottom: 20px;">
-							<input class="formInput" th:value="${member.memberAddrde}" readonly="readonly">
-						</div>
-					</div>
-					<div style="display: flex;justify-content: flex-end;margin-top: -1.5%;">
-					</div>
-				</form>
-			</div>
-		</div>
+                        <div class="formFrame" th:object="${member}">
+                            <form>
+                                <div>
+                                    <div class="w-100">
+                                        <h1>회원 정보</h1>
+                                        <p>이름</p>
+                                        <input class="formInput" th:value="${member.memberName}" readonly="readonly">
+                                    </div>
+                                    <div class="w-100">
+                                        <p>가입일</p>
+                                        <input class="formInput" th:value="${member.memberDate}" readonly="readonly">
+                                    </div>
+                                    <div class="w-100">
+                                        <p>아이디</p>
+                                        <input class="formInput" th:value="${member.memberId}" readonly="readonly">
+                                    </div>
+                                    <div class="w-100">
+                                        <p>전화번호</p>
+                                        <input class="formInput" th:value="${member.memberPhone}" readonly="readonly">
+                                    </div>
+                                    <div class="w-100">
+                                        <p>주소</p>
+                                        <input class="formInput" th:value="${member.memberAddr}" readonly="readonly" style="margin-bottom: 20px;">
+                                        <input class="formInput" th:value="${member.memberAddrde}" readonly="readonly">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
