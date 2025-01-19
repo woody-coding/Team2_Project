@@ -33,7 +33,7 @@
 					<li><b>장소 </b><span>대학로 아트포레스트 1관</span></li>
 					<li><b>공연기간 </b><span th:text="${show.startDate + '~' + show.endDate}">시작일자~종료일자</span></li>
 					<li><b>공연시간 </b><span th:text="${show.showPlayTime + '분'}">몇분</span></li>
-					<li><b>관람연령 </b><span th:text="${show.showRating}">nn세 이상</span></li>
+					<li><b>관람연령 </b><span th:text="${show.showRating}">nn</span><span>세 이상</span></li>
 					<li><b>가격 </b><span>전석 </span>
 					<span th:text="${show.showPrice} + '원'">티켓가격</span></li>
 	
@@ -99,7 +99,8 @@
 						<!-- 배우 상세 페이지 링크 연동-->
 						<a th:href="@{'/actor/' + ${actor.actor.actorNo}}">
 						<!-- 배우 이미지 파일-->
-						<img class="castPic" th:src="@{'/finalFile/' + ${actor.actor.showActorFile.fileNo}}" alt="배우 이미지">
+						<img class="castPic" th:src="@{'/finalFile/' + ${actor.actor.showActorFile.fileNo}}" alt="배우 이미지"
+						style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
 						</a>
 
 						<h4 th:text="${actor.roleName}">역할</h4>
