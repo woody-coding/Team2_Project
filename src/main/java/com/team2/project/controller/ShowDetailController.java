@@ -152,6 +152,8 @@ public class ShowDetailController {
         dto.setShowRating(show.getShowRating());
         dto.setShowTitle(show.getShowTitle());
         dto.setStartDate(show.getStartDate());
+        dto.setShowActorFile(show.getShowActorFile());
+        dto.setFileNo(show.getFileNo());
         return dto;
     }
 
