@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지 리뷰</title>
+    <link rel="stylesheet" th:href="@{/css/headerCss/headerMypage.css}"> 
+    <link rel="stylesheet" th:href="@{/css/footerCss/footerAdmin.css}"> 
+    <link rel="stylesheet" th:href="@{/css/mypage/mypageReviewList.css}"> 
+    
+    <style type="text/css">
+    .content {
+        margin-top: 22px;
+        font-size: 17px;
+        font-weight: bold;
+        display: flex; /* Flexbox 사용 */
+        align-items: center; /* 수직 가운데 정렬 */
+    }
+    
+    .showDetail {
+        display: flex; /* Flexbox 사용 */
+        flex-direction: column; /* 세로 방향으로 정렬 */
+        align-items: flex-start; /* 왼쪽 정렬 */
+        justify-content: space-between; /* 위아래 끝에 배치 */
+        height: 150px;
+        
+    }
+
+    .showDetail span {
+        margin-bottom: 5px; /* 두 span 사이 간격 조정 */
+    }
+    
+    .price {
+    	margin-left: 40px;
+    }
+    
+    .showImg{
+    	width: 150px;
+    	height:180px;
+    }
+    
+    .check{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    margin-left: 160px;
+    color: #565E9D;
+    }
+</style>
+</head>
+<body>
+<div th:replace="~{header/header :: header}"></div>
+<section>
+    <div class="sideBar" style="width: 1014px;">
+        <div class="userContainer">
+            <div class="userBox">
+                <a th:href="@{/mypage/main}">
+                    <span class="userName" style="font-size: 24px; font-weight: 700;" th:text="${member.memberName}">ㅇㅇㅇ</span>
+                    <span class="myPage" style="font-size: 16px;font-weight: 700;">님의 마이페이지</span>
+                </a>
+            </div>
+            <div class="container">
+                <div class="likeShowBox">
+                    <div class="likeShowCount">
+                        <span class="likeShow" style="font-size: 18px; font-weight: bold;">찜한 공연</span>
+                        <span class="likeShowCount" style="font-size: 20px; font-weight: bold;">10</span>
+                    </div>
+                </div>               
+                <div class="divider"></div>
+                <div class="likeActorBox">
+                    <div class="likeActorCount">
+                        <a th:href="@{/mypage/likeActor}">
+                            <span class="likeActor" style="font-size: 18px; font-weight: bold;">찜한 배우</span>
+                            <span class="likeActorCount" style="font-size: 20px; font-weight: bold;" th:text="${likedActorCount}">10</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="naviContainer">
+            <ul class="naviList">
+                <li class="naviList1"><a th:href="@{/mypage/order}">쇼핑 내역
+                    <a th:href="@{/mypage/order}"><ul class="subList">예매 내역</ul></a>
+                </a></li>
+                <li class="naviList1"><a th:href="@{/mypage/main}">라이브러리</a>
+                    <ul class="subList"><a>찜한 공연</a></ul>
+                    <ul class="subList"><a th:href="@{/mypage/likeActor}">찜한 배우</a></ul>
+                    <ul class="subList"><a th:href="@{/mypage/reviewList}">리뷰 관리</a></ul>
+                    <ul class="subList"><a th:href="@{/inquiry/list}">문의 내역</a></ul>
+                </li>
+                <li class="naviList1"><a th:href="@{/mypage/memberInfo}">회원 정보</a>
+                    <ul class="subList"><a th:href="@{/mypage/memberInfo}">회원 정보 관리</a></ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="contentBox" style="margin-right: 25px;">
+        <div class="NameBox">
+            <span class="detailName">예매 내역</span>
+        </div>
+        <div >
+        <div th:each="order : ${payments}" style="margin-top: 20px;">
+	        <div class="orderId" style="font-size: 17px;">  
+	        	<span>주문번호 :</span>
+	            <span th:text="${order.orderId != null ? order.orderId : '주문번호 없음'}">1231354</span>
+	        </div>
+	        <hr>
+	        <div class="content" style="margin-top: 11px; margin-bottom: 11px;">
+	            <div>
+	            	<img alt="" th:src="@{'/admin/finalFile/' + ${order.fileNo}}" class="showImg">
+	            </div>
+	            <div class="showDetail" style="width: 300px; margin-left: 40px;">
+	            	<span th:text="${order.title}">제목</span>
+	            	<span style="line-height: 24px;" th:text="${order.seatSpaces}">좌석<br>G1,G2</span>
+	            </div>
+	            <div class="price">
+	            	<span th:text="${order.amount}">14000원</span>
+	            	<span> 원</span>
+	            </div>
+	            <div class="check">
+	            	<span>결제 완료</span>
+	            </div>
+	        </div>
+        </div>
+        <hr>
+        </div>
+    </div>
+</section>
+<div th:replace="~{footer/footer :: footer}"></div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</body>
+</html>
