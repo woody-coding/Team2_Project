@@ -17,15 +17,7 @@
     	}else{
     		openNumAuth()
     	}
-    	$.ajax({
-    		type : 'GET',
-    		url  : "SendMGS",
-    		data : {PhoneNum : p},
-    		success: function(data){
-    			console.log(p);
-    		}
-    	});
-    	}
+		}
     function openNumAuth(){
  		var chk = localStorage.getItem('chk');
  		if(chk == null){
