@@ -21,9 +21,10 @@
         <div id="actor_info">
             <div class="actor_detail">
                 <div id="actor_img" class="actor_img" 
-     					th:style="'background-image: url(/uploads/' + ${actor.showActorFile.fileNo} + '); border: 1px solid; width: 264px; height: 309px; background-size: cover; background-position: center; background-repeat: no-repeat;'">
-    				<input type="file" name="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .png"/>
-				</div>    
+     					style="border: 1px solid; width: 264px; height: 309px; background-size: cover; background-position: center; background-repeat: no-repeat;">
+                <img th:src="@{${actor.showActorFile.filePath.substring(3)}}" alt="Poster" style="width: 264px; height: 309px; object-fit: cover"/>
+    				<input type="file" id="fileInput" name="file" style="display: none;" accept=".jpg, .jpeg, .png"/>
+				</div>  
                 <div class="actor_cont">
                     <textarea class="auto-resize name" th:text="${actor.actorName}" name="actorName" style="width: 175px;height: 48px;margin-left: -454px;"></textarea>
                     <ul class="text">
@@ -50,7 +51,7 @@
         </div>
         <div class="update-button" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
             <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">등록</button>
-             <button class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer;">취소</button>
+             <a th:href="@{/admin/actorDetail(actorNo=${actor.actorNo})}" class="register-button" style="padding: 10px 20px; background-color: #ff9400; color: white; border: none; border-radius: 5px; cursor: pointer; text-decoration: none;">취소</a>
         </div>
     </form>
     </div>
