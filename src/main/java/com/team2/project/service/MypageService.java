@@ -116,6 +116,8 @@ public class MypageService {
 	            dto = new MypagePaymentDTO();
 	            dto.setPaymentId(payment.getPaymentId());
 	            dto.setSeatSpaces(payment.getSeatSpaces()); // 처음 좌석 정보
+	            dto.setShowDate(payment.getShowDate());
+	            dto.setShowTime(payment.getShowTime());
 	            dto.setOrderId(currentOrderId); // 주문 ID 설정
 	            
 	            // 좌석 정보를 통해 Show 정보 가져오기
