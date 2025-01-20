@@ -50,7 +50,7 @@
                                 </a>
                     		</div>
                     		<div class="hot_list" th:if="${iterStat.index > 0}">
-                    			<a th:href="@{/show/ticketDetailPage/{showNo}/(showNo=${dto.showNo})}">
+                    			<a th:href="@{/show/ticketDetailPage/{showNo}(showNo=${dto.showNo})}">
                     				<img th:src="${dto.filePath}" alt="Hot Show Img">
                     			</a>
                     		</div>
