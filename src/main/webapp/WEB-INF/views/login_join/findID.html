@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>ID 찾기</title>
 </head>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
     window.onload = function(){
     	localStorage.clear();
@@ -16,7 +17,7 @@
     	}else{
     		openNumAuth()
     	}
-    	}
+		}
     function openNumAuth(){
  		var chk = localStorage.getItem('chk');
  		if(chk == null){

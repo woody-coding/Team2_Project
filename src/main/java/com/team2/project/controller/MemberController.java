@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.boot.sendMSG.sendMSG;
 import com.kakao.app.KakaoAPI;
 import com.team2.project.DTO.FindDTO;
 import com.team2.project.DTO.LoginDTO;
@@ -34,6 +36,8 @@ public class MemberController {
 	private MemberRepository memberRepo;
 	
 	private final MemberService memberService;
+	
+	sendMSG sendMSG = new sendMSG();
 	
 	KakaoAPI kakaoApi = new KakaoAPI();
 	
@@ -95,7 +99,7 @@ public class MemberController {
 		Optional<Member> Memberlogin = memberService.getMemberLoginCheck(dto);
 		if(Memberlogin.isEmpty()) {
 			mav.addObject("result","fail");
-			mav.setViewName("redirect:/login");			
+			mav.setViewName("redirect:/login");	
 			return mav;
 		}
 		else {
@@ -155,8 +159,13 @@ public class MemberController {
     public ModelAndView logout(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
         session.invalidate();
-        
         mav.setViewName("redirect:/");
         return mav;
     }
+//	주석풀고 사용가능
+//	@GetMapping("SendMGS")
+//	public void sendMessage(String PhoneNum) {
+//		System.out.println("문자 전송"+PhoneNum);
+//		sendMSG.sendAuthMSG(PhoneNum);
+//	}
 }	
