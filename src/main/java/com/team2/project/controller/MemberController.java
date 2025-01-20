@@ -162,10 +162,10 @@ public class MemberController {
         mav.setViewName("redirect:/");
         return mav;
     }
-	
-	@GetMapping("SendMGS")
-	public void sendMessage(String PhoneNum) {
-		System.out.println("문자 전송"+PhoneNum);
-		sendMSG.sendAuthMSG(PhoneNum);
-	}
+//	주석풀고 사용가능
+//	@GetMapping("SendMGS")
+//	public void sendMessage(String PhoneNum) {
+//		System.out.println("문자 전송"+PhoneNum);
+//		sendMSG.sendAuthMSG(PhoneNum);
+//	}
 }	
