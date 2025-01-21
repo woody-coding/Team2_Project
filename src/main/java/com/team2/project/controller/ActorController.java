@@ -50,7 +50,6 @@ public class ActorController {
 		System.out.println("");
 		System.out.println("MemberNo: " + likeYo.getMemberNo());
 		System.out.println("ActorNO: " + likeYo.getActorNo());
-		System.out.println("ShowNo: " + likeYo.getShowNO());
         System.out.println("Status: " + likeYo.getStatus());
         
         boolean success = actorService.toggleLike(likeYo);

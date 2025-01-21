@@ -115,7 +115,6 @@ public class ActorService {
 				LikeYO newLike = new LikeYO();
 				newLike.setMemberNo(likeYo.getMemberNo());
 				newLike.setActorNo(likeYo.getActorNo());
-	            newLike.setShowNO(likeYo.getShowNO());
 	            newLike.setStatus(likeYo.getStatus());
 	            likeRepo.save(newLike);
 	            likeRepo.flush();

@@ -18,7 +18,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "MULTI24_LIKEYO",uniqueConstraints = {
-	    @UniqueConstraint(columnNames = {"MEMBER_NO", "SHOW_NO"}),
 	    @UniqueConstraint(columnNames = {"MEMBER_NO", "ACTOR_NO"})
 	})
 @Getter
@@ -34,9 +33,6 @@ public class LikeYO {
 	@Column(name = "LIKE_NO")
 	private int likeNO;
 	
-	@Column(name = "SHOW_NO")
-	private Integer showNO; //fk
-	
 	@Column(name = "ACTOR_NO")
 	private Integer actorNo; //fk
 	
@@ -45,10 +41,6 @@ public class LikeYO {
 	
 	@Column(name = "STATUS", nullable = false)
 	private String status;
-	
-	@ManyToOne
-	@JoinColumn(name = "SHOW_NO" , insertable = false, updatable = false)
-	private Show show;
 	
 	@ManyToOne
 	@JoinColumn(name = "ACTOR_NO" , insertable = false, updatable = false)
