@@ -3,6 +3,7 @@ package com.team2.project.repository;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +21,7 @@ public interface AdminRepository extends JpaRepository<Member, Integer> {
     List<Member> findAll();
     
     @Query("SELECT s FROM Show s") // Show 엔티티를 가져오는 JPQL 쿼리
-    List<Show> findAllShow();
+    List<Show> findAllShow(Sort sort);
     
     // ID로 Show 조회
     @Query("SELECT s FROM Show s WHERE s.showNo = ?1")

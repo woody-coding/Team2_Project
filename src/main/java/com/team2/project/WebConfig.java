@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
 	            .addPathPatterns("/**")
 	            .excludePathPatterns("", "/", "/login", "/join", "/css/**", "/js/**", "/images/**", "/imgs/**", "/kakaologin", "/findID",
 	                                "/findPW", "/phonechk", "/insert", "/searchId", "/searchIdPW", "/idchk", "/show/ticketMenu", "/show/ticketMenu/{showCate}",
-	                                "/show/ticketDetailPage/{showNo}", "/show/Main", "/actor/{actorNo}", "/show/search", "/show/search/**");
+	                                "/show/ticketDetailPage/{showNo}", "/show/Main", "/actor/{actorNo}", "/show/search", "/show/search/**", "/finalFile/**");
 	}
 
     // * 이미지 파일 업로드 경로를	>>	C:/finalFile/ 폴더로 경로로 설정할 때

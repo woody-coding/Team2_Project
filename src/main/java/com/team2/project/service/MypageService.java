@@ -98,7 +98,7 @@ public class MypageService {
     }
 	
 	public List<MypagePaymentDTO> getPaymentsByMemberNo(int memberNo) {
-	    List<Payment> payments = paymentRepository.findByMember_MemberNo(memberNo);
+	    List<Payment> payments = paymentRepository.findByMember_MemberNoAndPaySuccessYNTrue(memberNo);
 	    
 	    // 주문번호를 기준으로 그룹화
 	    Map<String, MypagePaymentDTO> groupedPayments = new HashMap<>();
