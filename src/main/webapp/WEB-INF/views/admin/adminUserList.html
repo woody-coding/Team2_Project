@@ -34,7 +34,7 @@
     <td class="userAdrrDetail" th:text="${member.memberAddrde}">코오롱 하늘채 아파트 101동 605호</td>
     <td class="userPhone" th:text="${member.memberPhone}">010-9510-6733</td>
     <td class="userSignup" th:text="${#dates.format(member.memberDate, 'yyyy-MM-dd')}">24.04.04</td>
-    <td class="userStatus" th:text="${member.memberStatus == '0' ? '관리자' : member.memberStatus == '1' ? '회원' : member.memberStatus == '2' ? '탈퇴' : '상태 없음'}"></td>
+    <td class="userStatus" th:text="${member.memberStatus == 'ADMIN' ? '관리자' : member.memberStatus == 'MEMBER' ? '회원' : member.memberStatus == '2' ? '탈퇴' : '상태 없음'}"></td>
 </tr>
 			</table>
 			<div class="pagination">
