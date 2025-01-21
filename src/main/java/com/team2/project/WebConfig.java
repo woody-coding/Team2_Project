@@ -25,7 +25,8 @@ public class WebConfig implements WebMvcConfigurer {
 	
 		// 관리자 인터셉터
 	    registry.addInterceptor(new AdminCheckInterceptor())
-        .addPathPatterns("/admin/**");
+        .addPathPatterns("/admin/**")
+	    .excludePathPatterns("/admin/finalFile/**");
 	
 	}
 

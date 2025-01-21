@@ -10,8 +10,9 @@
     <script src="inquiry.js" th:src="@{/js/inquiry/inquiry.js}"></script>
 </head>
 <body>
-	<div th:replace="~{header/header :: header}"></div>
+	
     <section class="inquiry-form">
+		<div th:replace="~{header/header :: header}"></div>
         <h1 class="inquiry-title">1:1 문의 접수</h1>
         <div class="divider"></div>
         
@@ -73,8 +74,8 @@
                 <button id="closeModal">확인</button>
             </div>
         </div>
-
+		<div th:replace="~{footer/footer :: footer}"></div>
     </section>
-	<div th:replace="~{footer/footer :: footer}"></div>
+	
 </body>
 </html>

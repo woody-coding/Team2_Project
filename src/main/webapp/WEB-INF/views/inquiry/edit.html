@@ -10,8 +10,9 @@
     <script src="inquiry.js" th:src="@{/js/inquiry/inquiryEdit.js}"></script>
 </head>
 <body>
-	<div th:replace="~{header/header :: header}"></div>
+	
     <section class="inquiry-form">
+		<div th:replace="~{header/header :: header}"></div>
         <h1 class="inquiry-title">1:1 문의 수정</h1>
         <div class="divider"></div>
         
@@ -101,8 +102,8 @@
 		<div th:if="${errorMessage}" class="error-message">
 		    <p th:text="${errorMessage}"></p>
 		</div>
-
+		<div th:replace="~{footer/footer :: footer}"></div>
     </section>
-	<div th:replace="~{footer/footer :: footer}"></div>
+	
 </body>
 </html>
