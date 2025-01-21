@@ -1,11 +1,23 @@
 
     <header th:fragment="headerAdmin" class="header-container">
-        <!-- 泥� 踰덉㎏ 以�: 濡쒓퀬, 寃��깋諛�, 濡쒓렇�씤/�쉶�썝媛��엯 -->
+		<style>
+		    .auth-links {
+		        display: flex;
+		        align-items: center;
+		    }
+		    .auth-links > div {
+		        display: inline-block;
+		    }
+		    .auth-links img {
+		        vertical-align: middle;
+		    }
+		</style>
+		
         <div class="header-top">
             <div class="logo">
             	<a href="/admin/memberList">
                 	<img src="/images/header/logo_only.png" alt="로고">
-                </a>  <!-- 濡쒓퀬 �씠誘몄� -->
+                </a>
             </div>
             <div>
             <nav class="main-menu">
@@ -20,15 +32,31 @@
 		</nav>
            </div>
            <div>
-            <div class="auth-links">
-            	<!--濡쒓렇�븘�썐 -->
-                <a href="/logout" ><img src="/images/header/Log%20out.png" alt="濡쒓렇�븘�썐"></a>
-                <!--愿�由ъ옄�럹�씠吏� -->
-                <a href="/mypage/memberInfo"><img src="/images/header/User.png" alt="濡쒓렇�븘�썐"></a>
-            </div>
+			     <div class="auth-links">
+					<!-- 로그인/로그아웃 버튼 -->
+					<th:block th:if="${session.login}">
+					    <div onclick="logout()">
+					        <img src="/images/header/Log%20out.png" alt="로그아웃">
+					    </div>
+					</th:block>
+					<th:block th:unless="${session.login}">
+					    <a href="/login"><img src="/images/header/Log%20in.png" alt="로그인"></a>
+					</th:block>
+					<!--마이페이지 링크 넣어주기-->
+			         <a href="/mypage/main"><img src="/images/header/User.png" alt="마이페이지"></a>
+			     </div>
             <div class="playpage-links">
             	<a href="/show/Main">공연페이지 이동</a>
             </div>
 			</div>
         </div>
+	<script>
+		function logout() {
+		    var form = document.createElement('form');
+		    form.method = 'post';
+		    form.action = '/logout';
+		    document.body.appendChild(form);
+		    form.submit();
+		}
+	</script>
     </header>

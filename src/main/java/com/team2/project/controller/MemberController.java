@@ -110,6 +110,12 @@ public class MemberController {
 	        session.removeAttribute("prevPage");
 	        String moveToUrl = prevPage != null ? "redirect:/" + prevPage : "redirect:/";
 	        mav.addObject("result","sucess");
+	        
+	        // 관리자인 경우
+	        if(Memberlogin.get().getMemberStatus().equals("ADMIN")) {
+	        	moveToUrl = "redirect:/admin/memberList";
+	        }
+	        
 	        mav.setViewName(moveToUrl);
 			mav.addObject(Memberlogin);
 			return mav;
