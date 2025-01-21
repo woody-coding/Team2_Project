@@ -49,7 +49,7 @@ public class ActorService {
 		}
 		
 		// 다른작품 가져오기
-		List<ShowActor> showActors = showActorRepo.findByActorNo(actorNo);
+		List<ShowActor> showActors = showActorRepo.findTop3ByActorNo(actorNo);
 		List<ShowActorDto> dtos = new ArrayList<>();
 		
 		for(ShowActor showActor : showActors) {

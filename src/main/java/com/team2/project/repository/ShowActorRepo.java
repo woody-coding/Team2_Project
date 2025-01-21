@@ -10,6 +10,6 @@ import com.team2.project.model.ShowActor;
 @Repository
 public interface ShowActorRepo extends JpaRepository<ShowActor, Integer> {
 	
-	public List<ShowActor> findByActorNo(int actorNo);
+	public List<ShowActor> findTop3ByActorNo(int actorNo);
 	
 }
