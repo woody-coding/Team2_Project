@@ -205,13 +205,20 @@ body{
 .others_container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: nowrap;
     position: relative;
+    gap: 20px;
     width: 1200px;
     margin: 20px 0 0 0;
     padding: 0 30px 0 30px;
     z-index: 1;
+}
+
+.others_info {
+    flex: 0 1 calc(33.333% - 20px); /* 최대 3개까지 균등 분할, 간격 보정 */
+    box-sizing: border-box;         /* 패딩 포함 계산 */
+    text-align: center;             /* 내용 중앙 정렬 */
 }
 
 .others_container img, .other_name b{
