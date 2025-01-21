@@ -13,6 +13,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
 	//민영 추가 : review작성 결제자만 가능하도록 처리
 	Optional<Payment> findByMember_MemberNoAndOrderNameAndPaySuccessYN(int memberNo, String orderName, boolean paySuccessYN);
-	 List<Payment> findByMember_MemberNo(int memberNo);
+	
+	List<Payment> findByMember_MemberNoAndPaySuccessYNTrue(int memberNo);
 }
 

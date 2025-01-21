@@ -7,6 +7,7 @@ import com.team2.project.model.Member;
 import com.team2.project.repository.AdminRepository;
 import com.team2.project.repository.ShowActorFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -26,7 +27,7 @@ public class AdminService {
     }
     
     public List<Show> getAllShows() {
-        return adminRepository.findAllShow();
+        return adminRepository.findAllShow(Sort.by(Sort.Direction.DESC, "showNo"));
     }
     
     public Show getShowById(int ShowNo) {
