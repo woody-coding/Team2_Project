@@ -8,10 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const today = new Date();
     today.setHours(0, 0, 0, 0); // 시간 초기화 (날짜만 비교)
-    let currentMonth = today.getMonth();
-    let currentYear = today.getFullYear();
-    let selectedDate = null;
-    let selectedRoundTime = null;
 
     // HTML에서 showNo 값 가져오기
     const showNo = bookTicketLink.getAttribute('data-show-no'); // 또는 bookTicketLink.dataset.showNo
@@ -20,51 +16,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const periodStart = new Date(document.body.getAttribute('data-period-start'));
     const periodEnd = new Date(document.body.getAttribute('data-period-end'));
 
-  // 날짜 비교를 위해 시간 초기화
-periodStart.setHours(0, 0, 0, 0);
-periodEnd.setHours(0, 0, 0, 0);
+    // 날짜 비교를 위해 시간 초기화
+    periodStart.setHours(0, 0, 0, 0);
+    periodEnd.setHours(0, 0, 0, 0);
 
-function generateCalendar(year, month) {
-    calendarDays.innerHTML = '';
+    // 시작 날짜로 기본 달력 설정
+    let currentMonth = periodStart.getMonth();
+    let currentYear = periodStart.getFullYear();
+    let selectedDate = null;
+    let selectedRoundTime = null;
 
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const firstDayIndex = firstDay.getDay();
-    const daysInMonth = lastDay.getDate();
+    function generateCalendar(year, month) {
+        calendarDays.innerHTML = '';
 
-    for (let i = 0; i < firstDayIndex; i++) {
-        const emptyCell = document.createElement('div');
-        calendarDays.appendChild(emptyCell);
-    }
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const firstDayIndex = firstDay.getDay();
+        const daysInMonth = lastDay.getDate();
 
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dayCell = document.createElement('div');
-        dayCell.textContent = day;
-
-        const currentDate = new Date(year, month, day);
-        currentDate.setHours(0, 0, 0, 0); // 시간 초기화
-
-        if (currentDate >= periodStart && currentDate <= periodEnd) {
-            dayCell.classList.add('special-period');
+        for (let i = 0; i < firstDayIndex; i++) {
+            const emptyCell = document.createElement('div');
+            calendarDays.appendChild(emptyCell);
         }
 
-        if (currentDate <= today || currentDate < periodStart || currentDate > periodEnd) {
-            dayCell.classList.add('disabled-date');
-            dayCell.style.pointerEvents = 'none';
-        } else {
-            dayCell.addEventListener('click', () => {
-                document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
-                dayCell.classList.add('selected');
-                selectedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                bookTicketLink.classList.remove('disabled');
-            });
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayCell = document.createElement('div');
+            dayCell.textContent = day;
+
+            const currentDate = new Date(year, month, day);
+            currentDate.setHours(0, 0, 0, 0); // 시간 초기화
+
+            if (currentDate >= periodStart && currentDate <= periodEnd) {
+                dayCell.classList.add('special-period');
+            }
+
+            if (currentDate <= today || currentDate < periodStart || currentDate > periodEnd) {
+                dayCell.classList.add('disabled-date');
+                dayCell.style.pointerEvents = 'none';
+            } else {
+                dayCell.addEventListener('click', () => {
+                    document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+                    dayCell.classList.add('selected');
+                    selectedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    bookTicketLink.classList.remove('disabled');
+                });
+            }
+
+            calendarDays.appendChild(dayCell);
         }
 
-        calendarDays.appendChild(dayCell);
+        monthYear.textContent = `${year}년 ${month + 1}월`;
     }
-
-    monthYear.textContent = `${year}년 ${month + 1}월`;
-}
 
     prevMonth.addEventListener('click', () => {
         currentMonth--;
@@ -111,5 +113,6 @@ function generateCalendar(year, month) {
         bookTicketLink.href = `/show/bookSeat/${showNo}/${selectedDate}`;
     });
 
+    // 초기 달력 생성
     generateCalendar(currentYear, currentMonth);
 });
