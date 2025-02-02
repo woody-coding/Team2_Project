@@ -64,7 +64,6 @@ public class PaymentService {
     }
     
     // 토스 결제 승인 API에 POST 방식으로 요청/응답 처리 메서드
-    @Transactional
     private JSONObject sendRequest(JSONObject requestData, String secretKey, String urlString) throws IOException {
         HttpURLConnection connection = createConnection(secretKey, urlString);
         try (OutputStream os = connection.getOutputStream()) {
